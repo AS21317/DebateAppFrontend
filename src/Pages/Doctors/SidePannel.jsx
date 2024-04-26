@@ -3,12 +3,12 @@ import convertTime from '../../utils/convertTime'
 import { authContext } from '../../context/AuthContext'
 import { useContext } from 'react'
 import { toast } from 'react-toastify'
-const SidePannel = ({doctorId,ticketPrice,timeSlots}) => {
+const SidePannel = () => {
   const {token} = useContext(authContext)
 
 const bookingHandler = async()=>{
   try {
-    const res = await fetch(`https://medical-booking-backend.vercel.app/api/v1/bookings/checkout-session/${doctorId}`,{
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/bookings/checkout-session/${doctorId}`,{
       method:'POST',
       headers:{
         Authorization:`Bearer ${token}`
@@ -37,28 +37,45 @@ const bookingHandler = async()=>{
 }
 
   
-  console.log("Available time is : ",timeSlots)
+  // console.log("Available time is : ",timeSlots)
   return (
-    <div className="shadow-panelShadow p-3 lg:p-5 rounded-md">
+    <div className="shadow-panelShadow p-3 lg:p-5 bg-white-100 rounded-md">
     <div className="flex items-center justify-between">
-    <p className="text__para mt-0 font-semibold">Ticket Price</p>
-    <span className="text-[16px] leading-7 lg:text-[22px] lg:leading-8 text-headingColor font-bold">
-    Rs.{ticketPrice}
-    </span>
+    <p className="text__para mt-0 font-semibold">Want to talk with me here are the <span className=' text-green-950 font-semibold'>available time slots</span></p>
+   
     </div>
-    <div className="mt-[30px]">
-    <p className="text__para mt-0 font-semibold text-headingColor">
-    Available Time Slots:
-    </p>
+    <div className="mt-[10px]">
+    
     <ul className="mt-3">
-   {timeSlots?.map((time,index)=>(  <li key={index} className="flex items-center justify-between mb-2">
+    <li  className="flex items-center justify-between mb-2">
     <p className="text-[15px] leading-6 text-textColor font-semibold">
-    {time.day.charAt(0).toUpperCase()+time.day.slice(1)}
+      Monday 
     </p>
     <p className="text-[15px] leading-6 ltext-textColor font-semibold">
-    {convertTime(time.startingTime)} - {convertTime(time.endingTime)}
+      08:30 PM - 09:30 PM
     </p>
-    </li>))}
+    
+    </li>
+
+    <li  className="flex items-center justify-between mb-2">
+    <p className="text-[15px] leading-6 text-textColor font-semibold">
+      Tuesday 
+    </p>
+    <p className="text-[15px] leading-6 ltext-textColor font-semibold">
+      08:30 PM - 09:30 PM
+    </p>
+    
+    </li>
+
+    <li  className="flex items-center justify-between mb-2">
+    <p className="text-[15px] leading-6 text-textColor font-semibold">
+      Saturday 
+    </p>
+    <p className="text-[15px] leading-6 ltext-textColor font-semibold">
+      08:30 PM - 09:30 PM
+    </p>
+    
+    </li>
 
    
 
@@ -68,7 +85,7 @@ const bookingHandler = async()=>{
   
     </ul>
     </div>
-    <button onClick={bookingHandler} className="btn px-2 w-full rounded-md">Book Appointment</button>
+    <button onClick={bookingHandler} className="btn px-2 w-full rounded-md">Join me in upcomming events</button>
     </div>
   )
 }

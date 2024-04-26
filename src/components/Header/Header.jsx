@@ -14,7 +14,7 @@ const navLinks = [
   },
   {
     path: "/doctors",
-    display: "Find a Doctor",
+    display: "Find all Events",
   },
   {
     path: "/services",
@@ -48,6 +48,8 @@ const adminNavLinks = [
 const Header = () => {
   
 const [admin,setAdmin] = useState(false)
+const [host,setHost] =useState(false)
+const [coAdmin,setCoAdmin] =useState(false)
     const headerRef = useRef(null) 
     const menuRef = useRef(null)
     const {user,role,token}  = useContext(authContext)
@@ -88,14 +90,32 @@ const [admin,setAdmin] = useState(false)
           <div>
            <Link onClick={()=>setAdmin(false)} to={'/home'}> <img src={logo} alt="Logo" /></Link>
           </div>
-          {
+          {/* {
             role=='patient'? <Link to={!admin?'/admin/home':'/home'}> 
             <button       onClick={(e) => setAdmin((prevAdmin) => !prevAdmin)}  className="bg-primaryColor py-[2]  px-6 text-white font-[600] h-[44px] flex items-center
             justify-center rounded-[50px]">
                {admin? "User View":"Admin View"} 
             </button>
             </Link> :null
+          } */}
+
+{
+            role=='patient'? <Link to={!admin?'/host/home':'/home'}> 
+            <button       onClick={(e) => setHost((prevAdmin) => !prevAdmin)}  className="bg-primaryColor py-[2]  px-6 text-white font-[600] h-[44px] flex items-center
+            justify-center rounded-[50px]">
+               {admin? "User View":"Host View"} 
+            </button>
+            </Link> :null
           }
+
+{/* {
+            role=='patient'? <Link to={!admin?'/admin/home':'/home'}> 
+            <button       onClick={(e) => setAdmin((prevAdmin) => !prevAdmin)}  className="bg-primaryColor py-[2]  px-6 text-white font-[600] h-[44px] flex items-center
+            justify-center rounded-[50px]">
+               {admin? "User View":"Admin View"} 
+            </button>
+            </Link> :null
+          } */}
 
 {                /* =====>  menu =====>                  */}
                 <div className="navigation" ref={menuRef} onClick={toggleMenu}>

@@ -18,23 +18,20 @@ const DoctorCard = ({doctor}) => {
     <>
       <div className="max-w-sm bg-white rounded-lg overflow-hidden shadow-lg">
         <div className="border-b px-4 pb-6">
-          <div className="text-center my-4">
-            {/* <img
-              className="h-32 w-32 rounded-full border-4 border-white mx-auto my-4"
-              src={photo}
-              alt=""
-            /> */}
-            <div className="py-2">
-            <h3 className="font-bold text-2xl text-gray-800 mb-1">
-                {name}</h3>
-                <h3 className="font text-[16px] text-gray-800 mb-1">
-                {email}</h3>
-              <div className="inline-flex p-1 rounded-md font-semibold bg-amber-300 text-gray-700 items-center">
+        <div class="flex items-center">
+      <img class="h-14 w-14 rounded-full object-cover" src={photo} alt="Simon Lewis" />
+      <div class="ml-4 w-56">
+        <p class="text-slate-800 text-xl font-extrabold">Richard Hendricks</p>
+        <p class="text-slate-500">Algorithms Expert</p>
+      </div>
+    </div>
+              <div className=' flex mb-4 mt-2 justify-center'>
+              <div className=" px-4 py-2 mx-auto rounded-md  grid place-content-center font-semibold bg-amber-300 text-gray-700 ">
                 
-               {specialization}
+                {specialization}
+               </div>
+
               </div>
-            </div>
-          </div>
          
 
 <div className="flex gap-2 px-2">

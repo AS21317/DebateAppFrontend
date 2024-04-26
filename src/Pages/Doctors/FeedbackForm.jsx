@@ -24,7 +24,7 @@ const FeedbackForm = ({setShowFeedbackForm}) => {
         return  toast.error("Rating and Review Fields are required !!")
         }
         
-        const res = await fetch(`https://medical-booking-backend.vercel.app/api/v1/review/doctor/${id}/reviews`,{
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/review/doctor/${id}/reviews`,{
           method:'POST',
           headers:{
             "Content-Type":"application/json",

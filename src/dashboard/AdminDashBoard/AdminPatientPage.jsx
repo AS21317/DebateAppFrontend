@@ -5,7 +5,7 @@ import DoctorCard from './DoctorCard'
 import PatientCard from './PatientCard'
 
 const AdminPatientPage = () => {
-  const {data:users,loading,error} = useFetchData(`https://medical-booking-backend.vercel.app/api/v1/user`)
+  const {data:users,loading,error} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/user`)
   console.log("Users available are : ",users)
   return (
     <>

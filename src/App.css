@@ -66,6 +66,40 @@ body {
 
 }
 
+
+.modal {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  max-height: 90vh;
+  width: 450px;
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  /*Semi-transparentbackground*/z-index: 999;
+  /*Ensurethemodalisontopofothercontent*/overflow: auto;
+  /*Enablescrollingifcontentexceedsviewport*/-webkit-border-radius: 30px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+.modal-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Box shadow for a nice effect */
+}
+
+.modal-action {
+  display: flex;
+  justify-content: center; /* Align buttons to the right */
+  margin-top: 10px;
+}
+
+
+
 @media only screen and (max-width: 768px) {
   .navigation { 
   width: 100%;

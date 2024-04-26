@@ -7,7 +7,7 @@ import Signup from '../Pages/Signup'
 import Contact from '../Pages/Contact'
 import Doctors from '../Pages/Doctors/Doctors'
 import DoctorsDetails from '../Pages/Doctors/DoctorsDetails'
-import MyAccount from '../dashboard/user-acount/MyAccount'
+import MyAccount from '../Pages/User-Page/MyAccount'
 import Dashboard from '../dashboard/doctor-account/Dashboard'
 import CheckoutSuccessPage from '../Pages/CheckoutSuccessPage'
 
@@ -16,6 +16,8 @@ import AdminHomePage from '../dashboard/AdminDashBoard/AdminHomePage'
 import AdminDoctorPage from '../dashboard/AdminDashBoard/AdminDoctorPage'
 import AdminPatientPage from '../dashboard/AdminDashBoard/AdminPatientPage'
 import AdminMessagePage from '../dashboard/AdminDashBoard/AdminMessagePage'
+import HostDetails from '../Pages/HostPage/HostDetails'
+import HostHomePage from '../dashboard/HostDashboard/HostHomePage'
 
 const Routers = () => {
   return ( <Routes>
@@ -28,6 +30,9 @@ const Routers = () => {
             <Route path="/admin/patients" element={<AdminPatientPage/>} />
             <Route path="/admin/messages" element={<AdminMessagePage/>} />
 
+            <Route path='/host/home' element={<HostHomePage/>} />
+
+
             <Route path='/register' element={<Signup/>} />
             <Route path='/contact' element={<Contact/>} />
             <Route path='/doctors' element={<Doctors/>} />
@@ -35,7 +40,7 @@ const Routers = () => {
             
             <Route path='/user/profile/me' element=  { <ProtectedRoute allowedRoles={['patient']}><MyAccount/></ProtectedRoute> } /> 
             <Route path='/doctor/profile/me' element={<ProtectedRoute allowedRoles={['doctor']}><Dashboard/></ProtectedRoute>} /> 
-            <Route path='/doctor/:id' element={<DoctorsDetails/>} />
+            <Route path='/host/hostDetails' element={<HostDetails/>} />
   </Routes>
   )
 }

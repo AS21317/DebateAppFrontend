@@ -59,7 +59,7 @@ text-headingColor"
           </p>
         </div>
         <Link
-          to={`/doctor/${doctor._id}`}
+          to={`/doctor/#`}
           className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto
 flex items-center justify-center group hover:bg-primaryColor hover:border-none"
         >

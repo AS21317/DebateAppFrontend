@@ -6,6 +6,7 @@ import DoctorsDetails from "./DoctorsDetails";
 import useFetchData from '../../hooks/useFetchData'
 import Loader from '../../Loader/Loader'
 import Error from '../../components/Error/Error'
+import EventCard from "../../components/cards/EventCard";
 
 const Doctors = () => {
   const [query,setQuery] = useState('')
@@ -21,22 +22,22 @@ const Doctors = () => {
     return ()=> clearTimeout(timeout)
   },[query])
 
-  const {data:doctors,loading,error} = useFetchData(`https://medical-booking-backend.vercel.app/api/v1/doctor?query=${debounceQuery}`)
+  const {data:doctors,loading,error} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/doctor?query=${debounceQuery}`)
 
 
   console.log("Doctors  at Find Doctor page are : ",doctors)
   return (
     <>
-      <section className="bg-[#fff9ea]">
+      <section className="bg-[#fff9ea] p-4">
         <div className="container text-center">
-          <h2 className="heading">Find a Doctor</h2>
+          <h2 className="heading">Find a Event</h2>
           <div
             className="max-w-[570px] mt-[30px] mx-auto bg-[#0066ff2c] rounded-md flex items-center 
 justify-between"
           >
             <input
               type="search"
-              className="py-4 pl-4 pr-2 bg-transparent w-full focus:outline-none cursor-pointer
+              className="py-2 pl-4 pr-2 bg-transparent w-full focus:outline-none cursor-pointer
 placeholder:text-textColor"
               placeholder="Search doctor by name or specifications "
               value={query}
@@ -48,14 +49,23 @@ placeholder:text-textColor"
           </div>
         </div>
       </section>
-      <section>
-        <div className="container">
-        {loading && <Loader/>}
-        {error && <Error/>}
-         {!loading && !error &&  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            {doctors.map((doctor) => (
-              <DoctorCard key={doctor.id} doctor={doctor} />
-            ))}
+      <section className="pt-5">
+        <div className="container mt-0">
+        {/* {loading && <Loader/>}
+        {error && <Error/>} */}
+         {  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {/* {doctors.map((doctor) => (
+              <EventCard  />
+            ))} */}
+            <EventCard/>
+            <EventCard/>
+            <EventCard/>
+            <EventCard/>
+            <EventCard/>
+            <EventCard/>
+            <EventCard/>
+            <EventCard/>
+            <EventCard/>
           </div>}
         </div>
       </section>
@@ -63,11 +73,10 @@ placeholder:text-textColor"
       <section>
         <div className="container">
      
-          <div className="xl:w-[470px] mx-auto">
-            <h2 className="heading text-center">What our patient say</h2>
-            <p className="text__para text-center">
-              World-class care for everyone. Our health System offers unmatched,
-              expert health care.
+          <div className="xl:w-[570px] mx-auto">
+            <h2 className="heading text-center">What our members say</h2>
+            <p className="text__para text-center mt-0 font-semibold">
+            Engaging on this platform has been an absolute delight!.The community here is incredibly supportive.
             </p>
           </div>
           <Testimonial />

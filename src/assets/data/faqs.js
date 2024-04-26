@@ -1,27 +1,26 @@
 export const faqs = [
   {
-    question: "What is your medical care?",
+    question: "How do I join a debate?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "To join a debate, simply navigate to the 'Debates' section of our platform and browse through the available debates. Once you find one that interests you, click on it to view more details and join the discussion.",
   },
   {
-    question: "What happens if I need to go a hospital?",
+    question: "Can I suggest a topic for debate?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "Yes, we welcome topic suggestions from our users! Feel free to submit your topic ideas through our contact form or directly reach out to our team. We're always looking for engaging topics to explore.",
   },
   {
-    question: "What happens if I need to go a hospital?",
+    question: "How can I become an expert speaker or host?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "Becoming an expert speaker on our platform involves showcasing your expertise in a particular field and demonstrating your ability to engage and educate our audience. If you're interested in becoming a speaker, please reach out to us with details about your expertise and topics you'd like to discuss.",
   },
   {
-    question: "Can I visit your medical office?",
+    question: "What are the benefits of participating in group discussions?",
     content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+      "Participating in group discussions allows you to exchange ideas, gain new perspectives, and collaborate with others on shared interests. It's an excellent opportunity to learn from others, build connections, and broaden your understanding of various topics.",
   },
-  {
-    question: "Does you provide urgent care?",
-    content:
-      "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
-  },
+  
 ];
+
+
+

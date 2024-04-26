@@ -12,7 +12,7 @@ import Profile from "./Profile";
 
 const Dashboard = () => {
   const { data, loading, error } = useFetchData(
-    `https://medical-booking-backend.vercel.app/api/v1/doctor/profile/me`
+    `${import.meta.env.VITE_BASE_URL}/api/v1/doctor/profile/me`
   );
   console.log("Data recieved is : ", data);
 

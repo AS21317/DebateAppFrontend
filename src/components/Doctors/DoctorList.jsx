@@ -7,7 +7,7 @@ import Error from '../Error/Error'
 
 const DoctorList = () => {
 
-    const {data:doctors,loading,error} = useFetchData(`https://medical-booking-backend.vercel.app/api/v1/doctor`)
+    const {data:doctors,loading,error} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/doctor`)
     console.log("Doctors available are : ",doctors)
     return (
         <>

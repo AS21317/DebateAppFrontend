@@ -4,7 +4,7 @@ import MessageCard from './MessageCard'
 import useFetchData from '../../hooks/useFetchData'
 
 const AdminMessagePage = () => {
-  const {data:messages,loading,error} = useFetchData(`https://medical-booking-backend.vercel.app/api/v1/contact`)
+  const {data:messages,loading,error} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/contact`)
   console.log("Users available are : ",messages)
 
   return (

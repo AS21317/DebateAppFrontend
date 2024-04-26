@@ -2,13 +2,31 @@ import React from "react";
 import heroImg01 from "../assets/images/hero-img01.png";
 import heroImg02 from "../assets/images/hero-img02.png";
 import heroImg03 from "../assets/images/hero-img03.png";
+import home1 from "../assets/images/home1.jpg";
+import home2 from "../assets/images/home2.jpg";
+import home3 from "../assets/images/home3.jpg";
+import home4 from "../assets/images/home4.jpg";
+import home5 from "../assets/images/home5.jpg";
+import home6 from "../assets/images/home6.jpg";
+import home7 from "../assets/images/home7.jpg";
+import home8 from "../assets/images/home8.png";
+import home10 from "../assets/images/home10.png";
+import home11 from "../assets/images/home11.png";
+import home9 from "../assets/images/home9.jpg";
+import home12 from "../assets/images/home12.png";
+import whyus from "../assets/images/whyus.png";
+import gd from "../assets/images/gd.jpg";
+import debate from "../assets/images/debate.jpg";
+import exoertTalk from "../assets/images/expertTalk.jpg";
+
+
 import icon01 from "../assets/images/icon01.png";
 import icon02 from "../assets/images/icon02.png";
 import icon03 from "../assets/images/icon03.png";
 import featureImg from "../assets/images/feature-img.png";
 import videoIcon from "../assets/images/video-icon.png";
 import avatarIcon from "../assets/images/avatar-icon.png";
-import faqImg from "../assets/images/faq-img.png";
+import faq1 from "../assets/images/faq1.png";
 
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
@@ -17,30 +35,39 @@ import ServiceList from "../components/service/ServiceList";
 import DoctorList from "../components/Doctors/DoctorList";
 import FaqList from "../components/faq/FaqList";
 import Testimonial from "../components/Testtimonial/Testimonial";
+import EventCard from "../components/cards/EventCard";
+import Servicecard from "../components/cards/Servicecard";
+import HotTopicCard from "../components/cards/HotTopicCard";
+import HostCard from "../components/cards/HostCard";
+
+const text = [
+  
+    "Embark on intellectual journeys and sharpen your argumentative prowess with our Debate Services.oin a vibrant community of debaters committed to exploring diverse viewpoints and honing their rhetorical skills." ,
+    "Facilitate collaboration, deepen understanding, and cultivate consensus with our Group Discussion Services. Explore complex issues, share insights, and forge connections with like-minded individuals.",
+    "Gain  insights from industry leaders, subject matter experts, and thought leaders with our Expert Talk Services.  Expand your horizons with curated talks and discussions by experts in their fields."
+  
+]
 
 const Home = () => {
   return (
     <>
       <section className="hero__section pt-[60px] 2xl:h-[800px]">
         <div className="container">
-          <div className="flex flex-col lg:flex-row gap-[90px] items-center justify-between">
+          <div className="flex flex-col lg:flex-row  gap-20 items-center justify-between">
             <div>
-              <div className="lg:w-[570px]">
-                <h1 className="text-[36px] leading-[46px] text-headingColor font-[800] md:text-[60px] md:leading-[70px]">
-                  We help patients live a healthy, longer life.
+              <div className="lg:w-[590px]">
+                <h1 className="text-[36px] leading-[46px] text-headingColor font-[800] md:text-[45px] md:leading-[60px]">
+                Empowering individuals to express themselves with confidence and clarity
                 </h1>
-                <p className="text__para">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Natus quaerat cumque fugit, perspiciatis cum nemo aperiam, aut
-                  quia earum amet architecto, modi odio. Soluta unde ducimus
-                  perferendis?
+                <p className="text__para font-serif ">
+                Welcome to our platform where communication flourishes. Elevate your skills, express confidently.  Together, we empower individuals to navigate conversations with clarity and conviction.
                 </p>{" "}
-                <button className="btn">Request an Appointment</button>
+                <button className="btn text-[20px]">Join us to unlock your voice</button>
               </div>
 
               {/* Hero counter  */}
               <div
-                className="mt-[30px] lg:mt-[70px] flex flex-col lg:flex-row lg:items-center gap-5
+                className="mt-[30px] lg:mt-[50px] flex flex-col lg:flex-row lg:items-center gap-5
                 lg:gap-[30px]"
               >
                 <div>
@@ -51,7 +78,7 @@ const Home = () => {
                     30+
                   </h2>
                   <span className="w-[100px] h-2 bg-yellowColor rounded-full block mt-[-14px]"></span>
-                  <p className="text__para">Years of Experience</p>
+                  <p className="text__para font-semibold text-[20px]  font-serif">Total Users</p>
                 </div>
 
                 <div>
@@ -62,7 +89,7 @@ const Home = () => {
                     30+
                   </h2>
                   <span className="w-[100px] h-2 bg-purpleColor rounded-full block mt-[-14px]"></span>
-                  <p className="text__para">Clinic Location </p>
+                  <p className="text__para font-semibold text-[20px] font-serif">Active Users</p>
                 </div>
 
                 <div>
@@ -73,22 +100,26 @@ const Home = () => {
                     30+
                   </h2>
                   <span className="w-[100px] h-2 bg-irisBlueColor rounded-full block mt-[-14px]"></span>
-                  <p className="text__para">Patient Satisfaction</p>
+                  <p className="text__para font-semibold text-[20px] font-serif">Successfull Events</p>
                 </div>
               </div>
             </div>
 
             {/* Hero content  */}
 
-            <div className="flex gap-[30px] justify-end">
-              <div>
-                <img className="w-full" src={heroImg01} alt="" />
-              </div>
-              <div className="mt-[30px]">
-                <img src={heroImg02} alt="" className="w-full mb-[30px]" />
-                <img src={heroImg03} alt="" className="w-full" />
-              </div>
-            </div>
+            <div className="flex flex-col   lg:flex-row gap-[30px] justify-center items-center rounded-lg overflow-hidden">
+  <div className="mb-[30px] lg:mb-0  lg:mr-[30px]">
+  {/* <img className=" " src={home12} alt="" /> */}
+  <img src={home3} height={"420px"} className="rounded-2xl" width={"360px"} alt="" />
+  </div>
+  
+  { <div className="flex flex-col lg:flex-col">
+    {/* <img src={home12} alt="" className="w-full lg:w-[70%] mb-[30px] lg:mb-0 rounded-lg" /> */}
+    {/* <img src={home3} alt="" className="w-full lg:mt-6 lg:ml-[30px]  lg:w-[70%] rounded-lg" /> */}
+  </div> }
+</div>
+
+
           </div>
         </div>
       </section>
@@ -99,91 +130,58 @@ const Home = () => {
         <div className="container">
           <div className="lg:w-[470px] mx-auto">
             <h2 className="heading text-center">
-              Providing the best medical services
+             Event of the Day
             </h2>
 
-            <p className="text__para text-center">
-              World-class care for everyone. Our health System offers unmatched,
-              expert health care.
+            <p className="text__para font-semibold mt-0 text-center">
+             Break your silence, join us to speak learn and grow 
             </p>
           </div>
 
           <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[3@px] mt-[30px]
-                  lg:mt-[55px]"
+            className="sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] mt-[20px]
+                  lg:mt-[25px]"
           >
-            <div className="py-[30px] px-5 ">
-              <div className="flex items-center justify-center">
-                <img src={icon01} alt="" />
-              </div>
+           
 
-              <div className="mt-[30px]">
-                <h2 className="text-[26px] leading-9 Otext-headingColor font-[700] text-center">
-                  Find a Doctor
-                </h2>
-                <p className="text-[16px] leading-7 Mtext-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone. Our health System offers
-                  unmatched, expert health care. From the lab to the clinic.
-                </p>
-                <Link
-                  to="/doctors"
-                  className="w-[44px] h-[44px] rounded-full border border-solid border- 
-                [#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor
-                hover :border-none"
-                >
-                  <BsArrowRight />
-                </Link>
-              </div>
-            </div>
+           
+            <EventCard/>
+            <EventCard/>
+            <EventCard/>
+            <EventCard/>
 
-            <div className="py-[30px] px-5 ">
-              <div className="flex items-center justify-center">
-                <img src={icon02} alt="" />
-              </div>
-
-              <div className="mt-[30px]">
-                <h2 className="text-[26px] leading-9 Otext-headingColor font-[700] text-center">
-                  Find a Location
-                </h2>
-                <p className="text-[16px] leading-7 Mtext-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone. Our health System offers
-                  unmatched, expert health care. From the lab to the clinic.
-                </p>
-                <Link
-                  to="/doctors"
-                  className="w-[44px] h-[44px] rounded-full border border-solid border- 
-                [#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor
-                hover :border-none"
-                >
-                  <BsArrowRight />
-                </Link>
-              </div>
-            </div>
-
-            <div className="py-[30px] px-5 ">
-              <div className="flex items-center justify-center">
-                <img src={icon03} alt="" />
-              </div>
-
-              <div className="mt-[30px]">
-                <h2 className="text-[26px] leading-9 Otext-headingColor font-[700] text-center">
-                  Book Appointment
-                </h2>
-                <p className="text-[16px] leading-7 Mtext-textColor font-[400] mt-4 text-center">
-                  World-class care for everyone. Our health System offers
-                  unmatched, expert health care. From the lab to the clinic.
-                </p>
-                <Link
-                  to="/doctors"
-                  className="w-[44px] h-[44px] rounded-full border border-solid border- 
-                [#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor
-                hover :border-none"
-                >
-                  <BsArrowRight />
-                </Link>
-              </div>
-            </div>
           </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="container">
+          <div className="lg:w-[470px] mx-auto">
+            <h2 className="heading text-center">
+             Upcomming Events
+            </h2>
+
+            
+          </div>
+
+          <div
+            className="sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] mt-[20px]
+                  lg:mt-[25px]"
+          >
+           
+
+           
+            <EventCard/>
+            <EventCard/>
+            <EventCard/>
+            <EventCard/>
+
+          </div>
+        <div className=" grid place-content-center mt-12 ">
+        <button className="flex-1  bg-blue-600 rounded-full  text-[20px] font-bold text-white px-8 py-2">
+              See all Events
+            </button>
+        </div>
         </div>
       </section>
 
@@ -197,13 +195,20 @@ const Home = () => {
       <section>
         <div className="container">
           <div className="x1:w-[470px] mx-auto">
-            <h2 className="heading text-center">Our medical services</h2>
-            <p className="text__para text-center">
-              World-class care for everyone. Our health System offers unmatched,
-              expert health care.
+            <h2 className="heading text-center">Our Services</h2>
+            <p className="text__para mt-0 text-center font-semibold">
+             Choose the best one to grow your personality
             </p>
           </div>
-          <ServiceList />
+          <div
+            className="sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[20px]
+                  lg:mt-[20px]"
+          >
+             <Servicecard about={text[0]} title={"Debate"} photo={debate} />
+        <Servicecard  about={text[1]} title={"Group Discussion"} photo={home2}  />
+        <Servicecard   about={text[2]} title={"Expert Talk"} photo={exoertTalk}/>
+            </div>
+       
         </div>
       </section>
 
@@ -216,77 +221,30 @@ const Home = () => {
           <div className="flex items-center justify-between flex-col lg:flex-row">
             <div className="xl:w-[670px]">
               <h2 className="heading">
-                Get virtual treatment <br /> anytime.
+               Why to choose us
               </h2>
-              <ul className="pl-4">
-                <li className="text__para">
-                  1. Schedule the appointment directly.
-                </li>
-                <li className="text__para">
-                  2. Search for your physician here, and contact their office.
-                </li>
-                <li className="text__para">
-                  3. View our physicians who are accepting new patients, <br />{" "}
-                  use the online scheduling tool to select an appointment time.
-                </li>
-              </ul>
+              <ul className="list-disc text-[18px] ml-4 leading-8 list-inside mt-4 mb-4">
+  <li > Get the chance to talk with new people</li>
+  <li > Receive dedicated hosting for each event</li>
+  <li > Hosts are experts in their respective domains</li>
+  <li > Improve your English speaking skills by joining English  events</li>
+  <li > Maintain an outstanding profile to become a host on the platform</li>
+  <li > Develop critical thinking and problem-solving abilities</li>
+  <li > Enhance your leadership and teamwork skills</li>
+  <li > Gain exposure to diverse perspectives and viewpoints</li>
+</ul>
 
-              <Link to="/">
-                <button className="btn">Learn More</button>
-              </Link>
+
+
+            
             </div>
 
             {/* Image  */}
 
-            <div className="relative z-100 xl:w-[770px] flex justify-end mt-[50px] lg:mt-0">
-              <img src={featureImg} className="w-3/4" alt="" />
+            <div className="relative z-100 xl:w-[770px] flex justify-end mt-[20px] lg:mt-0">
+              <img src={whyus} width={700}  alt="" />
 
-              <div
-                className="w-[150px] lg:w-[248px] bg-white absolute bottom-[50px] left-0 md:bottom- 
-[100px] md:left-5 z-20 p-2 pb-3 lg:pt-4 lg:px-4 lg:pb-[26px] rounded-[10px]"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-[6px] lg:gap-3">
-                    <p
-                      className="text-[10px] leading-[10px] lg:text-[14px] lg:leading-5 text-headingColor 
-font-[600]"
-                    >
-                      Tue, 24
-                    </p>
-
-                    <p
-                      className="text-[10px] leading-[10px] lg:text-[14px] lg:leading-5 text-textColor
-font-[400]"
-                    >
-                      10:00AM
-                    </p>
-                  </div>
-                  <span
-                    className="w-5 h-5 lg:w-[34px] 1g:h-[34px] flex items-center justify-center
-bg-yellowColor rounded py-1 px-[6px] lg:py-3 lg:px-[9px]"
-                  >
-                    <img src={videoIcon} alt="" />
-                  </span>
-                </div>
-
-                <div
-                  className="w-[65px] lg:w-[96px] bg-[#CCF0F3] py-1 px-2 lg:py-[6px] lg:px-[10px] text-
-[8px] leading-[8px] lg:text-[12px] lg:leading-4 text-irisBlueColor font-[500] mt-2 lg:mt-4
-rounded-full"
-                >
-                  Consultation
-                </div>
-                <div className="flex items-center gap-[6px] lg:gap-[10px] mt-2 lg:mt-[18px]">
-                  <img src={avatarIcon} alt="" />
-
-                  <h4
-                    className="text-[10px] leading-3 lg:text-[16px] lg:leading-[22px] font-[700] 
-text-headingColor"
-                  >
-                    Wayne Collins
-                  </h4>
-                </div>
-              </div>
+             
             </div>
           </div>
         </div>
@@ -296,15 +254,43 @@ text-headingColor"
 
       <section>
         <div className="container">
-          <div className="xl:w-[470px] mx-auto">
-            <h2 className="heading text-center">0ur great doctors</h2>
+          <div className="xl:w-[690px] mx-auto">
+            <h2 className="heading text-center ">Hot Topics</h2>
 
-            <p className="text__para text-center">
-              World-class care for everyone. Our health System offers unmatched,
-              expert health care.
+            <p className=" mb-8 mt-2 text-xl text-center font-semibold ">
+             Following topic has been taken several times and yet in demand
             </p>
           </div>
-          <DoctorList />
+          <div
+            className="sm:grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] mt-[20px]
+                  lg:mt-[20px]"
+          >
+          <HotTopicCard/>
+          <HotTopicCard/>
+          <HotTopicCard/>
+          <HotTopicCard/>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div className="container">
+          <div className="xl:w-[690px] mx-auto">
+            <h2 className="heading text-center ">Out top rated Hosts</h2>
+
+            <p className=" mb-8 mt-2 text-xl text-center font-semibold ">
+             Here are our top rated host available to serve you anytime
+            </p>
+          </div>
+          <div
+            className="sm:grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] mt-[20px]
+                  lg:mt-[20px]"
+          >
+          <HostCard/>
+          <HostCard/>
+          <HostCard/>
+          <HostCard/>
+          </div>
         </div>
       </section>
 
@@ -314,13 +300,13 @@ text-headingColor"
 
       <section>
         <div className="container">
-          <div className="flex justify-between gap-[50px] lg:gap-0">
+          <div className="flex items-center justify-between gap-[50px] lg:gap-0">
             <div className="w-1/2 hidden md:block">
-              <img src={faqImg} alt="" />
+              <img src={faq1} alt="" />
             </div>
             <div className="w-full md:w-1/2">
               <h2 className="heading">
-                Most questions by our beloved patients
+                Most questions by our beloved members
               </h2>
               <FaqList />
             </div>
@@ -334,11 +320,10 @@ text-headingColor"
 
       <section>
         <div className="container">
-          <div className="xl:w-[470px] mx-auto">
-            <h2 className="heading text-center">What our patient say</h2>
-            <p className="text__para text-center">
-              World-class care for everyone. Our health System offers unmatched,
-              expert health care.
+          <div className="xl:w-[570px] mx-auto">
+            <h2 className="heading text-center">What our members say</h2>
+            <p className="text__para text-center mt-0 font-semibold">
+            Engaging on this platform has been an absolute delight!.The community here is incredibly supportive.
             </p>
           </div>
           <Testimonial />
