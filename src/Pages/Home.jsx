@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import heroImg01 from "../assets/images/hero-img01.png";
 import heroImg02 from "../assets/images/hero-img02.png";
 import heroImg03 from "../assets/images/hero-img03.png";
@@ -39,6 +39,7 @@ import EventCard from "../components/cards/EventCard";
 import Servicecard from "../components/cards/Servicecard";
 import HotTopicCard from "../components/cards/HotTopicCard";
 import HostCard from "../components/cards/HostCard";
+import useFetchData from "../hooks/useFetchData";
 
 const text = [
   
@@ -49,6 +50,9 @@ const text = [
 ]
 
 const Home = () => {
+  const { loading, error, data: hostData} = useFetchData('http://192.168.1.11:5000/api/v1/host/getAll')
+  console.log(hostData)
+
   return (
     <>
       <section className="hero__section pt-[60px] 2xl:h-[800px]">

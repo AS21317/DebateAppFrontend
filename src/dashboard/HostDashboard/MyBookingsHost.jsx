@@ -3,9 +3,9 @@ import React from 'react'
 // import Loader from '../../Loader/Loader'
 // import Error from '../../components/Error/Error'
 // import EventCard from '../../components/cards/EventCard'
-import CancelledEvents from '../../dashboard/HostDashboard/CancelledEvents'
-import UpcommingEventsHost from './UpcommingEventsHost'
-import CompletedEventHost from './CompletedEventHost'
+import CancelledEvents from './CancelledEventsCardsHost'
+import UpcommingEventsHost from './UpcommingEventsCardHost'
+import CompletedEventHost from './CompletedEventCardHost'
 import TodaysEventHost from './TodaysEventHost'
 import useFetchData from '../../hooks/useFetchData'
 import RequestedEventsHost from './RequestedEventsHost'
@@ -13,9 +13,8 @@ import RequestedEventsHost from './RequestedEventsHost'
 
 const MyBookingsHost
  = ({cardType}) => {
-const {data:appointments , loading,error} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/user/appointments/my-appointtments`)
 
-
+  console.log("card is :",cardType);
   return (
     <div>
           {/* {loading && !error && <Loader/>}
@@ -24,12 +23,7 @@ const {data:appointments , loading,error} = useFetchData(`${import.meta.env.VITE
 
 
 {
- !loading && !error && (<div className=' flex justify-between mt-5  '>
-    {
-        // appointments.map((doctor)=>(
-        //     // <DoctorCard doctor={doctor} key={doctor._id} />
-         
-        // ))
+ 
 // future , today
 
 
@@ -79,8 +73,6 @@ const {data:appointments , loading,error} = useFetchData(`${import.meta.env.VITE
  </div>
 )}
 
-    </div>
-  )
-}
+  
 
 export default MyBookingsHost

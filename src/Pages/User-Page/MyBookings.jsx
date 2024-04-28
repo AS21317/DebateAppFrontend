@@ -1,19 +1,14 @@
 import React from 'react'
-import useFetchData from '../../hooks/useFetchData'
-import DoctorCard from '../../components/Doctors/DoctorCard'
-import Loader from '../../Loader/Loader'
-import Error from '../../components/Error/Error'
-import EventCard from '../../components/cards/EventCard'
 import UpcommingEventCard from './UpcomingEvents'
 import PastEventCard from './PastEventCard'
 import TodaysEvent from './TodaysEvent'
-import CancelledEvents from '../../dashboard/HostDashboard/CancelledEvents'
+import CancelledEvents from '../../dashboard/HostDashboard/CancelledEventsCardsHost'
+import MissedEventCard from './MissedEventCard'
 
 
 const MyBookings = ({cardType}) => {
-const {data:appointments , loading,error} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/user/appointments/my-appointtments`)
 
-
+console.log("card type is  :",cardType)
   return (
     <div>
           {/* {loading && !error && <Loader/>}
@@ -22,18 +17,13 @@ const {data:appointments , loading,error} = useFetchData(`${import.meta.env.VITE
 
 
 {
- !loading && !error && (<div className=' flex justify-between mt-5  '>
-    {
-        // appointments.map((doctor)=>(
-        //     // <DoctorCard doctor={doctor} key={doctor._id} />
-         
-        // ))
-// future , today
+
 
 
     
-            cardType === "upcomming" ? <div className='flex flex-wrap gap-y-4   justify-between gap-x-5'>
+            cardType === "upcomming" ? <div className='flex flex-wrap gap-y-4  mt-4  justify-between gap-x-5'>
             <UpcommingEventCard/>
+            
             <UpcommingEventCard/>
             <UpcommingEventCard/>
             <UpcommingEventCard/>
@@ -53,6 +43,13 @@ const {data:appointments , loading,error} = useFetchData(`${import.meta.env.VITE
 
              
             
+           </div>:cardType==="missed"?<div className='flex flex-wrap justify-between gap-x-5 gap-y-4'>
+             <MissedEventCard/>
+             <MissedEventCard/>
+             <MissedEventCard/>
+             <MissedEventCard/>
+             
+            
            </div>:<div className='flex flex-wrap justify-between gap-x-5 gap-y-4'>
              <CancelledEvents/>
              <CancelledEvents/>
@@ -68,8 +65,6 @@ const {data:appointments , loading,error} = useFetchData(`${import.meta.env.VITE
  </div>
 )}
 
-    </div>
-  )
-}
+
 
 export default MyBookings

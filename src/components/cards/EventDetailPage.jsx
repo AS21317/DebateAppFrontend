@@ -1,95 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useContext } from "react";
+import { Loader } from 'lucide-react'
+import React, { useContext } from 'react'
+import { authContext } from '../../context/AuthContext'
+import { useParams } from 'react-router-dom'
 
+const EventDetailPage = () => {
+    const {id}=  useParams()
 
-import userImg from "../../assets/images/doctor-img01.png";
-import { authContext } from "../../context/AuthContext";
-import { Loader } from "lucide-react";
-import MyBookings from "../../Pages/User-Page/MyBookings";
-import Profile from "../doctor-account/Profile";
-import usegetProfile from '../../hooks/useFetchData'
-import { useNavigate } from "react-router-dom";
-import MyBookingsHost from "./MyBookingsHost";
-import { Navigate } from "react-router-dom";
-import { HashLoader } from "react-spinners";
-const HostAccount = () => {
-  const {user,token,role}  =useContext(authContext)
-  const [eventsData, setEventsData]= useState([])
-  const [showLoader,setShowLoader] = useState(false)
-
-
-
-
-
-  const { dispatch ,user:userData,loading,error} = useContext(authContext);
-  const [tab, setTab] = useState("bookings");
- const [cardType, setCardType]= useState("today")
-
-  const navigate = useNavigate()
-  console.log("user is ",userData)
-
-  console.log(userData, "Data is ");
-
-  const handleLogout = () => {
-    
-    dispatch({ type: "LOGOUT" });
-    navigate('/home')
-  };
-
-  const eventHandler = (status)=>{
-    setShowLoader(true)
-    try {
-        const res = await fetch(`http://192.168.1.11:5000/api/v1/events/getByHostAndStatus`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}` 
-            },
-            body: JSON.stringify({status:status,userId:userData._id}),
-        
-        });
-
-        
-
-
-        const result = await res.json();
-        
-        if (!res.ok) {
-            throw new Error(result.message);
-        }
-
-        // dispatch({
-        //   type:"LOGIN_SUCCESS",
-        //   payload:{
-        //     user:result.data,
-                
-                
-        //   }
-        // });
-    
-
-        console.log(result ,"Request Event   is here ");
-
-        
-
-
-        // if res found , 1. show a toast notification , 2. setShowLoader false
-
-        setShowLoader(false);
-        setEventsData(result.data)
-        toast.success(result.message);
-        // Navigate('/admin/home')
-    } catch (err) {
-        toast.error(err.message);
-        setShowLoader(false);
-    }
-
-  }
+  const {loading,error,data:eventData} = useFetchData(`http://192.168.1.11:5000/api/v1/hostApplication/${id}`)
 
   return (
-    <section>
-      <div className="max-w-[1170px] px-5 mx-auto">
-        {showLoader && !error && <HashLoader size={45} color="red" />}
+   <section>
+    <div className="container">
+    <div className="max-w-[1170px] px-5 mx-auto">
+        {loading && !error && <Loader />}
 
         {error && !loading && <Error errMessage={error} />}
         {!loading && !error && (
@@ -98,7 +21,7 @@ const HostAccount = () => {
               <div className="flex items-center justify-center">
                 <figure className="w-[100px] h-[100px] rounded-full border-2 border-solid border-primaryColor">
                   <img
-                    src={userData.photo}
+                    src={eventData.photo}
                     alt=""
                     className="w-full h-full rounded-full "
                   />
@@ -107,10 +30,10 @@ const HostAccount = () => {
 
               <div className="text-center mt-4">
                 <h3 className="text-[18px] leading-[30px] text-headingColor font-bold ">
-                  {userData.name}
+                  {eventData.name}
                 </h3>
                 <p className=" text-textColor leading-6 font-medium text-[15px] ">
-                  {userData.email}
+                  {eventData.email}
                 </p>
                 
                 
@@ -121,7 +44,7 @@ const HostAccount = () => {
             <p className="flex-1  text-black-500 font-bold ">
               Role
             </p>
-            <p className='font-semibold capitalize'>{userData.role}</p>
+            <p className='font-semibold capitalize'>{eventData.role}</p>
           </div>
                <div className="flex mb-2 justify-between gap-2 px-8">
             <p className="flex-1  text-black-500 font-bold ">
@@ -153,7 +76,7 @@ const HostAccount = () => {
               <div className="mt-[30px] md:mt-[50px] ">
 
               <button
-                  onClick={()=>{setTab("bookings"),setCardType("pending"), eventHandler("pending")}}
+                  onClick={()=>{setTab("bookings"),setCardType("requested")}}
                   className="w-full bg-[#8e8821] p-3 font-semibold  mt-4 text-[16px] leading-7 rounded-md text-white"
                 >
                   Requested Events { " "} (2)
@@ -184,7 +107,7 @@ const HostAccount = () => {
             <div className="md:col-span-2 md:px-[30px] ml-0">
               
             <button
-                  onClick={() => {setTab("bookings") , setCardType("today"),}}
+                  onClick={() => {setTab("bookings") , setCardType("today")}}
                   className={` ${
                     cardType === "today" &&
                     "bg-primaryColor text-white font-normal"
@@ -196,9 +119,9 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
 
 
                 <button
-                  onClick={() => {setTab("bookings") , setCardType("upcomming")}}
+                  onClick={() => {setTab("bookings") , setCardType("future")}}
                   className={` ${
-                    cardType === "upcomming" &&
+                    cardType === "future" &&
                     "bg-primaryColor text-white font-normal"
                   } p-2 mr-5 px-5 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
@@ -207,9 +130,9 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 </button>
 
                 <button
-                onClick={() => {setTab("bookings") , setCardType("completed")}}
+                onClick={() => {setTab("bookings") , setCardType("past")}}
                   className={` ${
-                    cardType === "completed" &&
+                    cardType === "past" &&
                     "bg-primaryColor text-white font-normal"
                   } p-2 mr-5 px-5 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
@@ -219,9 +142,9 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
 
 
                 <button
-                  onClick={() => {setTab("bookings"), setCardType("canceled")}}
+                  onClick={() => {setTab("bookings"), setCardType("cancel")}}
                   className={` ${
-                    cardType === "canceled" &&
+                    cardType === "cancel" &&
                     "bg-primaryColor text-white font-normal"
                   } p-2 mr-5 px-5 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
@@ -233,16 +156,17 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 
              
 
-              {tab === "bookings" ? (
+              {/* {tab === "bookings" ? (
                 <MyBookingsHost cardType={cardType} />
               ) : (
-                <Profile user={userData} />
-              )}
+                <Profile user={eventData} />
+              )} */}
             </div>
           </div>
         )}
-      </div>
-    </section>
-  );
-};
-export default HostAccount;
+      </div>    </div>
+   </section>
+  )
+}
+
+export default EventDetailPage

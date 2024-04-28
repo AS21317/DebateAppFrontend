@@ -26,7 +26,7 @@ const Login = () => {
     setLoading(true);
     console.log("Calling submit handler ")
     try {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`, {
+      const res = await fetch(`http://192.168.1.11:5000/api/v1/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,6 +38,7 @@ const Login = () => {
 
 
       const result = await res.json();
+      
       if (!res.ok) {
         throw new Error(result.message);
       }
@@ -52,6 +53,7 @@ const Login = () => {
       });
 
       console.log(result ,"Login data is here ");
+      
 
 
       // if res found , 1. show a toast notification , 2. setLoading false

@@ -25,7 +25,7 @@ const PastEventCard = () => {
     const [reviewShow,setReviewShow] = useState(false)
   return (
     <>
-    <div class="bg-[#f2ecdf] rounded-lg  group-hover:scale-110 shadow-2xl ">
+    <div class="bg-[#f2ecdf] mt-5 rounded-lg  group-hover:scale-110 shadow-2xl ">
       <div class="pt-0 pb-2">
         <h3 className='font-bold text-[20px]   text-center py-2 w-full   mb-4 text-[#00246B] bg-[#9feef5]  ' >Climate Change</h3>
       <div className="flex  gap-2 px-4">

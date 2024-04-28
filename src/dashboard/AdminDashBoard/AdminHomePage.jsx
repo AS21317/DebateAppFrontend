@@ -9,15 +9,7 @@ import faqImg from '../../assets/images/faq-img.png'
 
 
 
-import { Link } from "react-router-dom";
-import { BsArrowRight } from "react-icons/bs";
-import About from "../../components/About/About";
-import ServiceList from "../../components/service/ServiceList";
-import DoctorList from "../../components/Doctors/DoctorList";
-import FaqList from "../../components/faq/FaqList";
-import Testimonial from "../../components/Testtimonial/Testimonial"; 
-import SidebarComponent from "./SidebarComponent";
-import DoctorCard from "./DoctorCard";
+import AdminSidebarPannel from "./AdminSidebarPannel";
 
 
 
@@ -25,13 +17,13 @@ const AdminHomePage = () => {
   return (
     <>
     <div className="flex flex-grow ">
-      {/* Sidebar */}
-      <div className="w-auto">
-        <SidebarComponent />
-      </div>
-
-      <h1 className="mx-auto ">Welcome Admin Home</h1>
+    {/* Sidebar */}
+    <div className="w-auto">
+      <AdminSidebarPannel/>
     </div>
+
+    <h1 className="mx-auto text-[24px] font-bold my-auto ">Welcome Admin Home Page </h1>
+  </div>
     
 
  </>

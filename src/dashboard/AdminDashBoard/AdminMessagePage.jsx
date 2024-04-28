@@ -1,5 +1,5 @@
 import React from 'react'
-import SidebarComponent from './SidebarComponent'
+import SidebarComponent from './AdminSidebarPannel'
 import MessageCard from './MessageCard'
 import useFetchData from '../../hooks/useFetchData'
 

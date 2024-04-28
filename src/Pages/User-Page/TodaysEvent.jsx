@@ -5,7 +5,7 @@ const TodaysEvent
  = () => {
   return (
     <>
-    <div class="bg-green-100  min-w-[210px] rounded-lg  group-hover:scale-110 shadow-2xl ">
+    <div class="bg-green-100 mt-5  min-w-[210px] rounded-lg  group-hover:scale-110 shadow-2xl ">
       <div class="pt-4 pb-2">
         <h3 className='font-bold text-[20px]   text-center py-2 w-full   mb-4 text-[#00246B] bg-lime-300 ' >Climate Change</h3>
       <div className="flex  gap-2 px-4">

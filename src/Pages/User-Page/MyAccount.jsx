@@ -8,22 +8,107 @@ import Loader from "../../Loader/Loader";
 
 import userImg from "../../assets/images/doctor-img01.png";
 import Error from "../../components/Error/Error";
-const MyAccount = () => {
-  const { dispatch } = useContext(authContext);
-  const [tab, setTab] = useState("bookings");
- const [cardType, setCardType]= useState("upcomming")
+import TakeResonCard from "../../components/cards/TakeResonCard";
+import JoinHostCard from "../../components/cards/JoinHostCard";
+import { HashLoader } from "react-spinners";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-  const {
-    data: userData,
-    loading,
-    error,
-  } = usegetProfile(`${import.meta.env.VITE_BASE_URL}/api/v1/user/profile/me`);
-  
+const questions = [
+  "Tell us about yourself",
+  "Why do you want to join us as a host?",
+  "Why we should choose you?",
+];
+
+const MyAccount = () => {
+  const { dispatch, user: userData, token, error } = useContext(authContext);
+  const [answers, setAnswers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [expertise, setExpertise] = useState(["Debate", "GD", "ExpertTalk"]);
+
+  const [tab, setTab] = useState("bookings");
+  const [cardType, setCardType] = useState("upcomming");
+  const navigate = useNavigate()
+
+  // TO handle modal opennings
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      const modal1 = document.getElementById("my_modal_1");
+      const modal2 = document.getElementById("my_modal_2");
+      if (modal1 && event.target === modal1) {
+        modal1.close();
+      }
+      if (modal2 && event.target === modal2) {
+        modal2.close();
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
+  const handleSubmit = () => {
+    console.log(expertise);
+  };
+  const handleHostApplicationSubmit = async () => {
+    const applicationForm = [];
+    questions.map((question, index) => {
+      applicationForm.push({
+        question,
+        answer: answers[index],
+      });
+    });
+
+    console.log("Application Form data is :",applicationForm,expertise)
+
+    setLoading(true);
+    console.log("Calling submit handler ");
+    try {
+      const res = await fetch(
+        `http://192.168.1.11:5000/api/v1/hostApplication/create/${userData._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({applicationForm,expertise}),
+        }
+      );
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message);
+      }
+
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          user: result.data.user,
+        },
+      });
+
+      console.log(result, "Request data is here ");
+
+      // if res found , 1. show a toast notification , 2. setLoading false
+
+      setLoading(false);
+      toast.success(result.message);
+    } catch (error) {
+      toast.error(error.message);
+      setLoading(false);
+    }
+  };
 
   console.log(userData, "Data is ");
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
+    navigate('/home')
   };
 
   return (
@@ -52,29 +137,156 @@ const MyAccount = () => {
                 <p className=" text-textColor leading-6 font-medium text-[15px] ">
                   {userData.email}
                 </p>
-                <p className=" text-textColor leading-6 font-medium text-[15px] ">
-                  Blood Type : <span>{userData.bloodType}</span>{" "}
-                </p>
-
               </div>
-                <div className="flex mt-6 justify-between gap-2 px-8">
-            <p className="flex-1  text-black-500 font-bold ">
-              Total Debates:
-            </p>
-            <p className='font-semibold'>5</p>
-          </div>
-          <div className="flex mt-6 justify-between gap-2 px-8">
-            <p className="flex-1  text-black-500 font-bold ">
-              Total GD:
-            </p>
-            <p className='font-semibold'>15</p>
-          </div>
-        
+              <div className="flex mt-4 justify-between gap-2 px-8">
+                <p className="flex-1  text-black-500 font-bold ">Role:</p>
+                <p className="font-semibold capitalize">{userData.role}</p>
+              </div>
+              <div className="flex mt-4 justify-between gap-2 px-8">
+                <p className="flex-1  text-black-500 font-bold ">
+                  Total Debates:
+                </p>
+                <p className="font-semibold">5</p>
+              </div>
+              <div className="flex mt-4 justify-between gap-2 px-8">
+                <p className="flex-1  text-black-500 font-bold ">Total GD:</p>
+                <p className="font-semibold">15</p>
+              </div>
 
               <div className="mt-[30px] md:mt-[50px] ">
                 <button
                   onClick={handleLogout}
-                  className="w-full bg-[#181A1E] p-3 text-[16px] leading-7 rounded-md text-white"
+                  className="w-full bg-[#0bb050] font-semibold p-3 text-[16px] leading-7 rounded-md text-white"
+                >
+                  Join our Whatapps Group
+                </button>
+                {userData.role !== "host" && (
+                  <button
+                    onClick={() =>
+                     {!userData.appliedForHost && document.getElementById("my_modal_2").showModal()}
+                    }
+                    className="w-full bg-[#abb10b] font-semibold mt-4 p-3 text-[16px] leading-7 rounded-md text-white"
+                  >
+                    {!userData?.appliedForHost ? (
+                      !loading ? (
+                        "Join us as a host"
+                      ) : (
+                        <HashLoader size={25} color="white" />
+                      )
+                    ) : (
+                      "Pending"
+                    )}
+                  </button>
+                )}
+                {/* Modal section */}
+                <div className="flex justify-center ">
+                  <dialog id="my_modal_2" className="modal">
+                    <div className="modal-box">
+                      {questions.map((question, index) => (
+                        <JoinHostCard
+                          question={question}
+                          answer={answers[index]}
+                          handleChange={(e) => {
+                            const ans = [...answers];
+                            ans[index] = e.target.value;
+                            setAnswers(ans);
+                          }}
+                        />
+                      ))}
+
+                      <div className=" bg-green-100 mt-4 p-4">
+                        <h1 className=" font-semibold ">
+                          Select Your Expertise:{" "}
+                        </h1>
+                        <div className=" flex justify-between mt-4">
+                          <div className="">
+                            <label className="flex items-center space-x-2">
+                              <input
+                                type="checkbox"
+                                checked={expertise.includes("Debate")}
+                                onChange={() => {
+                                  if (expertise.includes("Debate")) {
+                                    setExpertise(
+                                      expertise.filter(
+                                        (item) => item !== "Debate"
+                                      )
+                                    );
+                                  } else {
+                                    setExpertise([...expertise, "Debate"]);
+                                  }
+                                }}
+                                className="h-6 w-6"
+                              />
+                              <span className="text-lg font-medium">
+                                Debate
+                              </span>
+                            </label>
+                          </div>
+                          <div className="">
+                            <label className="flex items-center space-x-2">
+                              <input
+                                type="checkbox"
+                                checked={expertise.includes("GD")}
+                                onChange={() => {
+                                  if (expertise.includes("GD")) {
+                                    setExpertise(
+                                      expertise.filter((item) => item !== "GD")
+                                    );
+                                  } else {
+                                    setExpertise([...expertise, "GD"]);
+                                  }
+                                }}
+                                className="h-6 w-6"
+                              />
+                              <span className="text-lg font-medium ">GD</span>
+                            </label>
+                          </div>
+                          <div className="">
+                            <label className="flex items-center space-x-2">
+                              <input
+                                type="checkbox"
+                                checked={expertise.includes("ExpertTalk")}
+                                onChange={() => {
+                                  if (expertise.includes("ExpertTalk")) {
+                                    setExpertise(
+                                      expertise.filter(
+                                        (item) => item !== "ExpertTalk"
+                                      )
+                                    );
+                                  } else {
+                                    setExpertise([...expertise, "ExpertTalk"]);
+                                  }
+                                }}
+                                className="h-6 w-6"
+                              />
+                              <span className="text-lg font-medium">
+                                Expert Talk
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="modal-action flex justify-between">
+                        <form method="dialog" className="">
+                          <button className="btn bg-red-600">Cancel</button>
+                        </form>
+                        <form method="dialog" className="">
+                          <button
+                            onClick={handleHostApplicationSubmit}
+                            className="btn bg-blue-600 font-bold"
+                          >
+                            Submit
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </dialog>
+                </div>
+
+                <button
+                  onClick={handleLogout}
+                  className="w-full bg-[#181A1E] p-3 mt-4 text-[16px] leading-7 rounded-md text-white"
                 >
                   Logout
                 </button>
@@ -85,44 +297,57 @@ const MyAccount = () => {
             </div>
 
             <div className="md:col-span-2 md:px-[30px] ml-4">
-              
               <button
-                  onClick={() => {setTab("settings"),setCardType("settings")}}
-                  className={`${
-                    cardType === "settings" && 
-                    "bg-primaryColor text-white font-normal"
-                  } py-2 mr-5 px-5 rounded-md text-headingColor
+                onClick={() => {
+                  setTab("settings"), setCardType("settings");
+                }}
+                className={`${
+                  cardType === "settings" &&
+                  "bg-primaryColor text-white font-normal"
+                } py-2 mr-3 px-3 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
-                >
-                  Profile Settings
-                </button>
+              >
+                Profile Settings
+              </button>
 
-                <button
-                  onClick={() => {setTab("bookings") , setCardType("upcomming")}}
-                  className={` ${
-                    cardType === "upcomming" &&
-                    "bg-primaryColor text-white font-normal"
-                  } p-2 mr-5 px-5 rounded-md text-headingColor
+              <button
+                onClick={() => {
+                  setTab("bookings"), setCardType("upcomming");
+                }}
+                className={` ${
+                  cardType === "upcomming" &&
+                  "bg-primaryColor text-white font-normal"
+                } p-2 mr-3 px-3 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
-                >
-                  Upcomming Events
-                </button>
+              >
+                Upcomming Events
+              </button>
 
-
-                <button
-                  onClick={() => {setTab("bookings"), setCardType("past")}}
-                  className={` ${
-                    cardType === "past" &&
-                    "bg-primaryColor text-white font-normal"
-                  } p-2 mr-5 px-5 rounded-md text-headingColor
+              <button
+                onClick={() => {
+                  setTab("bookings"), setCardType("past");
+                }}
+                className={` ${
+                  cardType === "past" &&
+                  "bg-primaryColor text-white font-normal"
+                } p-2 mr-3 px-3 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
-                >
-                  Past Events
-                </button>
-                
-                
-                
-             
+              >
+                Past Events
+              </button>
+
+              <button
+                onClick={() => {
+                  setTab("bookings"), setCardType("missed");
+                }}
+                className={` ${
+                  cardType === "missed" &&
+                  "bg-primaryColor text-white font-normal"
+                } p-2 mr-0 px-3 rounded-md text-headingColor
+font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+              >
+                Missed Events
+              </button>
 
               {tab === "bookings" ? (
                 <MyBookings cardType={cardType} />

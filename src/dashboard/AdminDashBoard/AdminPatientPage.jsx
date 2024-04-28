@@ -1,5 +1,5 @@
 import React from 'react'
-import SidebarComponent from './SidebarComponent'
+import SidebarComponent from './AdminSidebarPannel'
 import useFetchData from '../../hooks/useFetchData'
 import DoctorCard from './DoctorCard'
 import PatientCard from './PatientCard'

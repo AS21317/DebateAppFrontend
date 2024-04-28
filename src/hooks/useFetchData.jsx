@@ -1,7 +1,7 @@
 import { useState, useEffect,useContext } from "react";
 import { authContext } from "../context/AuthContext";
 
-const useFetchData = (url) => {
+const useFetchData = (url, body="") => {
   const [data, setData] = useState([]);
   const {token}  = useContext(authContext)
 
@@ -15,6 +15,7 @@ const useFetchData = (url) => {
       try {
         const res = await fetch(url, {
           headers: { Authorization: `Bearer ${token}` },
+          // body,
         });
         const result = await res.json();
         if (!res.ok) {

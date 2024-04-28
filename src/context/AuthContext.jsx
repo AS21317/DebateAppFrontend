@@ -21,8 +21,8 @@ const authReducer = (state, action) => {
     case "LOGIN_SUCCESS":
       return {
         user: action.payload.user,
-        token: action.payload.token,
-        role: action.payload.role
+        token: action.payload.token || localStorage.getItem("token"),
+        role: action.payload.role || localStorage.getItem("role")
       };
     case "LOGOUT":
       return {

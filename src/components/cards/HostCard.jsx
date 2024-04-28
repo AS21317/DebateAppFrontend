@@ -35,7 +35,7 @@ const sociallinks = [
 const HostCard = () => {
   return (
    <>
-   <div class="mx-auto my-10 flex max-w-xs flex-col items-center rounded-xl border px-3 py-4 text-center md:max-w-lg md:flex-row md:items-start md:text-left">
+   <div class="mx-auto mt-4 flex max-w-xs flex-col items-center rounded-xl border px-3 py-4 text-center md:max-w-lg md:flex-row md:items-start md:text-left">
 
   <div class="">
   <div class="flex items-center">

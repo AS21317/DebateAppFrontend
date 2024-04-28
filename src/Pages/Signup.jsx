@@ -18,8 +18,10 @@ const Signup = () => {
     password: "",
     photo: selectedFile,
     gender: "",
-    role: "patient",
     name: "",
+    confirmPassword:"",
+    age:null
+    
   });
 
   const handleInputChange = (e) => {
@@ -54,6 +56,8 @@ const Signup = () => {
    
   };
 
+  console.log("Form data is: ",formData)
+
 
 
   const submitHandler = async (event) => {
@@ -61,7 +65,7 @@ const Signup = () => {
     setLoading(true);
     console.log("Calling submit handler ")
     try {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/auth/register`, {
+      const res = await fetch(`http://192.168.1.11:5000/api/v1/auth/registerUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -106,7 +110,7 @@ const Signup = () => {
             <form  onSubmit={submitHandler}>
               <div className="mb-5">
                 <input
-                  types="text"
+                  type="text"
                   placeholder="Full Name"
                   name="name"
                   value={formData.name}
@@ -120,7 +124,7 @@ const Signup = () => {
 
               <div className="mb-5">
                 <input
-                  types="password"
+                  type="password"
                   placeholder="Password"
                   name="password"
                   value={formData.password}
@@ -134,7 +138,22 @@ const Signup = () => {
 
               <div className="mb-5">
                 <input
-                  types="email"
+                  type="text"
+                  placeholder="Confirm Password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  className="w-full  py-3 border-b border-solid border-[#0066ff61] focus:outline-none
+ focus:border-b-primaryColor text-[16px] leading-7 text-headingColor
+ cursor-pointer"
+                  required
+                />
+              </div>
+
+
+              <div className="mb-5">
+                <input
+                  type="email"
                   placeholder="Enter Your Email"
                   name="email"
                   value={formData.email}
@@ -147,24 +166,10 @@ const Signup = () => {
               </div>
 
               <div className="mb-5 flex items-center justify-between">
-                <label
-                  htmlfor=""
-                  className="text-headingColor font-bold text-[16px] leading-7"
-                >
-                  Are you a:
-                  <select
-                    name="role"
-                    value={formData.role}
-                    onChange={handleInputChange}
-                    className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3
-focus:outline-none"
-                  >
-                    <option value="patient">Patient</option>
-                    <option value="doctor">Doctor</option>
-                  </select>
-                </label>
+               
 
-                <label className="text-headingColor font-bold text-[16px] leading-7">
+               <div>
+               <label className="text-headingColor font-bold text-[16px] leading-7">
                   Gender:
                   <select
                     name="gender"
@@ -179,6 +184,21 @@ focus:outline-none"
                     <option value="other">Other</option>
                   </select>
                 </label>
+               </div>
+               <div className="mb-5">
+                <input
+                  type="number"
+                  placeholder="Age"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleInputChange}
+                  className="w-full  py-3 border-b border-solid border-[#0066ff61] focus:outline-none
+ focus:border-b-primaryColor text-[16px] leading-7 text-headingColor
+ cursor-pointer"
+                  required
+                />
+              </div>
+               
               </div>
 
               <div className="mb-5 flex items-center gap-3">

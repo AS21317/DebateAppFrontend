@@ -2,31 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 
 
-import userImg from "../../assets/images/doctor-img01.png";
-import { authContext } from "../../context/AuthContext";
 import { Loader } from "lucide-react";
-import MyBookings from "../../Pages/User-Page/MyBookings";
-import Profile from "../doctor-account/Profile";
-import usegetProfile from '../../hooks/useFetchData'
 import { useNavigate } from "react-router-dom";
-import MyBookingsHost from "./MyBookingsHost";
-import { Navigate } from "react-router-dom";
-import { HashLoader } from "react-spinners";
-const HostAccount = () => {
-  const {user,token,role}  =useContext(authContext)
-  const [eventsData, setEventsData]= useState([])
-  const [showLoader,setShowLoader] = useState(false)
+import MyBookings from "../../Pages/User-Page/MyBookings";
+import { authContext } from "../../context/AuthContext";
 
 
 
 
 
+const ProfileCard = () => {
   const { dispatch ,user:userData,loading,error} = useContext(authContext);
   const [tab, setTab] = useState("bookings");
  const [cardType, setCardType]= useState("today")
 
   const navigate = useNavigate()
-  console.log("user is ",userData)
+  
 
   console.log(userData, "Data is ");
 
@@ -36,60 +27,10 @@ const HostAccount = () => {
     navigate('/home')
   };
 
-  const eventHandler = (status)=>{
-    setShowLoader(true)
-    try {
-        const res = await fetch(`http://192.168.1.11:5000/api/v1/events/getByHostAndStatus`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}` 
-            },
-            body: JSON.stringify({status:status,userId:userData._id}),
-        
-        });
-
-        
-
-
-        const result = await res.json();
-        
-        if (!res.ok) {
-            throw new Error(result.message);
-        }
-
-        // dispatch({
-        //   type:"LOGIN_SUCCESS",
-        //   payload:{
-        //     user:result.data,
-                
-                
-        //   }
-        // });
-    
-
-        console.log(result ,"Request Event   is here ");
-
-        
-
-
-        // if res found , 1. show a toast notification , 2. setShowLoader false
-
-        setShowLoader(false);
-        setEventsData(result.data)
-        toast.success(result.message);
-        // Navigate('/admin/home')
-    } catch (err) {
-        toast.error(err.message);
-        setShowLoader(false);
-    }
-
-  }
-
   return (
     <section>
       <div className="max-w-[1170px] px-5 mx-auto">
-        {showLoader && !error && <HashLoader size={45} color="red" />}
+        {loading && !error && <Loader />}
 
         {error && !loading && <Error errMessage={error} />}
         {!loading && !error && (
@@ -113,16 +54,8 @@ const HostAccount = () => {
                   {userData.email}
                 </p>
                 
-                
               </div>
-              
                <div className="mt-6">
-               <div className="flex mb-2 justify-between gap-2 px-8">
-            <p className="flex-1  text-black-500 font-bold ">
-              Role
-            </p>
-            <p className='font-semibold capitalize'>{userData.role}</p>
-          </div>
                <div className="flex mb-2 justify-between gap-2 px-8">
             <p className="flex-1  text-black-500 font-bold ">
               Total Debates:
@@ -143,7 +76,7 @@ const HostAccount = () => {
           </div>
           <div className="flex mb-2 justify-between gap-2 px-8">
             <p className="flex-1  text-black-500 font-bold ">
-              Avg Rating:
+              Avr Rating:
             </p>
             <p className='font-semibold'>4.5</p>
           </div>
@@ -153,7 +86,7 @@ const HostAccount = () => {
               <div className="mt-[30px] md:mt-[50px] ">
 
               <button
-                  onClick={()=>{setTab("bookings"),setCardType("pending"), eventHandler("pending")}}
+                  onClick={()=>{setTab("bookings"),setCardType("requested")}}
                   className="w-full bg-[#8e8821] p-3 font-semibold  mt-4 text-[16px] leading-7 rounded-md text-white"
                 >
                   Requested Events { " "} (2)
@@ -163,7 +96,7 @@ const HostAccount = () => {
                   onClick={()=>{setTab("profile"),setCardType("")}}
                   className="w-full bg-[#6060cd] p-3 font-semibold mt-4 text-[16px] leading-7 rounded-md text-white"
                 >
-                  Profile Details
+                  Profile
                 </button>
 
                 <button
@@ -184,7 +117,7 @@ const HostAccount = () => {
             <div className="md:col-span-2 md:px-[30px] ml-0">
               
             <button
-                  onClick={() => {setTab("bookings") , setCardType("today"),}}
+                  onClick={() => {setTab("bookings") , setCardType("today")}}
                   className={` ${
                     cardType === "today" &&
                     "bg-primaryColor text-white font-normal"
@@ -196,9 +129,9 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
 
 
                 <button
-                  onClick={() => {setTab("bookings") , setCardType("upcomming")}}
+                  onClick={() => {setTab("bookings") , setCardType("future")}}
                   className={` ${
-                    cardType === "upcomming" &&
+                    cardType === "future" &&
                     "bg-primaryColor text-white font-normal"
                   } p-2 mr-5 px-5 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
@@ -207,9 +140,9 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 </button>
 
                 <button
-                onClick={() => {setTab("bookings") , setCardType("completed")}}
+                onClick={() => {setTab("bookings") , setCardType("past")}}
                   className={` ${
-                    cardType === "completed" &&
+                    cardType === "past" &&
                     "bg-primaryColor text-white font-normal"
                   } p-2 mr-5 px-5 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
@@ -219,9 +152,9 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
 
 
                 <button
-                  onClick={() => {setTab("bookings"), setCardType("canceled")}}
+                  onClick={() => {setTab("bookings"), setCardType("cancel")}}
                   className={` ${
-                    cardType === "canceled" &&
+                    cardType === "cancel" &&
                     "bg-primaryColor text-white font-normal"
                   } p-2 mr-5 px-5 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
@@ -234,7 +167,7 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
              
 
               {tab === "bookings" ? (
-                <MyBookingsHost cardType={cardType} />
+                <MyBookings cardType={cardType} />
               ) : (
                 <Profile user={userData} />
               )}
@@ -245,4 +178,4 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
     </section>
   );
 };
-export default HostAccount;
+export default ProfileCard;
