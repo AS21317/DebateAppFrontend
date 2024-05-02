@@ -6,22 +6,22 @@ import { Link } from "react-router-dom";
 
 const sociallinks = [
   {
-    path: "https: //www.youtube.com/c/CodingWithMuhib",
+    path: "#",
     icon: <AiFillYoutube className="Mgroup-hover:text-white w-4 h-5" />,
   },
 
   {
-    path: "https: //github.com/codingwithmuhib",
+    path: "#",
     icon: <AiFillGithub className=" Mgroup-hover:text-white w-4 h-5" />,
   },
 
   {
-    path: "https: //ww.instagram.com/muhib160.official/",
+    path: "#",
     icon: <AiFillInstagram className="Mgroup-hover:text-white w-4 h-5" />,
   },
 
   {
-    path: "https://www.linkedin.com/in/codingwithmuhib/",
+    path: "#",
     icon: <RiLinkedinFill classame=" Mgroup-hover:text-white w-4 h-5" />,
   },
 ];

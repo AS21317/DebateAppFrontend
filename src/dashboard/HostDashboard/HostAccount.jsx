@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import MyBookingsHost from "./MyBookingsHost";
 import { Navigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
+import { toast } from "react-toastify";
 const HostAccount = () => {
   const {user,token,role}  =useContext(authContext)
   const [eventsData, setEventsData]= useState([])
@@ -23,7 +24,7 @@ const HostAccount = () => {
 
   const { dispatch ,user:userData,loading,error} = useContext(authContext);
   const [tab, setTab] = useState("bookings");
- const [cardType, setCardType]= useState("today")
+  const [cardType, setCardType]= useState("today")
 
   const navigate = useNavigate()
   console.log("user is ",userData)
@@ -36,10 +37,11 @@ const HostAccount = () => {
     navigate('/home')
   };
 
-  const eventHandler = (status)=>{
+  const eventHandler = async (status)=>{
     setShowLoader(true)
     try {
-        const res = await fetch(`http://192.168.1.11:5000/api/v1/events/getByHostAndStatus`, {
+      console.log("calling this ")
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/events/getByHostAndStatus`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -156,7 +158,9 @@ const HostAccount = () => {
                   onClick={()=>{setTab("bookings"),setCardType("pending"), eventHandler("pending")}}
                   className="w-full bg-[#8e8821] p-3 font-semibold  mt-4 text-[16px] leading-7 rounded-md text-white"
                 >
-                  Requested Events { " "} (2)
+                  Requested Events {
+                    cardType === "pending" && eventsData && `(${eventsData.length})`
+                  }
                 </button>
 
                 <button
@@ -184,26 +188,26 @@ const HostAccount = () => {
             <div className="md:col-span-2 md:px-[30px] ml-0">
               
             <button
-                  onClick={() => {setTab("bookings") , setCardType("today"),}}
+                  onClick={() => {setTab("bookings") , setCardType("today")}}
                   className={` ${
                     cardType === "today" &&
                     "bg-primaryColor text-white font-normal"
                   } p-2 mr-5 px-4 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 >
-                  Today Events
+                  Todays Events
                 </button>
 
 
                 <button
-                  onClick={() => {setTab("bookings") , setCardType("upcomming")}}
+                  onClick={() => {setTab("bookings") , setCardType("upcoming")}}
                   className={` ${
-                    cardType === "upcomming" &&
+                    cardType === "upcoming" &&
                     "bg-primaryColor text-white font-normal"
                   } p-2 mr-5 px-5 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 >
-                  Future Events
+                  Upcoming Events
                 </button>
 
                 <button
@@ -219,14 +223,14 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
 
 
                 <button
-                  onClick={() => {setTab("bookings"), setCardType("canceled")}}
+                  onClick={() => {setTab("bookings"), setCardType("cancelled")}}
                   className={` ${
-                    cardType === "canceled" &&
+                    cardType === "cancelled" &&
                     "bg-primaryColor text-white font-normal"
-                  } p-2 mr-5 px-5 rounded-md text-headingColor
+                  } p-2  px-2 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 >
-                  Canceled Events
+                  Cancelled Events
                 </button>
                 
                 
@@ -234,7 +238,7 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
              
 
               {tab === "bookings" ? (
-                <MyBookingsHost cardType={cardType} />
+                <MyBookingsHost eventsData={eventsData} status={cardType} />
               ) : (
                 <Profile user={userData} />
               )}

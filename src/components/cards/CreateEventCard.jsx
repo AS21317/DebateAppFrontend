@@ -58,8 +58,8 @@ const CreateEventCard = () => {
   const{token}= useContext(authContext) 
 
 
-  const {loading: topicLoading, data: topicsData} = useFetchData('http://192.168.1.11:5000/api/v1/topic/getAll')
-  const {loading: hostLoading, data: hostsData} = useFetchData('http://192.168.1.11:5000/api/v1/host/getAll')
+  const {loading: topicLoading, data: topicsData} = useFetchData('${import.meta.env.VITE_BASE_URL}/api/v1/topic/getAll')
+  const {loading: hostLoading, data: hostsData} = useFetchData('${import.meta.env.VITE_BASE_URL}/api/v1/host/getAll')
   const [eventLoading, setEventLoading] = useState(false);
 
   const selectTopicsData = prepareSelectData(topicsData, getTopicLabel)
@@ -127,7 +127,7 @@ const CreateEventCard = () => {
     e.preventDefault();
         try {
           // Replace the API endpoint with your event creation endpoint
-          const res = await fetch(`http://192.168.1.11:5000/api/v1/events/create/${formData.hostId}`, {
+          const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/events/create/${formData.hostId}`, {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -142,6 +142,7 @@ const CreateEventCard = () => {
           }
           console.log("Result is : ", result);
           toast.success(result.message);
+          setFormData("")
         } catch (err) {
           toast.error(err.message);
         }
@@ -171,8 +172,8 @@ const CreateEventCard = () => {
               >
                 <option value="">Select Event Type</option>
                 <option value="debate">Debate</option>
-                <option value="group_discussion">Group Discussion</option>
-                <option value="expert_talk">Expert Talk</option>
+                <option value="groupDiscussion">Group Discussion</option>
+                <option value="expertTalk">Expert Talk</option>
               </select>
             </div>
 

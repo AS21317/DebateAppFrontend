@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 const EventDetailPage = () => {
     const {id}=  useParams()
 
-  const {loading,error,data:eventData} = useFetchData(`http://192.168.1.11:5000/api/v1/hostApplication/${id}`)
+  const {loading,error,data:eventData} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/hostApplication/${id}`)
 
   return (
    <section>

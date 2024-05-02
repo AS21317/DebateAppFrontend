@@ -12,9 +12,9 @@ import RequestedEventsHost from './RequestedEventsHost'
 
 
 const MyBookingsHost
- = ({cardType}) => {
+ = ({status,eventsData}) => {
 
-  console.log("card is :",cardType);
+  console.log("card is :",status);
   return (
     <div>
           {/* {loading && !error && <Loader/>}
@@ -28,41 +28,31 @@ const MyBookingsHost
 
 
     
-            cardType === "future" ? <div className='flex flex-wrap gap-y-4   justify-between gap-x-5'>
-            <UpcommingEventsHost/>
-            <UpcommingEventsHost/>
-            <UpcommingEventsHost/>
-            <UpcommingEventsHost/>
+            status === "upcoming" ? <div className='flex flex-wrap gap-y-4   justify-between gap-x-5'>
+           {eventsData.map((eventData)=><UpcommingEventsHost eventData={eventData} />)}
            
-          </div>:cardType ==="past"?<div className='flex flex-wrap justify-between gap-x-5 gap-y-6'>
-             <CompletedEventHost/>
-             <CompletedEventHost/>
-             <CompletedEventHost/>
-             <CompletedEventHost/>
+          </div>:status ==="completed"?<div className='flex flex-wrap justify-between gap-x-5 gap-y-6'>
+          {eventsData.map((eventData)=><CompletedEventHost eventData={eventData} />)}
+
              
              
             
-           </div> :cardType ==="today"?<div className='flex justify-between flex-wrap gap-x-5 gap-y-4'>
-             <TodaysEventHost/>
-             <TodaysEventHost/>
-             <TodaysEventHost/>
+           </div> :status ==="today"?<div className='flex justify-between flex-wrap gap-x-5 gap-y-4'>
+           {eventsData.map((eventData)=><TodaysEventHost eventData={eventData} />)}
+
             
 
              
             
-           </div>:cardType==="requested"?<div className='flex flex-wrap justify-between gap-x-5 gap-y-4'>
-             <RequestedEventsHost/>
-             <RequestedEventsHost/>
-             <RequestedEventsHost/>
-             <RequestedEventsHost/>
+           </div>:status==="pending"?<div className='flex flex-wrap justify-between gap-x-5 gap-y-4'>
+           {eventsData.map((eventData)=><RequestedEventsHost eventData={eventData} />)}
+
            
              
             
            </div>:<div className='flex flex-wrap justify-between gap-x-5 gap-y-4'>
-             <CancelledEvents/>
-             <CancelledEvents/>
-             <CancelledEvents/>
-             <CancelledEvents/>
+           {eventsData.map((eventData)=><CancelledEvents eventData={eventData} />)}
+
              
             
            </div>

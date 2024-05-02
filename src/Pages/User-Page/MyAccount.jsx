@@ -23,11 +23,12 @@ const questions = [
 const MyAccount = () => {
   const { dispatch, user: userData, token, error } = useContext(authContext);
   const [answers, setAnswers] = useState([]);
+  const [eventsData ,setEventsData] = useState([])
   const [loading, setLoading] = useState(false);
   const [expertise, setExpertise] = useState(["Debate", "GD", "ExpertTalk"]);
 
   const [tab, setTab] = useState("bookings");
-  const [cardType, setCardType] = useState("upcomming");
+  const [cardType, setCardType] = useState("upcoming");
   const navigate = useNavigate()
 
   // TO handle modal opennings
@@ -43,16 +44,72 @@ const MyAccount = () => {
       }
     };
 
+
+
     document.addEventListener("click", handleOutsideClick);
+    eventHandler("Upcoming")
 
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
 
-  const handleSubmit = () => {
-    console.log(expertise);
-  };
+
+
+  const eventHandler = async (status)=>{
+    console.log("first")
+    
+    try {
+      console.log("calling this ")
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/user/get${status}Events/${userData._id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}` 
+            },
+          
+        
+        });
+
+        
+
+
+        const result = await res.json();
+        
+        if (!res.ok) {
+            throw new Error(result.message);
+        }
+
+        // dispatch({
+        //   type:"LOGIN_SUCCESS",
+        //   payload:{
+        //     user:result.data,
+                
+                
+        //   }
+        // });
+    
+
+        console.log(result ,`Request ${status}  Event   is here `);
+
+        
+
+
+        // if res found , 1. show a toast notification , 2. setShowLoader false
+
+        
+        setEventsData(result.data)
+        toast.success(result.message);
+        // Navigate('/admin/home')
+    } catch (err) {
+        toast.error(err.message);
+    }
+
+  }
+
+
+
+ 
   const handleHostApplicationSubmit = async () => {
     const applicationForm = [];
     questions.map((question, index) => {
@@ -68,7 +125,7 @@ const MyAccount = () => {
     console.log("Calling submit handler ");
     try {
       const res = await fetch(
-        `http://192.168.1.11:5000/api/v1/hostApplication/create/${userData._id}`,
+        `${import.meta.env.VITE_BASE_URL}/api/v1/hostApplication/create/${userData._id}`,
         {
           method: "POST",
           headers: {
@@ -312,23 +369,23 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
 
               <button
                 onClick={() => {
-                  setTab("bookings"), setCardType("upcomming");
+                  setTab("bookings"), setCardType("upcoming"),eventHandler("Upcoming")
                 }}
                 className={` ${
-                  cardType === "upcomming" &&
+                  cardType === "upcoming" &&
                   "bg-primaryColor text-white font-normal"
                 } p-2 mr-3 px-3 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
               >
-                Upcomming Events
+                Upcoming Events
               </button>
 
               <button
                 onClick={() => {
-                  setTab("bookings"), setCardType("past");
+                  setTab("bookings"), setCardType("completed"),eventHandler("Completed")
                 }}
                 className={` ${
-                  cardType === "past" &&
+                  cardType === "completed" &&
                   "bg-primaryColor text-white font-normal"
                 } p-2 mr-3 px-3 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
@@ -338,7 +395,7 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
 
               <button
                 onClick={() => {
-                  setTab("bookings"), setCardType("missed");
+                  setTab("bookings"), setCardType("missed"),eventHandler("Missed")
                 }}
                 className={` ${
                   cardType === "missed" &&
@@ -350,7 +407,7 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
               </button>
 
               {tab === "bookings" ? (
-                <MyBookings cardType={cardType} />
+                <MyBookings eventsData={eventsData} status={cardType} />
               ) : (
                 <Profile user={userData} />
               )}

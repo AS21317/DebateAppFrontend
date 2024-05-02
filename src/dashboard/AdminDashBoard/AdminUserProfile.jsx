@@ -60,7 +60,7 @@ const UserProfile
     setLoading(true);
     console.log("Calling submit handler ")
     try {
-      const res = await fetch(`http://192.168.1.11:5000/api/v1/hostApplication/create/${userData._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/hostApplication/create/${userData._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

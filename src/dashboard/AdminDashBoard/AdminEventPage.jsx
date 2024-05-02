@@ -17,7 +17,7 @@ const AdminEventPage = () => {
        
         setLoading(true)
         try {
-            const res = await fetch(`http://192.168.1.11:5000/api/v1/events/getByStatus`, {
+            const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/events/getByStatus`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -81,15 +81,15 @@ const AdminEventPage = () => {
       {!loading  && 
       <div>
         <div className=' bg-gray-200 flex flex-wrap gap-4'>
-            <button onClick={()=>eventHandler("today")} className='bg-green-600 rounded-2xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  > Todays Events</button>
+            <button onClick={()=>eventHandler("today")} className='bg-green-600 rounded-xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  > Todays Events</button>
 
-            <button onClick={()=>eventHandler("upcomming")} className='bg-green-600 rounded-2xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  >Upcomming Events</button>
+            <button onClick={()=>eventHandler("upcomming")} className='bg-green-600 rounded-xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  >Upcomming Events</button>
 
-            <button onClick={()=>eventHandler("completed")} className='bg-green-600 rounded-2xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  >Completed Events</button>
+            <button onClick={()=>eventHandler("completed")} className='bg-green-600 rounded-xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  >Completed Events</button>
 
-            <button onClick={()=>eventHandler("cancelled")} className='bg-green-600 rounded-2xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  >Cancelled Events</button>
+            <button onClick={()=>eventHandler("cancelled")} className='bg-green-600 rounded-xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  >Cancelled Events</button>
 
-            <button onClick={()=>eventHandler("pending")} className='bg-green-600 rounded-2xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  >Pending Events</button>
+            <button onClick={()=>eventHandler("pending")} className='bg-green-600 rounded-xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  >Pending Events</button>
            
         </div>
         <div className="flex flex-wrap  gap-4  justify-start items-start h-full w-full">

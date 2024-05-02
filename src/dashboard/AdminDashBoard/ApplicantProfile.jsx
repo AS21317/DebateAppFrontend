@@ -48,14 +48,14 @@ const ApplicantProfile = () => {
 
  
 
-  const {loading,error,data:applicationData} = useFetchData(`http://192.168.1.11:5000/api/v1/hostApplication/${id}`)
+  const {loading,error,data:applicationData} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/hostApplication/${id}`)
 //   console.log(applicationData,"application user")
 
   
  const handleAccept = async()=>{
         setShowLoader((true))
         try {
-            const res = await fetch(`http://192.168.1.11:5000/api/v1/auth/registerHost/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/auth/registerHost/${id}`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

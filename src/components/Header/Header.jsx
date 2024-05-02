@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useContext, useState } from "react";
 
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/images/logo3.png";
 import { NavLink, Link } from "react-router-dom";
 import userImage from "../../assets/images/avatar-icon.png";
 import Login from "../../Pages/Login";
@@ -132,7 +132,7 @@ const Header = () => {
           <div>
             <Link onClick={() => setAdmin(false)} to={"/home"}>
               {" "}
-              <img src={logo} alt="Logo" />
+              <img src={logo} alt="Logo" width={"125px"} height={85} />
             </Link>
           </div>
 

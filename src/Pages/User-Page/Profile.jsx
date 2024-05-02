@@ -79,7 +79,7 @@ const Profile = ({user ,disable=false}) => {
     setLoading(true)
     console.log("called here updation ")
     try {
-      const res= await fetch(`http://192.168.1.11:5000/api/v1/user/update/${user._id}`,{
+      const res= await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/user/update/${user._id}`,{
         method:'PUT',
         headers:{
           'content-type':'application/json',

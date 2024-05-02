@@ -1,5 +1,5 @@
 import { ChevronFirst, ChevronLast, MoreVertical } from "lucide-react"
-import logo from "../../assets/images/logo.png"
+import logo from "../../assets/images/logo3.png"
 // import profile from "../assets/profile.png"
 import { createContext, useContext, useState } from "react"
 import { Link } from "react-router-dom";

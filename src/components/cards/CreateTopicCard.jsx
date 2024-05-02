@@ -36,7 +36,7 @@ const CreateTopicCard = () => {
     e.preventDefault();
     try {
       // Replace the API endpoint with your event creation endpoint
-      const res = await fetch(`http://192.168.1.11:5000/api/v1/topic/create`, {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/topic/create`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

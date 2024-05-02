@@ -18,7 +18,7 @@ const AdminHostPage = () => {
   const getPendingApplications = async()=>{
 		setLoading((true))
 		try {
-				const res = await fetch(`http://192.168.1.11:5000/api/v1/host/getAll`, {
+				const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/host/getAll`, {
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",

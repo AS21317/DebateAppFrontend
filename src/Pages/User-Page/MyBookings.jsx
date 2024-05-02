@@ -6,9 +6,12 @@ import CancelledEvents from '../../dashboard/HostDashboard/CancelledEventsCardsH
 import MissedEventCard from './MissedEventCard'
 
 
-const MyBookings = ({cardType}) => {
+const MyBookings = ({status,eventsData=[]}) => {
 
-console.log("card type is  :",cardType)
+  
+
+
+console.log("card type is  :",status)
   return (
     <div>
           {/* {loading && !error && <Loader/>}
@@ -21,40 +24,27 @@ console.log("card type is  :",cardType)
 
 
     
-            cardType === "upcomming" ? <div className='flex flex-wrap gap-y-4  mt-4  justify-between gap-x-5'>
-            <UpcommingEventCard/>
+            status === "upcoming" ? <div className='flex flex-wrap gap-y-4  mt-4  justify-between gap-x-5'>
+                       {eventsData.map((eventData)=><UpcommingEventCard eventData={eventData} />)}
+
             
-            <UpcommingEventCard/>
-            <UpcommingEventCard/>
-            <UpcommingEventCard/>
            
-          </div>:cardType ==="past"?<div className='flex flex-wrap justify-between gap-x-5 gap-y-6'>
-             <PastEventCard/>
-             <PastEventCard/>
-             <PastEventCard/>
-             <PastEventCard/>
+           
+          </div>:status ==="past"?<div className='flex flex-wrap justify-between gap-x-5 gap-y-6'>
+          {eventsData.map((eventData)=><PastEventCard eventData={eventData} />)}
              
             
-           </div> :cardType ==="today"?<div className='flex justify-between flex-wrap gap-x-5 gap-y-4'>
-             <TodaysEvent/>
-             <TodaysEvent/>
-             <TodaysEvent/>
-             <TodaysEvent/>
+           </div> :status ==="today"?<div className='flex justify-between flex-wrap gap-x-5 gap-y-4'>
+           {eventsData.map((eventData)=><TodaysEvent eventData={eventData} />)}
 
              
             
-           </div>:cardType==="missed"?<div className='flex flex-wrap justify-between gap-x-5 gap-y-4'>
-             <MissedEventCard/>
-             <MissedEventCard/>
-             <MissedEventCard/>
-             <MissedEventCard/>
+           </div>:status==="missed"?<div className='flex flex-wrap justify-between gap-x-5 gap-y-4'>
+           {eventsData.map((eventData)=><MissedEventCard eventData={eventData} />)}
              
             
            </div>:<div className='flex flex-wrap justify-between gap-x-5 gap-y-4'>
-             <CancelledEvents/>
-             <CancelledEvents/>
-             <CancelledEvents/>
-             <CancelledEvents/>
+           {eventsData.map((eventData)=><CancelledEvents eventData={eventData} />)}
              
             
            </div>
