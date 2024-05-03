@@ -259,7 +259,7 @@ const Home = () => {
 
       {/* Hero Section End  */}
 
-      <section className=" ">
+      <section  className="bg-[#CDF0F3]">
         <div className="container ">
           <div className="lg:-w-[470px] mx-auto">
             <h2 className="heading text-center">Event of the Day</h2>
@@ -270,8 +270,8 @@ const Home = () => {
           </div>
 
           <div
-            className="sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] mt-[20px]
-                  lg:mt-[25px]"
+            className="sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[40px]
+                  lg:mt-[115px]"
           >
             {loadingTodayEvents ? <HashLoader /> :
               todaysEventsData.map((event) => <EventCard event={event} />)}
@@ -286,8 +286,8 @@ const Home = () => {
           </div>
 
           <div
-            className="sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] mt-[20px]
-                  lg:mt-[25px]"
+            className="sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] mt-[90px]
+                  lg:mt-[115px]"
           >
             {loadingUpcomingEvents ? <HashLoader /> :
               upcomingEvents.map((event) => <EventCard event={event} />)}
@@ -339,7 +339,7 @@ const Home = () => {
 
       {/*  ===========>>> FEATURE SECTION START  <<<==========  */}
 
-      <section>
+      <section  className="bg-[#CDF0F3]">
         <div className="container">
           <div className="flex items-center justify-between flex-col lg:flex-row">
             <div className="xl:w-[670px]">
@@ -387,7 +387,7 @@ const Home = () => {
             </p>
           </div>
           <div
-            className="sm:grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] mt-[20px]
+            className="sm:grid grid-cols-1 md:grid-cols-3  lg:grid-cols-3 gap-5 lg:gap-[50px] mt-[20px]
                   lg:mt-[20px]"
           >
             <HotTopicCard />
@@ -398,7 +398,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section>
+      <section className="bg-[#CDF0F3]">
         <div className="container">
           <div className="xl:w-[690px] mx-auto">
             <h2 className="heading text-center ">Out top rated Hosts</h2>
@@ -441,7 +441,7 @@ const Home = () => {
 
       {/*  ========>>>  TESTIMONIAL  SECTION   <<<===========  */}
 
-      <section>
+      <section  className="bg-[#CDF0F3]">
         <div className="container">
           <div className="xl:w-[570px] mx-auto">
             <h2 className="heading text-center">What our members say</h2>

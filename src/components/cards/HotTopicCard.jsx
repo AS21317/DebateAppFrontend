@@ -4,7 +4,7 @@ import home7 from '../../assets/images/home7.jpg'
 const HotTopicCard = () => {
   return (
     <>
-    <div class="relative pb-6  flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+    <div class="relative  pb-6  flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
   <a class="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
     <img class="object-cover" src={home7} />
     <span class="absolute top-0 left-0 m-2 rounded-full bg-black px-3 text-center text-lg font-semibold text-white">Debate</span>
