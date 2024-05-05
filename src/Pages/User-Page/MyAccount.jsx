@@ -24,6 +24,7 @@ const MyAccount = () => {
   const { dispatch, user: userData, token, error } = useContext(authContext);
   const [answers, setAnswers] = useState([]);
   const [eventsData ,setEventsData] = useState([])
+  const [eventLoading, seteventLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [expertise, setExpertise] = useState(["Debate", "GD", "ExpertTalk"]);
 
@@ -55,10 +56,10 @@ const MyAccount = () => {
   }, []);
 
 
-
+// function to fetch all kind of event by status for a user
   const eventHandler = async (status)=>{
     console.log("first")
-    
+    seteventLoading(true)
     try {
       console.log("calling this ")
         const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/user/get${status}Events/${userData._id}`, {
@@ -91,6 +92,7 @@ const MyAccount = () => {
     
 
         console.log(result ,`Request ${status}  Event   is here `);
+        
 
         
 
@@ -98,11 +100,13 @@ const MyAccount = () => {
         // if res found , 1. show a toast notification , 2. setShowLoader false
 
         
+        seteventLoading(false)
         setEventsData(result.data)
-        toast.success(result.message);
+        // toast.success(result.message);
         // Navigate('/admin/home')
     } catch (err) {
-        toast.error(err.message);
+        // toast.error(err.message);
+        seteventLoading(false)
     }
 
   }
@@ -175,7 +179,7 @@ const MyAccount = () => {
 
         {error && !loading && <Error errMessage={error} />}
         {!loading && !error && (
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className=" sm:grid md:grid-cols-3 gap-10">
             <div className="pb-[50px] px-[30px] rounded-md">
               <div className="flex items-center justify-center">
                 <figure className="w-[100px] h-[100px] rounded-full border-2 border-solid border-primaryColor">
@@ -210,13 +214,19 @@ const MyAccount = () => {
                 <p className="font-semibold">15</p>
               </div>
 
-              <div className="mt-[30px] md:mt-[50px] ">
-                <button
-                  onClick={handleLogout}
-                  className="w-full bg-[#0bb050] font-semibold p-3 text-[16px] leading-7 rounded-md text-white"
-                >
-                  Join our Whatapps Group
-                </button>
+              <div className="mt-[30px] md:mt-[50px]  ">
+              <button
+                onClick={() => {
+                  setTab("settings"), setCardType("settings");
+                }}
+                className={`${
+                  cardType === "settings" &&
+                  "bg-primaryColor text-white font-normal"
+                } py-2 mr-3 px-3 w-full rounded-md text-headingColor
+font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+              >
+                Profile Settings
+              </button>
                 {userData.role !== "host" && (
                   <button
                     onClick={() =>
@@ -251,7 +261,7 @@ const MyAccount = () => {
                         />
                       ))}
 
-                      <div className=" bg-green-100 mt-4 p-4">
+                      <div className=" bg-[#e7eb99] rounded-xl mt-4 p-4">
                         <h1 className=" font-semibold ">
                           Select Your Expertise:{" "}
                         </h1>
@@ -353,28 +363,18 @@ const MyAccount = () => {
               </div>
             </div>
 
-            <div className="md:col-span-2 md:px-[30px] ml-4">
-              <button
-                onClick={() => {
-                  setTab("settings"), setCardType("settings");
-                }}
-                className={`${
-                  cardType === "settings" &&
-                  "bg-primaryColor text-white font-normal"
-                } py-2 mr-3 px-3 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
-              >
-                Profile Settings
-              </button>
+            <div className="md:col-span-2 gap-y-5 md:px-[30px] ml-4">
+              
 
-              <button
+           <div className=" flex flex-wrap justify-center gap-y-4 ">
+           <button
                 onClick={() => {
                   setTab("bookings"), setCardType("upcoming"),eventHandler("Upcoming")
                 }}
                 className={` ${
                   cardType === "upcoming" &&
                   "bg-primaryColor text-white font-normal"
-                } p-2 mr-3 px-3 rounded-md text-headingColor
+                } sm:p-2 sm:mr-3 min-w-[150px] sm:w-fit sm:px-3 mr-3  px-3 py-3 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
               >
                 Upcoming Events
@@ -387,7 +387,7 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 className={` ${
                   cardType === "completed" &&
                   "bg-primaryColor text-white font-normal"
-                } p-2 mr-3 px-3 rounded-md text-headingColor
+                }sm:p-2 sm:mr-3 min-w-[150px] sm:w-fit sm:px-3 mr-3 px-3 py-3 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
               >
                 Past Events
@@ -400,13 +400,29 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 className={` ${
                   cardType === "missed" &&
                   "bg-primaryColor text-white font-normal"
-                } p-2 mr-0 px-3 rounded-md text-headingColor
+                } sm:p-2 sm:mr-3 min-w-[150px] sm:w-fit sm:px-3 mr-3 px-3 py-3 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
               >
                 Missed Events
               </button>
 
-              {tab === "bookings" ? (
+              <button
+                onClick={() => {
+                  setTab("bookings"), setCardType("cancelled"),eventHandler("cancelled");
+                }}
+                className={`${
+                  cardType === "cancelled" &&
+                  "bg-primaryColor text-white font-normal"
+                } sm:p-2 sm:mr-3 min-w-[150px] sm:w-fit sm:px-3 mr-3 px-3 py-3  rounded-md text-headingColor
+font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+              >
+                Canceled Events
+              </button>
+           </div>
+                {
+                  !eventLoading && eventsData.length ===0 && (<div className=" flex justify-center items-center h-full font-bold capitalize font-serif text-2xl"><p>{`You have no ${cardType} Events `} </p></div>)
+                }
+              {tab === "bookings" ? ( eventLoading ?<div className=" flex mt-10 justify-center items-center"><HashLoader size={35} color="black" /></div>:
                 <MyBookings eventsData={eventsData} status={cardType} />
               ) : (
                 <Profile user={userData} />

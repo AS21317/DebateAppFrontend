@@ -11,9 +11,15 @@ import { CgProfile } from "react-icons/cg";
 import { authContext } from "../../context/AuthContext";
 
 const prepareSelectData = (datas=[], getLabel=()=>"") => {
-
-  
   return datas.map((data) => {
+    if(data.photo){
+      return {
+        value: data._id,
+        photo: data.photo,
+        label: getLabel(data),
+      }
+    }
+
     return {
       value: data._id,
       label: getLabel(data),
@@ -58,8 +64,8 @@ const CreateEventCard = () => {
   const{token}= useContext(authContext) 
 
 
-  const {loading: topicLoading, data: topicsData} = useFetchData('${import.meta.env.VITE_BASE_URL}/api/v1/topic/getAll')
-  const {loading: hostLoading, data: hostsData} = useFetchData('${import.meta.env.VITE_BASE_URL}/api/v1/host/getAll')
+  const {loading: topicLoading, data: topicsData} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/topic/getAll`)
+  const {loading: hostLoading, data: hostsData} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/host/getAll`)
   const [eventLoading, setEventLoading] = useState(false);
 
   const selectTopicsData = prepareSelectData(topicsData, getTopicLabel)
@@ -110,7 +116,7 @@ const CreateEventCard = () => {
   };
 
   const handleTopicSelect = (selectedOption) => {
-    setFormData({ ...formData, topic: selectedOption.value });
+    setFormData({ ...formData, topic: selectedOption.value, photo: selectedOption.photo });
   }
 
   const handleFileInputChange = async (e) => {
@@ -189,8 +195,38 @@ const CreateEventCard = () => {
             {/* Description */}
             {/* Seats Available */}
 
-            {/* Buttons */}
-            <div className="mt-6">
+            
+
+            <div className=" flex flex-col items-center max-w-[300px]  mb-5 mt-10">
+            {formData.photo && (
+              <figure className="w-[300px] h-[240px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
+                <img
+                  src={formData.photo}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </figure>
+            )}
+            <div className=" max-w-[200px]  ">
+              <input
+                type="file"
+                name="photo"
+                id="customFile"
+                onChange={handleFileInputChange}
+                accept=".jpg, .png"
+                className="  opacity-0 cursor-pointer"
+              />
+
+              <label
+                htmlFor="customFile"
+                className="  w-full h-full flex justify-center px-[0.75rem] py-[0.575rem] text-[18px] leading-6  text-center overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
+              >
+                Upload New Photo
+              </label>
+            </div>
+          </div>
+          {/* Buttons */}
+          <div className="mt-6">
               <button 
               onClick={createEventHandler}
                 type="submit"
@@ -273,34 +309,7 @@ const CreateEventCard = () => {
             />
           </div>
 
-          <div className="mb-5">
-            {formData.photo && (
-              <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
-                <img
-                  src={formData.photo}
-                  alt=""
-                  className="w-full h-full rounded-full"
-                />
-              </figure>
-            )}
-            <div className="relative w-[130px] h-[50px] ">
-              <input
-                type="file"
-                name="photo"
-                id="customFile"
-                onChange={handleFileInputChange}
-                accept=".jpg, .png"
-                className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
-              />
-
-              <label
-                htmlFor="customFile"
-                className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer"
-              >
-                Upload Photo
-              </label>
-            </div>
-          </div>
+         
         </div>
       </div>
     </>

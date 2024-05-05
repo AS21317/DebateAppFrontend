@@ -17,14 +17,12 @@ const AdminEventPage = () => {
        
         setLoading(true)
         try {
-            const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/events/getByStatus`, {
-                method: "POST",
+            const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/events/getByStatus?status=${status}`, {
+                method: "GET",
                 headers: {
                     "Content-Type": "application/json",
                         "Authorization": `Bearer ${token}` 
                 },
-                body: JSON.stringify({status:status}),
-            
             });
 
             
@@ -55,10 +53,8 @@ const AdminEventPage = () => {
 
             setLoading(false);
             setEventsData(result.data)
-            toast.success(result.message);
             // Navigate('/admin/home')
         } catch (err) {
-            toast.error(err.message);
             setLoading(false);
         }
     };
@@ -83,7 +79,7 @@ const AdminEventPage = () => {
         <div className=' bg-gray-200 flex flex-wrap gap-4'>
             <button onClick={()=>eventHandler("today")} className='bg-green-600 rounded-xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  > Todays Events</button>
 
-            <button onClick={()=>eventHandler("upcomming")} className='bg-green-600 rounded-xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  >Upcomming Events</button>
+            <button onClick={()=>eventHandler("upcoming")} className='bg-green-600 rounded-xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  >upcoming Events</button>
 
             <button onClick={()=>eventHandler("completed")} className='bg-green-600 rounded-xl px-4 py-2 my-2 mx-4 font-bold text-[18px] text-white'  >Completed Events</button>
 

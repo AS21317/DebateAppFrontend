@@ -38,7 +38,7 @@ const sociallinks = [
   },
 ];
 
-const HostDetails = () => {
+const EventDetails = () => {
   const [tab, setTab] = useState("about");
 
   const data = {
@@ -55,8 +55,8 @@ const HostDetails = () => {
         {
           <div className="grid md:grid-cols-3 gap-[50px]">
             <div className="md:col-span-2">
-              <div className="flex flex-wrap justify-center  gap-20">
-                <div class="flex h-60 flex-col   justify-between overflow-hidden">
+              <div className="flex  gap-20">
+                <div class="flex h-60 flex-col justify-between overflow-hidden">
                   <img src={debateImg} class=" h-full w-full object-cover " />
                 </div>
 
@@ -110,7 +110,7 @@ const HostDetails = () => {
                   className={`${
                     tab === "about" &&
                     "border-b border-solid border-primaryColor"
-                  } py-2 px-3 mr-4 text-[16px] leading-7 text-headingColor font-semibold`}
+                  } py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
                 >
                   About
                 </button>
@@ -120,7 +120,7 @@ const HostDetails = () => {
                   className={`${
                     tab === "feedback" &&
                     "border-b border-solid border-primaryColor"
-                  } py-2 px-3 mr-4 text-[16px] leading-7 text-headingColor font-semibold`}
+                  } py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
                 >
                   Reviews
                 </button>
@@ -128,8 +128,8 @@ const HostDetails = () => {
                   onClick={() => setTab("intrest")}
                   className={`${
                     tab === "intrest" &&
-                    "border-b  border-solid border-primaryColor"
-                  } py-2 px-3 mr-4 text-[16px] leading-7 text-headingColor font-semibold`}
+                    "border-b border-solid border-primaryColor"
+                  } py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}
                 >
                   Area of Intrest
                 </button>
@@ -161,4 +161,4 @@ const HostDetails = () => {
   );
 };
 
-export default HostDetails;
+export default EventDetails;

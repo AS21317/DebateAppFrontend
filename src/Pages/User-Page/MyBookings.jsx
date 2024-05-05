@@ -1,16 +1,16 @@
 import React from 'react'
-import UpcommingEventCard from './UpcomingEvents'
 import PastEventCard from './PastEventCard'
 import TodaysEvent from './TodaysEvent'
 import CancelledEvents from '../../dashboard/HostDashboard/CancelledEventsCardsHost'
 import MissedEventCard from './MissedEventCard'
+import UpcomingEventCard from './UpcomingEvents'
 
 
 const MyBookings = ({status,eventsData=[]}) => {
 
   
 
-
+console.log("Passed event is ",eventsData)
 console.log("card type is  :",status)
   return (
     <div>
@@ -24,8 +24,8 @@ console.log("card type is  :",status)
 
 
     
-            status === "upcoming" ? <div className='flex flex-wrap gap-y-4  mt-4  justify-between gap-x-5'>
-                       {eventsData.map((eventData)=><UpcommingEventCard eventData={eventData} />)}
+            status === "upcoming" ? <div className='flex flex-wrap gap-y-4  mt-4  justify-center sm:justify-between gap-x-5'>
+                       {eventsData.map((event)=><UpcomingEventCard eventData={event} />)}
 
             
            

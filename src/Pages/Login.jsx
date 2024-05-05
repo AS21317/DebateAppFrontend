@@ -1,15 +1,13 @@
-import React, { useState,useContext } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import HashLoader from 'react-spinners/HashLoader'
-import {authContext} from "../context/AuthContext.jsx";
+import HashLoader from "react-spinners/HashLoader";
+import { authContext } from "../context/AuthContext.jsx";
 
 const Login = () => {
-
-  const [loading,setLoading] = useState(false);
-  const navigate = useNavigate()
-  const {dispatch} = useContext(authContext)
-
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { dispatch } = useContext(authContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -20,59 +18,54 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
-    console.log("Calling submit handler ")
+    console.log("Calling submit handler ");
     try {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      
-
+      const res = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const result = await res.json();
-      
+
       if (!res.ok) {
         throw new Error(result.message);
       }
 
       dispatch({
-        type:"LOGIN_SUCCESS",
-        payload:{
-          user:result.data,
-          token:result.token,
-          role:result.role,
-        }
+        type: "LOGIN_SUCCESS",
+        payload: {
+          user: result.data,
+          token: result.token,
+          role: result.role,
+        },
       });
 
-      console.log(result ,"Login data is here ");
-      
-
+      console.log(result, "Login data is here ");
 
       // if res found , 1. show a toast notification , 2. setLoading false
 
       setLoading(false);
       toast.success(result.message);
-      navigate('/home');
+      navigate("/home");
     } catch (error) {
       toast.error(error.message);
       setLoading(false);
     }
   };
 
-
-
   return (
-    <section>
-      <div className="w-full max-w-[570px] mx-auto rounded-lg shadow-md md:p-10">
-        <h3 className="text-headingColor text-[22px] leading-9 font-bold mb-10">
+    <section className='hero__section py-10  sm:py-[75px] '>
+      <div className="w-full max-w-[300px]  sm:max-w-[570px] mx-auto rounded-lg shadow-md px-10 sm:p-10 pt-5">
+        <h3 className="text-headingColor text-[22px] leading-9 font-bold mb-4 sm:mb-10">
           Hello! <span className=" text-primaryColor">Welcome</span> Back
         </h3>
 
@@ -109,7 +102,7 @@ focus:border-b-primaryColor text-[16px] leading-7 text-headingColor
               type="submit"
               className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-2 "
             >
-              {loading?<HashLoader size={25} color="#fff" />:'Login'}
+              {loading ? <HashLoader size={25} color="#fff" /> : "Login"}
             </button>
           </div>
           <p className="mt-5 text-textColor text-center">

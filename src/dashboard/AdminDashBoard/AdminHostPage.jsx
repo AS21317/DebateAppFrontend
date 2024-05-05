@@ -55,10 +55,10 @@ const AdminHostPage = () => {
 	
 				setLoading(false);
 				setApplications(result.data)
-				toast.success(result.message);
+				// toast.success(result.message);
 				// Navigate('/admin/home')
 			} catch (err) {
-				toast.error(err.message);
+				// toast.error(err.message);
 				setLoading(false);
 			}
 		};

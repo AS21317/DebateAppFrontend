@@ -43,6 +43,12 @@ import AdminExpertPage from '../dashboard/AdminDashBoard/AdminExpertPage'
 import CreateTopic from '../dashboard/AdminDashBoard/CreateTopic'
 import AdminEventPage from '../dashboard/AdminDashBoard/AdminEventPage'
 import EventDetailPage from '../components/cards/EventDetailPage'
+import AllEventPage from '../Pages/Event Page/AllEventPage'
+import DebateDetails from '../Pages/Services/DebateDetails'
+import GdDetails from '../Pages/Services/GdDetails'
+import ExpertTalkDetails from '../Pages/Services/ExpertTalkDetails'
+import AllHostPage from '../Pages/HostPage/AllHostPage'
+import ExpertApplicationPage from '../Pages/ExpertApplicationPage'
 
 const Routers = () => {
   return ( <Routes>
@@ -100,13 +106,21 @@ const Routers = () => {
 
             <Route path='/register' element={<Signup/>} />
             <Route path='/contact' element={<Contact/>} />
-            <Route path='/doctors' element={<Doctors/>} />
+            <Route path='/events' element={<AllEventPage/>} />
+            <Route path='/hosts' element={<AllHostPage/>} />
             <Route path='/checkout-success' element={<CheckoutSuccessPage/>} />
             
             <Route path='/user/profile' element=  { <ProtectedRoute allowedRoles={['user','admin']}><MyAccount/></ProtectedRoute> } /> 
             <Route path='/doctor/profile/me' element={<ProtectedRoute allowedRoles={['admin']}><Dashboard/></ProtectedRoute>} /> 
             <Route path='/host/hostDetails' element={<HostDetails/>} />
-          
+            <Route path='/event/eventDetails/:id' element={<EventDetailPage/>} />
+           
+           {/* Services Route */}
+            <Route path='/services/debate/details' element={<DebateDetails/>} />
+            <Route path='/services/gd/details' element={<GdDetails/>} />
+            <Route path='/services/et/details' element={<ExpertTalkDetails/>} />
+            <Route path='/applyForExpert' element={<ProtectedRoute allowedRoles={['user','admin']}><ExpertApplicationPage/></ProtectedRoute>} />
+           
 
   </Routes>
   )

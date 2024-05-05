@@ -85,7 +85,7 @@ const bookingHandler = async()=>{
   
     </ul>
     </div>
-    <button onClick={bookingHandler} className="btn px-2 w-full rounded-md">Join me in upcomming events</button>
+    <button onClick={bookingHandler} className="btn px-2 w-full rounded-md">Join me in upcoming events</button>
     </div>
   )
 }

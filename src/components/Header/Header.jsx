@@ -13,12 +13,20 @@ const userNavLinks = [
     display: "Home",
   },
   {
-    path: "/doctors",
-    display: "Find all Events",
+    path: "/events",
+    display: "All Events",
+  },
+  {
+    path: "/hosts",
+    display: "All Hosts",
   },
   {
     path: "/services",
     display: "Services",
+  },
+  {
+    path: "/applyForExpert",
+    display: "Become an Expert",
   },
   {
     path: "/contact",
@@ -126,13 +134,13 @@ const Header = () => {
   };
 
   return (
-    <header className="header flex justify-center items-center" ref={headerRef}>
-      <div className="container ">
+    <header className="header flex  shadow-md justify-center items-center" ref={headerRef}>
+      <div className="container px-1  ">
         <div className="flex  items-center justify-between">
           <div>
             <Link onClick={() => setAdmin(false)} to={"/home"}>
               {" "}
-              <img src={logo} alt="Logo" width={"125px"} height={85} />
+              <img src={logo} alt="Logo" className=" w-[80px]   sm:w-[125px] sm:h-[70px]" />
             </Link>
           </div>
 
@@ -185,8 +193,8 @@ const Header = () => {
           } */}
 
           {/* =====>  menu =====>                  */}
-          <div className="navigation" ref={menuRef} onClick={toggleMenu}>
-            <ul className="menu flex items-center gap-[2.7rem]">
+          <div className="navigation " ref={menuRef} onClick={toggleMenu}>
+            <ul className="menu flex items-center flex-wrap gap-[2rem] sm:gap-[2.4rem] md:gap-[3.4rem]  lg:gap-[1.4rem]">
               {newRole == "admin"
                 ? adminNavLinks.map((link, index) => (
                     <li key={index}>
@@ -281,7 +289,7 @@ const Header = () => {
             ) : (
               <Link to="/login">
                 <button
-                  className="bg-primaryColor py-2  px-6 text-white font-[600] h-[44px] flex items-center
+                  className="bg-primaryColor  sm:py-5 px-4 sm:px-6 text-white font-[500] sm:text-xl h-9 flex items-center
                     justify-center rounded-[50px]"
                 >
                   Login
@@ -289,7 +297,7 @@ const Header = () => {
               </Link>
             )}
 
-            <span className="md:hidden">
+            <span className="lg:hidden">
               <BiMenu className="w-6 h-6 cursor-pointer" onClick={toggleMenu} />
             </span>
           </div>

@@ -57,10 +57,10 @@ const Contact = () => {
   };
 
   return (
-    <section>
+    <section className=" py-10 sm:py-[75px] ">
       <div className="px-4 mx-auto max-w-screen-md ">
         <h2 className="heading text-center">Contact Us</h2>
-        <p className="mb-8 lg:mb-16 font-light text-center text__para">
+        <p className="mb-4 lg:mb-8 font-light text-center text__para">
           Got a technical issue? Want to send feedback about a beta feature? Let
           us know.
         </p>
@@ -147,9 +147,11 @@ const Contact = () => {
           </div>
 
 
-          <button type="submit" className="btn rounded sm:w-fit">
+          <div className="  w-full  flex justify-center  ">
+          <button type="submit" className=" bg-blue-500 px-6 py-3 rounded-lg   text-white ">
    {loading?<HashLoader size={25} color="white"/>:"Submit"}
 </button> 
+          </div>
         </form>
       </div>
     </section>

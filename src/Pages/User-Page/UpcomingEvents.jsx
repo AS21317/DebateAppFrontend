@@ -2,12 +2,13 @@ import React from 'react'
 import climate1 from '../../assets/images/climate1.jpg'
 import { Link } from 'react-router-dom'
 
-const UpcommingEventCard = ({eventData}) => {
+const UpcomingEventCard = ({eventData}) => {
+  console.log("Upcoming card data ",eventData)
   return (
     <>
     <div class="bg-green-100 rounded-lg  group-hover:scale-110 shadow-2xl ">
       <div class="pt-4 pb-2">
-        <h3 className='font-bold text-[20px]   text-center py-2 w-full   mb-4 text-[#00246B] bg-lime-300 ' >{eventData.topic.name}</h3>
+        <h3 className='font-semibold text-[18px]    text-center py-2 w-full   mb-4 text-[#00246B] bg-lime-300 ' >{eventData.topic.name}</h3>
       <div className="flex  gap-2 px-4">
             <p className="flex-1 text-black-500   font-bold ">
               Type: 
@@ -58,4 +59,4 @@ const UpcommingEventCard = ({eventData}) => {
   )
 }
 
-export default UpcommingEventCard
+export default UpcomingEventCard

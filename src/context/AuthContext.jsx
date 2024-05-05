@@ -1,11 +1,10 @@
 import React, { createContext, useReducer ,useContext, useEffect} from "react";
 
 
-  const initialState = { 
-    user: localStorage.getItem( 'user') !== undefined ? JSON.parse(localStorage.getItem( 'user')) : null,
-    role: localStorage.getItem('role') || null,
-    token: localStorage.getItem('token') || null,
-    
+const initialState = { 
+  user: localStorage.getItem( 'user') !== undefined ? JSON.parse(localStorage.getItem( 'user')) : null,
+  role: localStorage.getItem('role') || null,
+  token: localStorage.getItem('token') || null,
 };
 
 export const authContext = createContext(initialState);
@@ -25,6 +24,7 @@ const authReducer = (state, action) => {
         role: action.payload.role || localStorage.getItem("role")
       };
     case "LOGOUT":
+      localStorage.removeItem("token")
       return {
         user: null,
         role: null,

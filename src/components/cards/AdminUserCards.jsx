@@ -113,14 +113,14 @@ const AdminUserCards = () => {
           </div>
 
           <div class="flex justify-between mt-2">
-            <Link to={'/admin/userProfile'}> 
+            <Link to={`/admin/userProfile/`}> 
              
               <button class=" rounded-lg border-2 bg-blue-600 text-white px-6 py-2 font-semibold">
                 Check Profile
               </button>
             </Link>
             <button class=" rounded-lg border-2 bg-blue-600 text-white px-2 py-2 font-semibold">
-              Make Admin
+              Make Expert
             </button>
           </div>
           <button

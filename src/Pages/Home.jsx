@@ -1,37 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import heroImg01 from "../assets/images/hero-img01.png";
-import heroImg02 from "../assets/images/hero-img02.png";
-import heroImg03 from "../assets/images/hero-img03.png";
-import home1 from "../assets/images/home1.jpg";
 import home2 from "../assets/images/home2.jpg";
 import home3 from "../assets/images/home3.jpg";
-import home4 from "../assets/images/home4.jpg";
-import home5 from "../assets/images/home5.jpg";
-import home6 from "../assets/images/home6.jpg";
-import home7 from "../assets/images/home7.jpg";
-import home8 from "../assets/images/home8.png";
-import home10 from "../assets/images/home10.png";
-import home11 from "../assets/images/home11.png";
-import home9 from "../assets/images/home9.jpg";
-import home12 from "../assets/images/home12.png";
 import whyus from "../assets/images/whyus.png";
-import gd from "../assets/images/gd.jpg";
 import debate from "../assets/images/debate.jpg";
 import exoertTalk from "../assets/images/expertTalk.jpg";
-
-import icon01 from "../assets/images/icon01.png";
-import icon02 from "../assets/images/icon02.png";
-import icon03 from "../assets/images/icon03.png";
-import featureImg from "../assets/images/feature-img.png";
-import videoIcon from "../assets/images/video-icon.png";
-import avatarIcon from "../assets/images/avatar-icon.png";
 import faq1 from "../assets/images/faq1.png";
 
-import { Link } from "react-router-dom";
-import { BsArrowRight } from "react-icons/bs";
 import About from "../components/About/About";
-import ServiceList from "../components/service/ServiceList";
-import DoctorList from "../components/Doctors/DoctorList";
 import FaqList from "../components/faq/FaqList";
 import Testimonial from "../components/Testtimonial/Testimonial";
 import EventCard from "../components/cards/EventCard";
@@ -41,7 +16,9 @@ import HostCard from "../components/cards/HostCard";
 import useFetchData from "../hooks/useFetchData";
 import { authContext } from "../context/AuthContext";
 import { HashLoader } from "react-spinners";
-import { toast } from "react-toastify";
+import { Slide, toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import Slider from "../components/Slider";
 
 const text = [
   "Embark on intellectual journeys and sharpen your argumentative prowess with our Debate Services.oin a vibrant community of debaters committed to exploring diverse viewpoints and honing their rhetorical skills.",
@@ -54,9 +31,11 @@ const Home = () => {
 
   const [loadingTodayEvents, setLoadingTodayEvents] = useState(false);
   const [loadingUpcomingEvents, setLoadingUpcomingEvents] = useState(false);
+  const [loadingAllTopics, setloadingAllTopics] = useState(false);
 
   const [todaysEventsData, setTodaysEventsData] = useState([]);
-  const [upcomingEvents, setUpcomingEvents] = useState([]); 
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [allTopics, setallTopics] = useState([]);
   // console.log("ENV is : ", import.meta.env.VITE_BASE_URL)
 
   // Fetching all hosts
@@ -64,7 +43,9 @@ const Home = () => {
     loading,
     error,
     data: hostData,
-  } = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/host/getAll`);
+  } = useFetchData(
+    `${import.meta.env.VITE_BASE_URL}/api/v1/host/getAll?limit=8`
+  );
   console.log(hostData);
 
   // Fetching All Topics
@@ -74,14 +55,15 @@ const Home = () => {
     setLoadingTodayEvents(true);
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/events/getByStatus`,
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/api/v1/events/getByStatus?status=today`,
         {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ status: "today" }),
         }
       );
 
@@ -100,16 +82,16 @@ const Home = () => {
       // });
 
       console.log(result, "Requested Todays event    is here ");
-      console.log("Hostt details is ", result.data[0].host)
+      console.log("Hostt details is ", result.data[0].host);
 
       // if res found , 1. show a toast notification , 2. setShowLoader false
 
       setLoadingTodayEvents(false);
       setTodaysEventsData(result.data);
-      toast.success(result.message);
+      // toast.success(result.message);
       // Navigate('/admin/home')
     } catch (err) {
-      toast.error(err.message);
+      // toast.error(err.message);
       setLoadingTodayEvents(false);
     }
   };
@@ -120,14 +102,15 @@ const Home = () => {
     setLoadingUpcomingEvents(true);
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/events/getByStatus`,
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/api/v1/events/getByStatus?status=upcoming`,
         {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ status: "upcoming" }),
         }
       );
 
@@ -151,82 +134,139 @@ const Home = () => {
 
       setLoadingUpcomingEvents(false);
       setUpcomingEvents(result.data);
-      toast.success(result.message);
+      // toast.success(result.message);
       // Navigate('/admin/home')
     } catch (err) {
-      toast.error(err.message);
+      // toast.error(err.message);
       setLoadingUpcomingEvents(false);
     }
   };
 
+  const getAllTopic = async () => {
+    setloadingAllTopics(true);
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/topic/getAll`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result.message);
+      }
+
+      // dispatch({
+      //   type:"LOGIN_SUCCESS",
+      //   payload:{
+      //     user:result.data,
+
+      //   }
+      // });
+
+      console.log(result, "Requested Topics  is here ");
+
+      // if res found , 1. show a toast notification , 2. setShowLoader false
+
+      setloadingAllTopics(false);
+      setallTopics(result.data);
+      // toast.success(result.message);
+      console.log("type of ", result.data, typeof result.data);
+      // Navigate('/admin/home')
+    } catch (err) {
+      // toast.error(err.message);
+      setloadingAllTopics(false);
+    }
+  };
+
+  console.log("all topics is ", allTopics);
+
+  // sort and get the first 4 topics
+  // Sort the data based on the length of events array in descending order
+  allTopics.length > 0 &&
+    allTopics.sort((a, b) => b.events.length - a.events.length);
+
+  // Get the first four elements after sorting
+  const homeTopics = allTopics.length > 0 && allTopics?.slice(0, 6);
+  console.log("topics is ", homeTopics, typeof homeTopics);
+
   useEffect(() => {
     getAllTodaysEvents();
     getAllUpcomingEvents();
+    getAllTopic();
   }, []);
 
   return (
     <>
-      <section className="hero__section pt-[60px] 2xl:h-[800px]">
+      <section className="hero__section pt-4 md:pt-[60px] ">
         <div className="container">
-          <div className="flex flex-col lg:flex-row  gap-20 items-center justify-between">
+          <div className="flex flex-col-reverse lg:flex-row   items-center justify-between">
             <div>
               <div className="lg:w-[590px]">
-                <h1 className="text-[36px] leading-[46px] text-headingColor font-[800] md:text-[45px] md:leading-[60px]">
-                  <span className=" text-[#feb60de9]">Empowering</span> individuals to express themselves with confidence
-                  and clarity
+                <h1 className="text-[26px] leading-[36px] text-headingColor font-[800] md:text-[45px] md:leading-[60px]">
+                  <span className=" text-[#feb60de9]">Empowering</span>{" "}
+                  individuals to express themselves with confidence and clarity
                 </h1>
-                <p className="text__para font-serif ">
+                <p className="text__para text-base sm:text-lg font-serif ">
                   Welcome to our platform where communication flourishes.
                   Elevate your skills, express confidently. Together, we empower
                   individuals to navigate conversations with clarity and
                   conviction.
                 </p>{" "}
-                <button className="btn text-[20px]">
-                  Join us to unlock your voice
-                </button>
+                <Link to={"/events"}>
+                  <button className="btn px-4 sm:px-7  md:text-[20px]">
+                    Join us to unlock your voice
+                  </button>
+                </Link>
               </div>
 
               {/* Hero counter  */}
               <div
-                className="mt-[30px] lg:mt-[50px] flex flex-col lg:flex-row lg:items-center gap-5
+                className="mt-[30px] lg:mt-[50px] flex flex-wrap justify-start md:flex-row lg:items-center gap-5
                 lg:gap-[30px]"
               >
                 <div>
                   <h2
-                    className="text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700]
+                    className="text-[36px] leading-[56px] lg:text-[40px] lg:leading-[54px] font-[700]
                 text-headingColor"
                   >
-                    30+
+                    130+
                   </h2>
                   <span className="w-[100px] h-2 bg-yellowColor rounded-full block mt-[-14px]"></span>
-                  <p className="text__para font-semibold text-[20px]  font-serif">
+                  <p className="text__para font-semibold text-[18px]  font-serif">
                     Total Users
                   </p>
                 </div>
 
                 <div>
                   <h2
-                    className="text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700]
+                    className="text-[36px] leading-[56px] lg:text-[40px] lg:leading-[54px] font-[700]
                 text-headingColor"
                   >
-                    30+
+                    80+
                   </h2>
                   <span className="w-[100px] h-2 bg-purpleColor rounded-full block mt-[-14px]"></span>
-                  <p className="text__para font-semibold text-[20px] font-serif">
+                  <p className="text__para font-semibold text-[18px] font-serif">
                     Active Users
                   </p>
                 </div>
 
                 <div>
                   <h2
-                    className="text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700]
+                    className="text-[36px] leading-[56px] lg:text-[40px] lg:leading-[54px] font-[700]
                 text-headingColor"
                   >
-                    30+
+                    20+
                   </h2>
                   <span className="w-[100px] h-2 bg-irisBlueColor rounded-full block mt-[-14px]"></span>
-                  <p className="text__para font-semibold text-[20px] font-serif">
-                    Successfull Events
+                  <p className="text__para font-semibold text-[18px] font-serif">
+                    Successful Events
                   </p>
                 </div>
               </div>
@@ -235,7 +275,7 @@ const Home = () => {
             {/* Hero content  */}
 
             <div className="flex flex-col   lg:flex-row gap-[30px] justify-center items-center rounded-lg overflow-hidden">
-              <div className="mb-[30px] lg:mb-0  lg:mr-[30px]">
+              <div className=" lg:mb-0  lg:mr-[30px]">
                 {/* <img className=" " src={home12} alt="" /> */}
                 <img
                   src={home3}
@@ -258,46 +298,82 @@ const Home = () => {
       </section>
 
       {/* Hero Section End  */}
-
-      <section  className="bg-[#CDF0F3]">
+      {/* bg-[#CDF0F3] */}
+      <section className="hero__section1 pt-4 md:pt-[60px]  ">
         <div className="container ">
-          <div className="lg:-w-[470px] mx-auto">
+          <div className="mx-auto">
             <h2 className="heading text-center">Event of the Day</h2>
 
-            <p className="text__para font-semibold mt-0 text-center">
+            <p className="text__para w-[300px] sm:text-[20px] sm:w-fit mx-auto font-semibold mt-0 text-center">
               Break your silence, join us to speak learn and grow
             </p>
           </div>
 
-          <div
-            className="sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[40px]
-                  lg:mt-[115px]"
-          >
-            {loadingTodayEvents ? <HashLoader /> :
-              todaysEventsData.map((event) => <EventCard event={event} />)}
+          <div className="  text-center flex justify-center mt-10 sm:mt-16 font-bold text-2xl text-red-600">
+            {loadingTodayEvents && (
+              <HashLoader className="text-center" size={35} color="red" />
+            )}
+
+            {!loadingTodayEvents && todaysEventsData.length === 0 && (
+              <div>
+                {" "}
+                <h1>No Event for Todays </h1>
+              </div>
+            )}
           </div>
+
+          {todaysEventsData?.length > 0 && (
+            <div
+              className="sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[40px]
+          lg:mt-[115px]"
+            >
+              {todaysEventsData.map((event) => (
+                <EventCard event={event} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
-      <section className="bg-amber-50">
-        <div className="container">
-          <div className="lg:w-[470px] mx-auto">
-            <h2 className="heading text-center">Upcomming Events</h2>
+      <section className="hero__section py-6 sm:pb-[75px] sm:pt-[60px]">
+        <div className="container w-full max-w-[100%]">
+          <div className="mx-auto">
+            <h2 className="heading text-center">Upcoming Events</h2>
+            <p className="text__para w-[300px] sm:text-[20px] sm:w-fit font-semibold mt-0 text-center mx-auto">
+              Elevate your voice and expand your horizons at our upcoming event
+            </p>
           </div>
 
+          {loadingTodayEvents && (
+            <div className=" text-center flex justify-center mt-10 font-bold text-2xl text-red-600">
+              <HashLoader className="text-center" size={35} color="red" />{" "}
+            </div>
+          )}
+
+          {!loadingUpcomingEvents && upcomingEvents?.length === 0 && (
+            <div className=" text-center flex justify-center mt-10 font-bold text-2xl text-red-600">
+              <h1>No Upcoming Events </h1>
+            </div>
+          )}
+        </div>
+
+        {upcomingEvents?.length > 0 && (
           <div
-            className="sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] mt-[90px]
-                  lg:mt-[115px]"
+            className="sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-5 lg:gap-[30px] mt-[30px] 
+        lg:mt-[40px]"
           >
-            {loadingUpcomingEvents ? <HashLoader /> :
-              upcomingEvents.map((event) => <EventCard event={event} />)}
-
+            {upcomingEvents.map((event) => (
+              <EventCard event={event} />
+            ))}
           </div>
-          <div className=" grid place-content-center mt-12 ">
+        )}
+
+        <div className=" grid place-content-center mt-12 ">
+          <Link to={"/events"}>
             <button className="flex-1  bg-blue-600 rounded-full  text-[20px] font-bold text-white px-8 py-2">
               See all Events
             </button>
-          </div>
+          </Link>
         </div>
       </section>
 
@@ -308,8 +384,8 @@ const Home = () => {
 
       {/*   ==========>>> SERVICE SECTION START  <<<=========== */}
 
-      <section className="bg-amber-50">
-        <div className="container">
+      <section className="hero__section sm:pb-[60px]  pt-4 pb-6  md:pt-[60px] ">
+        <div className="container max-w-full">
           <div className="x1:w-[470px] mx-auto">
             <h2 className="heading text-center">Our Services</h2>
             <p className="text__para mt-0 text-center font-semibold">
@@ -317,16 +393,23 @@ const Home = () => {
             </p>
           </div>
           <div
-            className="sm:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[20px]
+            className=" sm:grid grid-cols-1    md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[20px]
                   lg:mt-[20px]"
           >
-            <Servicecard about={text[0]} title={"Debate"} photo={debate} />
             <Servicecard
+              about={text[0]}
+              params={"debate"}
+              title={"Debate"}
+              photo={debate}
+            />
+            <Servicecard
+              params={"gd"}
               about={text[1]}
               title={"Group Discussion"}
               photo={home2}
             />
             <Servicecard
+              params={"et"}
               about={text[2]}
               title={"Expert Talk"}
               photo={exoertTalk}
@@ -339,12 +422,12 @@ const Home = () => {
 
       {/*  ===========>>> FEATURE SECTION START  <<<==========  */}
 
-      <section  className="bg-[#CDF0F3]">
+      <section className="hero__section1  pb-6 sm:pb-[75px]  pt-2 md:pt-[60px]">
         <div className="container">
-          <div className="flex items-center justify-between flex-col lg:flex-row">
+          <div className="flex items-center justify-between gap-y-4 flex-col-reverse lg:flex-row">
             <div className="xl:w-[670px]">
               <h2 className="heading">Why to choose us</h2>
-              <ul className="list-disc text-[18px] ml-4 leading-8 list-inside mt-4 mb-4">
+              <ul className="list-disc text-base ml-4 sm:leading-8 md:list-inside mt-4 mb-4">
                 <li> Get the chance to talk with new people</li>
                 <li> Receive dedicated hosting for each event</li>
                 <li> Hosts are experts in their respective domains</li>
@@ -375,47 +458,41 @@ const Home = () => {
         </div>
       </section>
 
-      {/*  ========>>>  DOCTOR SECTION  <<<===========  */}
+      {/*  ========>>>  HOT TOPICs SECTION START <<<===========  */}
 
-      <section className="bg-amber-50">
-        <div className="container">
-          <div className="xl:w-[690px] mx-auto">
+      <section className="hero__section pt-4 pb-6 sm:pb-[40px] md:pt-[60px] ">
+        <div className="container events mx-auto ">
+          <div className="xl:w-[600px] mx-auto">
             <h2 className="heading text-center ">Hot Topics</h2>
 
-            <p className=" mb-8 mt-2 text-xl text-center font-semibold ">
+            <p className=" mb-8 mt-2 text__para text-base   sm:text-xl text-center font-semibold ">
               Following topic has been taken several times and yet in demand
             </p>
           </div>
-          <div
-            className="sm:grid grid-cols-1 md:grid-cols-3  lg:grid-cols-3 gap-5 lg:gap-[50px] mt-[20px]
-                  lg:mt-[20px]"
-          >
-            <HotTopicCard />
-            <HotTopicCard />
-            <HotTopicCard />
-            <HotTopicCard />
-          </div>
+
+          {Array.isArray(homeTopics) && !loadingAllTopics ? (
+            <Slider role={"event"} sliderData={homeTopics} />
+          ) : (
+            <HashLoader size={35} color="red" />
+          )}
         </div>
       </section>
 
-      <section className="bg-[#CDF0F3]">
-        <div className="container">
-          <div className="xl:w-[690px] mx-auto">
+      {/*  ========>>>  HOT TOPICs SECTION END <<<===========  */}
+
+      {/*  ========>>>  HOST SECTION END  <<<===========  */}
+
+      <section className="hero__section1 pb-6 sm:pb-[50px]  pt-4 md:pt-[60px] ">
+        <div className="container max-w-full">
+          <div className="xl:w-[690px] mx-auto ">
             <h2 className="heading text-center ">Out top rated Hosts</h2>
 
-            <p className=" mb-8 mt-2 text-xl text-center font-semibold ">
+            <p className=" mb-8 mt-2 text-base sm:text-xl text-center font-semibold ">
               Here are our top rated host available to serve you anytime
             </p>
           </div>
-          <div
-            className="sm:grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-[30px] mt-[20px]
-                  lg:mt-[20px]"
-          >
-            <HostCard />
-            <HostCard />
-            <HostCard />
-            <HostCard />
-          </div>
+
+          {<Slider role={"host"} sliderData={hostData} />}
         </div>
       </section>
 
@@ -423,7 +500,7 @@ const Home = () => {
 
       {/*  ========>>>  FAQ SECTION START  <<<===========  */}
 
-      <section className="bg-amber-50">
+      <section className="hero__section pt-4 pb-6 sm:py-[75px]   ">
         <div className="container">
           <div className="flex items-center justify-between gap-[50px] lg:gap-0">
             <div className="w-1/2 hidden md:block">
@@ -441,7 +518,7 @@ const Home = () => {
 
       {/*  ========>>>  TESTIMONIAL  SECTION   <<<===========  */}
 
-      <section  className="bg-[#CDF0F3]">
+      <section className="hero__section1 pt-6 pb-6 sm:pb-[50px] sm:pt-[75px] md:pt-[60px]">
         <div className="container">
           <div className="xl:w-[570px] mx-auto">
             <h2 className="heading text-center">What our members say</h2>

@@ -1,7 +1,7 @@
 import React from 'react'
 import climate1 from '../../assets/images/climate1.jpg'
 
-const UpcommingEventCardsHost
+const upcomingEventCardsHost
 
  = () => {
   return (
@@ -51,5 +51,5 @@ const UpcommingEventCardsHost
   )
 }
 
-export default UpcommingEventCardsHost
+export default upcomingEventCardsHost
 

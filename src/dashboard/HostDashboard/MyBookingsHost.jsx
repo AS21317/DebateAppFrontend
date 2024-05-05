@@ -4,7 +4,7 @@ import React from 'react'
 // import Error from '../../components/Error/Error'
 // import EventCard from '../../components/cards/EventCard'
 import CancelledEvents from './CancelledEventsCardsHost'
-import UpcommingEventsHost from './UpcommingEventsCardHost'
+import upcomingEventsHost from './upcomingEventsCardHost'
 import CompletedEventHost from './CompletedEventCardHost'
 import TodaysEventHost from './TodaysEventHost'
 import useFetchData from '../../hooks/useFetchData'
@@ -29,7 +29,7 @@ const MyBookingsHost
 
     
             status === "upcoming" ? <div className='flex flex-wrap gap-y-4   justify-between gap-x-5'>
-           {eventsData.map((eventData)=><UpcommingEventsHost eventData={eventData} />)}
+           {eventsData.map((eventData)=><upcomingEventsHost eventData={eventData} />)}
            
           </div>:status ==="completed"?<div className='flex flex-wrap justify-between gap-x-5 gap-y-6'>
           {eventsData.map((eventData)=><CompletedEventHost eventData={eventData} />)}

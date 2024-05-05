@@ -9,7 +9,7 @@ const JoinHostCard = ({question, answer, handleChange}) => {
   
     return (
       <div className="flex flex-col gap-3 mt-4">
-        <div className="flex flex-col gap-4 bg-green-100 p-4">
+        <div className="flex flex-col gap-4 bg-[#e7eb99] rounded-xl p-4">
           {/* Input for reason of cancellation */}
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2">
