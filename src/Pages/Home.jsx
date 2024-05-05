@@ -100,7 +100,6 @@ const Home = () => {
       // });
 
       console.log(result, "Requested Todays event    is here ");
-      console.log("Hostt details is ", result.data[0].host)
 
       // if res found , 1. show a toast notification , 2. setShowLoader false
 
@@ -109,7 +108,7 @@ const Home = () => {
       toast.success(result.message);
       // Navigate('/admin/home')
     } catch (err) {
-      toast.error(err.message);
+      toast.error(err);
       setLoadingTodayEvents(false);
     }
   };
@@ -154,7 +153,7 @@ const Home = () => {
       toast.success(result.message);
       // Navigate('/admin/home')
     } catch (err) {
-      toast.error(err.message);
+      toast.error(err);
       setLoadingUpcomingEvents(false);
     }
   };

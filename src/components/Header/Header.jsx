@@ -266,7 +266,7 @@ const Header = () => {
                       ? "/user/profile"
                       : newRole === "admin"
                       ? "/admin/userDashboard"
-                      : "/coAdmin/Profile"
+                      : "/coAdmin/userDashboard"
                   }`}
                 >
                   <figure className="w-[35px] h-[35px] rounded-full ">

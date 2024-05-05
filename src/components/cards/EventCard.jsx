@@ -4,6 +4,7 @@ import { authContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ShortHostCard from "./ShortHostCard";
+import { BsFillCalendarMonthFill } from "react-icons/bs";
 
 const EventCard = ({ event }) => {
   const { token, user } = useContext(authContext);
@@ -61,11 +62,11 @@ const EventCard = ({ event }) => {
       <div className=" mb-16  rounded-lg   bg-slate-100 group-hover:scale-110 shadow-2xl "
        >
         {/* <img
-          class="h-48 w-full object-cover object-end"
+          className="h-48 w-full object-cover object-end"
           src={event.photo || climate1}
           alt="Home in Countryside"
         /> */}
-        <div class="">
+        <div className="">
 
           
         <div className="relative flex justify-center mb-4">

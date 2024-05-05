@@ -29,9 +29,9 @@ import GivePermission from '../dashboard/AdminDashBoard/GivePermission'
 import UserProfile from '../dashboard/AdminDashBoard/AdminUserProfile'
 import HostAccount from '../dashboard/HostDashboard/HostAccount'
 import ProfileCard from '../components/cards/ProfileCard'
-import CoAdminHomePage from '../dashboard/CoAdmin.jsx/CoAdminHomePage'
+import CoAdminHomePage from '../dashboard/CoAdmin/CoAdminHomePage'
 import AdminProfileCard from '../dashboard/AdminDashBoard/AdminProfileCard'
-import CoAdminProfileCard from '../dashboard/CoAdmin.jsx/CoAdminProfileCard'
+import CoAdminProfileCard from '../dashboard/CoAdmin/CoAdminProfileCard'
 import HostUserDashboard from '../dashboard/HostDashboard/HostUserDashboard'
 import HostHostDashboard from '../dashboard/HostDashboard/HostHostDashboard'
 import HostApplicant from '../dashboard/AdminDashBoard/HostApplicant'
@@ -43,6 +43,9 @@ import AdminExpertPage from '../dashboard/AdminDashBoard/AdminExpertPage'
 import CreateTopic from '../dashboard/AdminDashBoard/CreateTopic'
 import AdminEventPage from '../dashboard/AdminDashBoard/AdminEventPage'
 import EventDetailPage from '../components/cards/EventDetailPage'
+import ErrorPage from '../Pages/ErrorPage'
+import CoAdminHostDashboard from '../dashboard/CoAdmin/CoAdminHostDashboard'
+import CoAdminUserDashboard from '../dashboard/CoAdmin/CoAdminUserDashboard'
 
 const Routers = () => {
   return ( <Routes>
@@ -73,8 +76,12 @@ const Routers = () => {
 
             <Route path="/admin/userDashboard" element={<AdminUserDashboard/>} />
             <Route path="/admin/hostDashboard" element={<AdminHostDashboard/>} />
+
             <Route path="/host/userDashboard" element={<HostUserDashboard/>} />
             <Route path="/host/HostDashboard" element={<HostHostDashboard/>} />
+            
+            <Route path="/coAdmin/userDashboard" element={<CoAdminUserDashboard/>} />
+            <Route path="/coAdmin/hostDashboard" element={<CoAdminHostDashboard/>} />
 
             
             
@@ -95,7 +102,8 @@ const Routers = () => {
             <Route path="/admin/experts" element={<AdminExpertPage/>} />
 
 
-           
+            
+            
 
 
             <Route path='/register' element={<Signup/>} />
@@ -106,8 +114,9 @@ const Routers = () => {
             <Route path='/user/profile' element=  { <ProtectedRoute allowedRoles={['user','admin']}><MyAccount/></ProtectedRoute> } /> 
             <Route path='/doctor/profile/me' element={<ProtectedRoute allowedRoles={['admin']}><Dashboard/></ProtectedRoute>} /> 
             <Route path='/host/hostDetails' element={<HostDetails/>} />
-          
 
+              {/* Error Page */}
+            <Route path='*' element={<ErrorPage />} />
   </Routes>
   )
 }
