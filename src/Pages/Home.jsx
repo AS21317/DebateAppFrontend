@@ -92,6 +92,7 @@ const Home = () => {
       // Navigate('/admin/home')
     } catch (err) {
       // toast.error(err.message);
+      toast.error(err);
       setLoadingTodayEvents(false);
     }
   };
@@ -137,7 +138,7 @@ const Home = () => {
       // toast.success(result.message);
       // Navigate('/admin/home')
     } catch (err) {
-      // toast.error(err.message);
+      toast.error(err);
       setLoadingUpcomingEvents(false);
     }
   };

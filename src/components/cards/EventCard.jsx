@@ -38,6 +38,7 @@ const formatDate = (date) => {
   return `${day}-${month}-${year}`;
 }
 
+import { BsFillCalendarMonthFill } from "react-icons/bs";
 
 const EventCard = ({ event }) => {
   let { token, user, dispatch } = useContext(authContext);
@@ -154,6 +155,34 @@ const EventCard = ({ event }) => {
                       <IoCalendarOutline color="#60a5fa" size={15} />
                         <p className=" ml-2  font-semibold">{startDate}</p>
                       </div>
+      <div className=" mb-16  rounded-lg   bg-slate-100 group-hover:scale-110 shadow-2xl "
+       >
+        {/* <img
+          className="h-48 w-full object-cover object-end"
+          src={event.photo || climate1}
+          alt="Home in Countryside"
+        /> */}
+        <div className="">
+
+          
+        <div className="relative flex justify-center mb-4">
+  <img
+    className="h-28 border-4 -top-16 border-black rounded-full absolute w-28 object-cover object-end z-10"
+    src={event.photo || climate1}
+    alt="Home in Countryside"
+   
+  />
+</div>
+
+
+
+          <h3 className="font-bold text-[24px] mt-12     py-2 w-full  text-center  mb-4 text-[#00246B] bg-green-200 ">
+            {event.topic.name}
+            </h3>
+          <div className="flex  gap-2 px-4">
+            <p className="flex-1 text-black-500   font-bold ">Type:</p>
+            <p className="text-red-600  font-bold text-[20px] ">{event.type}</p>
+          </div>
 
                       <div className="flex-1 inline-flex items-center">
                         <svg

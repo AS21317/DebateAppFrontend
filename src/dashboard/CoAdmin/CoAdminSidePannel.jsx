@@ -9,8 +9,8 @@ import Sidebar, { SidebarItem } from '../AdminDashBoard/Sidebar';
 const CoAdminSidePannel = ({role}) => {
   return (
     <Sidebar className="" >
-          <SidebarItem icon={<LayoutDashboard size={20} />} text="User Dashboard" to="/admin/userDashboard"  />
-          <SidebarItem icon={<LayoutDashboard size={20} />} text="Host Dashboard" to="/admin/hostDashboard"  />
+          <SidebarItem icon={<LayoutDashboard size={20} />} text="User Dashboard" to="/coAdmin/userDashboard"  />
+          <SidebarItem icon={<LayoutDashboard size={20} />} text="Host Dashboard" to="/coAdmin/hostDashboard"  />
           {/* <SidebarItem icon={<LayoutDashboard size={20} />} text="Admin Dashboard" to="/admin/adminDashboard"  /> */}
           <SidebarItem icon={<StickyNote size={20} />} text="Give Permission" to="/admin/givePermission" alert />
          
