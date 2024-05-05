@@ -25,7 +25,7 @@ import CreateCoAdmin from '../dashboard/AdminDashBoard/CreateCoAdmin'
 import CreateHost from '../dashboard/AdminDashBoard/CreateHost'
 import AdminCalender from '../dashboard/AdminDashBoard/AdminCalender'
 import CreateEvent from '../dashboard/AdminDashBoard/CreateEvent'
-import GivePermission from '../dashboard/AdminDashBoard/GivePermission'
+import AllUsers from '../dashboard/AdminDashBoard/AllUsers'
 import UserProfile from '../dashboard/AdminDashBoard/AdminUserProfile'
 import HostAccount from '../dashboard/HostDashboard/HostAccount'
 import ProfileCard from '../components/cards/ProfileCard'
@@ -46,6 +46,8 @@ import EventDetailPage from '../components/cards/EventDetailPage'
 import ErrorPage from '../Pages/ErrorPage'
 import CoAdminHostDashboard from '../dashboard/CoAdmin/CoAdminHostDashboard'
 import CoAdminUserDashboard from '../dashboard/CoAdmin/CoAdminUserDashboard'
+import ExpertApplicants from '../dashboard/AdminDashBoard/ExpertApplicants'
+
 
 const Routers = () => {
   return ( <Routes>
@@ -86,13 +88,14 @@ const Routers = () => {
             
             
            {/* Admin Sidebar Routes */}
-            <Route path="/admin/givePermission" element={<GivePermission/>} />
+            <Route path="/admin/allUsers" element={<AllUsers/>} />
             <Route path="/admin/userProfile" element={<UserProfile/>} />
             <Route path="/admin/calender" element={<AdminCalender/>} />
             <Route path="/admin/createEvent" element={<CreateEvent/>} />
             <Route path="/admin/allEvents" element={<AdminEventPage/>} />
             <Route path="/admin/createTopic" element={<CreateTopic/>} />
             <Route path="/admin/hostApplications" element={<HostApplicant/>} />
+            <Route path="/admin/expertApplications" element={<ExpertApplicants/>} />
             <Route path="/admin/applicantProfile/:id" element={<ApplicantProfile/>} />
 
             {/* Admin Navbar Routes */}
