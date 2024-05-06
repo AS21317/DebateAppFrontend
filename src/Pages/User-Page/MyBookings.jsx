@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PastEventCard from './PastEventCard'
 import TodaysEvent from './TodaysEvent'
 import CancelledEvents from '../../dashboard/HostDashboard/CancelledEventsCardsHost'
 import MissedEventCard from './MissedEventCard'
 import UpcomingEventCard from './UpcomingEvents'
+import useFetchData from '../../hooks/useFetchData'
 
 
-const MyBookings = ({status,eventsData=[]}) => {
+const MyBookings = ({status,eventsData=[],userId}) => {
+  
+ 
 
   
 

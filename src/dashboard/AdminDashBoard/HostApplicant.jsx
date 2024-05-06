@@ -76,18 +76,18 @@ const HostApplicant = () => {
     <div className="flex flex-col justify-center items-center flex-grow m-6 overflow-hidden">
 			{loading && <Loader />}
       {!loading  && <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-start items-start h-full w-full">
-        {applications.map(({ user }, index) => {
+        {applications.map((applicantData, index) => {
+			const hostApplicant = { 
+				_id: applicantData.user._id,
+				user: applicantData.user, 
+				expertise: applicantData.expertise
+			}
+			console.log(hostApplicant, "hostApplicant is this")
+
             return <ApplicantCard 
                 key={index}
-                name={user.name}
-                photo={user.photo}
-                email={user.email}
-                areaOfInterests={user.areaOfInterests}
-                noOfEvents={user.events.length}
-                reviews={user.events.length}
-                rating={user.averageRating}
-								id={user._id}
-								user={user}
+				role={"host"}
+				applicantData={hostApplicant}
             />
         })}
         </div>}

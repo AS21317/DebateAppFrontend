@@ -41,7 +41,7 @@ const ExpertApplicants = () => {
 			setApplications(result.data)
 			toast.success(result.message);
 		} catch (err) {
-			toast.error(err.message);
+			toast.error(err);
 			setLoading(false);
 		}
 	};
@@ -61,20 +61,14 @@ const ExpertApplicants = () => {
 		{loading && <Loader />}
       	{!loading  && 
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 justify-start items-start h-full w-full">
-			{/* {applications.map(({ user }, index) => {
+			{applications.map(( applicantData , index) => {
 				return <ApplicantCard 
 					key={index}
-					name={user.name}
-					photo={user.photo}
-					email={user.email}
-					areaOfInterests={user.areaOfInterests}
-					noOfEvents={user.events.length}
-					reviews={user.events.length}
-					rating={user.averageRating}
-					id={user._id}
-					user={user}
+					role='expert'
+					
+					applicantData={applicantData}
 				/>
-			})} */}
+			})}
         </div>}
       </div>
   </div>

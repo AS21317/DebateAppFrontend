@@ -35,7 +35,7 @@ import CoAdminProfileCard from '../dashboard/CoAdmin/CoAdminProfileCard'
 import HostUserDashboard from '../dashboard/HostDashboard/HostUserDashboard'
 import HostHostDashboard from '../dashboard/HostDashboard/HostHostDashboard'
 import HostApplicant from '../dashboard/AdminDashBoard/HostApplicant'
-import ApplicantProfile from '../dashboard/AdminDashBoard/ApplicantProfile'
+import ApplicantProfile from '../dashboard/AdminDashBoard/HostapplicantProfile'
 import AdminHostPage from '../dashboard/AdminDashBoard/AdminHostPage'
 import AdminAdminsPage from '../dashboard/AdminDashBoard/AdminAdminsPage'
 import AdminCoAdminPage from '../dashboard/AdminDashBoard/AdminCoAdminPage'
@@ -53,6 +53,9 @@ import ErrorPage from '../Pages/ErrorPage'
 import CoAdminHostDashboard from '../dashboard/CoAdmin/CoAdminHostDashboard'
 import CoAdminUserDashboard from '../dashboard/CoAdmin/CoAdminUserDashboard'
 import ExpertApplicants from '../dashboard/AdminDashBoard/ExpertApplicants'
+import ExpertDashboard from '../dashboard/ExpertDashboard/ExpertDashboard'
+import HostapplicantProfile from '../dashboard/AdminDashBoard/HostapplicantProfile'
+import ExpertApplicantProfile from '../dashboard/AdminDashBoard/ExpertApplicantProfile'
 
 
 const Routers = () => {
@@ -102,7 +105,8 @@ const Routers = () => {
             <Route path="/admin/createTopic" element={<CreateTopic/>} />
             <Route path="/admin/hostApplications" element={<HostApplicant/>} />
             <Route path="/admin/expertApplications" element={<ExpertApplicants/>} />
-            <Route path="/admin/applicantProfile/:id" element={<ApplicantProfile/>} />
+            <Route path="/admin/hostApplicantProfile/:id" element={<HostapplicantProfile/>} />
+            <Route path="/admin/expertApplicantProfile/:id" element={<ExpertApplicantProfile/>} />
 
             {/* Admin Navbar Routes */}
             <Route path="/admin/hosts" element={<AdminHostPage/>} />
@@ -132,6 +136,7 @@ const Routers = () => {
             <Route path='/services/et/details' element={<ExpertTalkDetails/>} />
             <Route path='/applyForExpert' element={<ProtectedRoute allowedRoles={['user','admin']}><ExpertApplicationPage/></ProtectedRoute>} />
            
+            <Route path='/expertDashboard' element={<ExpertDashboard/>} />
 
 
               {/* Error Page */}

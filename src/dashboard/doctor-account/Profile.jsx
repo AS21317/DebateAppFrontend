@@ -5,7 +5,7 @@ import { authContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 
-const Profile = ({doctorData}) => {
+const Profile = ({profileData}) => {
 
   const {token}  = useContext(authContext)
 
@@ -21,34 +21,34 @@ const Profile = ({doctorData}) => {
     ticketPrice: 0,
     about: "",
     photo:null,
-    qualifications: [
+    qualifications:[
       
     ],
     experiences: [
       
     ],
-    timeSlots: [],
+    timeSlots: [
+      
+    ],
   });
 
 
   useEffect(()=>{
     setFormData({
-      name:doctorData?.name,
-      email: doctorData?.email,
-      age:doctorData?.age,
+      name:profileData?.name,
+      email:profileData ?.email,
+      age:profileData?.age,
     
-    phone:doctorData?.phone,
-    bio:doctorData?.bio,
-    gender:doctorData?.gender,
-    specialization:doctorData?.specialization,
-    ticketPrice: doctorData?.ticketPrice,
-    about:doctorData?.about,
-    photo:doctorData?.photo,
-    qualifications:doctorData?.qualifications,
-    experiences: doctorData?.experiences,
-    timeSlots: doctorData?.timeSlots,
+    phone:profileData?.phone,
+    bio:profileData?.bio,
+    gender:profileData?.gender,
+    about:profileData?.about,
+    photo:profileData?.photo,
+    qualifications:profileData?.qualifications,
+    experiences: profileData?.experiences,
+    timeSlots: profileData?.timeSlots,
     })
-  },[doctorData])
+  },[])
 
 
 
@@ -242,7 +242,7 @@ const Profile = ({doctorData}) => {
         </div>
 
         <div className="mb-5">
-          <div className="grid grid-cols-4 gap-5 mb-[30px]">
+          <div className="grid   grid-cols-2 gap-5 mb-[30px]">
             <div>
               <p className="form__label">Gender*</p>
               <select
@@ -258,32 +258,9 @@ const Profile = ({doctorData}) => {
               </select>
             </div>
 
-            <div>
-              <p className="form__label">Specialization*</p>
-              <select
-                name="specialization"
-                value={formData.specialization}
-                onChange={handleInputChange}
-                className="form__input py-3.5"
-              >
-                <option value="">Select</option>
-                <option value="surgeon">Surgeon</option>
-                <option value="neurologist">Neurologist</option>
-                <option value="dermetologist">Dermetologist</option>
-              </select>
-            </div>
+           
 
-            <div className="form__label">
-              <p>Ticket Price*</p>
-              <input
-                type="number"
-                placeholder="100"
-                name="ticketPrice"
-                value={formData.ticketPrice}
-                onChange={handleInputChange}
-                className="form__input"
-              />
-            </div>
+           
             <div className="form__label">
               <p>Age*</p>
               <input

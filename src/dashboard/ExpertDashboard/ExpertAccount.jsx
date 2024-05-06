@@ -6,19 +6,25 @@ import userImg from "../../assets/images/doctor-img01.png";
 import { authContext } from "../../context/AuthContext";
 import { Loader } from "lucide-react";
 import MyBookings from "../../Pages/User-Page/MyBookings";
-import Profile from "../doctor-account/Profile";
 import usegetProfile from '../../hooks/useFetchData'
 import { useNavigate } from "react-router-dom";
-import MyBookingsHost from "./MyBookingsHost";
 import { Navigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import { toast } from "react-toastify";
-const HostAccount = () => {
+import MyBookingsHost from "../HostDashboard/MyBookingsHost";
+import Profile from "../doctor-account/Profile";
+
+
+const ExpertAccount = () => {
   const {user,token,role}  =useContext(authContext)
   const [eventsData, setEventsData]= useState([])
   const [showLoader,setShowLoader] = useState(false)
 
-  const { dispatch ,user:userData, loading, error} = useContext(authContext);
+
+
+
+
+  const { dispatch ,user:userData,loading,error} = useContext(authContext);
   const [tab, setTab] = useState("bookings");
   const [cardType, setCardType]= useState("today")
 
@@ -28,6 +34,7 @@ const HostAccount = () => {
   console.log(userData, "Data is ");
 
   const handleLogout = () => {
+    
     dispatch({ type: "LOGOUT" });
     navigate('/home')
   };
@@ -36,15 +43,18 @@ const HostAccount = () => {
     setShowLoader(true)
     try {
       console.log("calling this ")
-        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/events/getByHostAndStatus/${userData._id}/${status}`, {
-            method: "GET",
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/events/getByHostAndStatus`, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}` 
             },
-            // body: JSON.stringify({status:status,userId:userData._id}),
+            body: JSON.stringify({status:status,userId:userData._id}),
         
         });
+
+        
+
 
         const result = await res.json();
         
@@ -62,7 +72,12 @@ const HostAccount = () => {
         // });
     
 
-        console.log(result ,`Requested  ${status}  event   is here `);
+        console.log(result ,"Request Event   is here ");
+
+        
+
+
+        // if res found , 1. show a toast notification , 2. setShowLoader false
 
         setShowLoader(false);
         setEventsData(result.data)
@@ -78,6 +93,8 @@ const HostAccount = () => {
   return (
     <section>
       <div className="max-w-[1170px] px-5 mx-auto">
+        {showLoader && !error && <HashLoader size={45} color="red" />}
+
         {error && !loading && <Error errMessage={error} />}
         {!loading && !error && (
           <div className="grid md:grid-cols-3 gap-10">
@@ -102,29 +119,57 @@ const HostAccount = () => {
                 
                 
               </div>
-              <div className="flex mt-4 justify-between gap-2 px-8">
-                <p className="flex-1  text-black-500 font-bold ">Role:</p>
-                <p className="font-semibold capitalize">{userData.role}</p>
-              </div>
-              <div className="flex mt-4 justify-between gap-2 px-8">
-                <p className="flex-1  text-black-500 font-bold ">
-                  Total Debates:
-                </p>
-                <p className="font-semibold">5</p>
-              </div>
-              <div className="flex mt-4 justify-between gap-2 px-8">
-                <p className="flex-1  text-black-500 font-bold ">Total GD:</p>
-                <p className="font-semibold">15</p>
-              </div>
+              
+               <div className="mt-6">
+               <div className="flex mb-2 justify-between gap-2 px-8">
+            <p className="flex-1  text-black-500 font-bold ">
+              Role
+            </p>
+            <p className='font-semibold capitalize'>{userData.role}</p>
+          </div>
+               <div className="flex mb-2 justify-between gap-2 px-8">
+            <p className="flex-1  text-black-500 font-bold ">
+              Total Debates:
+            </p>
+            <p className='font-semibold'>5</p>
+          </div>
+          <div className="flex mb-2 justify-between gap-2 px-8">
+            <p className="flex-1  text-black-500 font-bold ">
+              Total GD:
+            </p>
+            <p className='font-semibold'>15</p>
+          </div>
+          <div className="flex mb-2 justify-between gap-2 px-8">
+            <p className="flex-1  text-black-500 font-bold ">
+              Total Reviews:
+            </p>
+            <p className='font-semibold'>45</p>
+          </div>
+          <div className="flex mb-2 justify-between gap-2 px-8">
+            <p className="flex-1  text-black-500 font-bold ">
+              Avg Rating:
+            </p>
+            <p className='font-semibold'>4.5</p>
+          </div>
+               </div>
         
 
               <div className="mt-[30px] md:mt-[50px] ">
 
               <button
                   onClick={()=>{setTab("bookings"),setCardType("pending"), eventHandler("pending")}}
-                  className="w-full bg-[#8e8821] p-3 font-semibold  mt-4 text-[16px] leading-7 rounded-md text-white"
+                  className="w-full bg-[#2aa45b] p-3 font-semibold  mt-4 text-[16px] leading-7 rounded-md text-white"
                 >
-                  Requested Events {
+                  Request to Admin {
+                    cardType === "pending" && eventsData && `(${eventsData.length})`
+                  }
+                </button>
+
+                <button
+                  onClick={()=>{setTab("bookings"),setCardType("pending"), eventHandler("pending")}}
+                  className="w-full bg-[#434114] p-3 font-semibold  mt-4 text-[16px] leading-7 rounded-md text-white"
+                >
+                  Request from Admin {
                     cardType === "pending" && eventsData && `(${eventsData.length})`
                   }
                 </button>
@@ -151,65 +196,58 @@ const HostAccount = () => {
               </div>
             </div>
 
-            <div className="md:col-span-2 gap-y-5 md:px-[10px] ml-4">
-              <h1  className="text-2xl font-semibold ml-2  ">Events</h1>
-              <div className=" w-full h-1 border-t-2 mb-2  "></div>
-            <div className=" flex flex-wrap justify-center sm:justify-normal gap-y-4 ">
-                <button
-                  onClick={() => {setTab("bookings") , setCardType("today"), eventHandler("today")}}
+            <div className="md:col-span-2 md:px-[30px] ml-0">
+              
+            <button
+                  onClick={() => {setTab("bookings") , setCardType("today")}}
                   className={` ${
                     cardType === "today" &&
                     "bg-primaryColor text-white font-normal"
-                  } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+                  } p-2 mr-5 px-4 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 >
-                  {cardType === "today" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
-                    "Today" 
-                  }
+                  Todays Events
                 </button>
 
 
                 <button
-                  onClick={() => {setTab("bookings") , setCardType("upcoming"), eventHandler("upcoming")}}
+                  onClick={() => {setTab("bookings") , setCardType("upcoming")}}
                   className={` ${
                     cardType === "upcoming" &&
                     "bg-primaryColor text-white font-normal"
-                  } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+                  } p-2 mr-5 px-5 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 >
-                   {cardType === "upcoming" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
-                    "Upcoming" 
-                  } 
+                  Upcoming Events
                 </button>
 
                 <button
-                onClick={() => {setTab("bookings") , setCardType("completed"), eventHandler("completed")}}
+                onClick={() => {setTab("bookings") , setCardType("completed")}}
                   className={` ${
                     cardType === "completed" &&
                     "bg-primaryColor text-white font-normal"
-                  } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+                  } p-2 mr-5 px-5 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 >
-                   {cardType === "completed" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
-                    "Completed" 
-                  } 
+                  Past Events
                 </button>
 
 
                 <button
-                  onClick={() => {setTab("bookings"), setCardType("cancelled"), eventHandler("cancelled")}}
+                  onClick={() => {setTab("bookings"), setCardType("cancelled")}}
                   className={` ${
                     cardType === "cancelled" &&
                     "bg-primaryColor text-white font-normal"
-                  } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+                  } p-2  px-2 rounded-md text-headingColor
 font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 >
-                   {cardType === "cancelled" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
-                    "Cancelled" 
-                  }
+                  Cancelled Events
                 </button>
                 
-            </div>
+                
+                
+             
+
               {tab === "bookings" ? (
                 <MyBookingsHost eventsData={eventsData} status={cardType} />
               ) : (
@@ -222,4 +260,4 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
     </section>
   );
 };
-export default HostAccount;
+export default ExpertAccount;

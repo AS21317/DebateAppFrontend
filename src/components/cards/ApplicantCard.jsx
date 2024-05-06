@@ -26,12 +26,12 @@ const sociallinks = [
   },
 ];
 
-const ApplicantCard = ({ user,id,expertise = [], name = "", email="", noOfEvents=0, reviewsCt=0, rating=0, photo="" }) => {
-  expertise = ["Debate", "GD"];
+const ApplicantCard = ({ applicantData ,role="host" }) => {
+  // expertise = ["Debate", "GD"];
 //   name = "Richard Hendricks";
 //   email = "demo@gmail.com";
 //   photo = faq1
-console.log(user,"User here")
+console.log(applicantData,"applicantData here")
   useEffect(() => {
     const handleOutsideClick = (event) => {
       const modal = document.getElementById("my_modal_1");
@@ -54,15 +54,15 @@ console.log(user,"User here")
           <div class="flex items-center">
             <img
               class="h-14 w-14 rounded-full object-cover"
-              src={photo}
+              src={applicantData.user.photo}
               alt="Simon Lewis"
             />
 
             <div class="ml-4 w-56">
-              <p class="text-slate-800 text-xl font-extrabold">{name}</p>
-              <p class="text-slate-500">{email}</p>
+              <p class="text-slate-800 text-xl font-extrabold">{applicantData.user.name}</p>
+              <p class="text-slate-500">{applicantData.user.email}</p>
               <div className="flex flex-wrap gap-1">
-                {expertise.map((interest) => {
+                {applicantData.expertise.map((interest) => {
                   return (
                     <span class="mt-1 bg-lime-300 w-fit font-bold text-slate-900 py-1 px-2 rounded-[50px]">
                       {interest}
@@ -75,21 +75,21 @@ console.log(user,"User here")
           <div class="flex mt-6 space-x-2">
             <div class="flex flex-col items-center rounded-xl bg-gray-100 px-4 py-2">
               <p class="text-sm font-medium text-gray-500">Events</p>
-              <p class="text-3xl font-medium text-gray-600">{noOfEvents}</p>
+              <p class="text-3xl font-medium text-gray-600">{applicantData.user.events.length}</p>
             </div>
             <div class="flex flex-col items-center rounded-xl bg-gray-100 px-4 py-2">
               <p class="text-sm font-medium text-gray-500">Reviews</p>
-              <p class="text-3xl font-medium text-gray-600">{reviewsCt}</p>
+              <p class="text-3xl font-medium text-gray-600">{applicantData.user.events.length}</p>
             </div>
             <div class="flex flex-col items-center rounded-xl bg-gray-100 px-4 py-2">
               <p class="text-sm font-medium text-gray-500">Rating</p>
-              <p class="text-3xl font-medium text-gray-600">{rating}</p>
+              <p class="text-3xl font-medium text-gray-600">{applicantData.user.averageRating}</p>
             </div>
             <div class=""></div>
           </div>
 
           {/* Use this social media link later  */}
-          {/* <div className="flex justify-around  mb-5 mt-6">
+          <div className="flex justify-around  mb-5 mt-6">
             {sociallinks.map((link, index) => (
               <Link
                 to={link.path}
@@ -103,15 +103,15 @@ console.log(user,"User here")
                 {link.icon}
               </Link>
             ))}
-          </div> */}
+          </div>
 
           <hr className="h-1 my-2 bg-gray-500" />
 
           <Link
-		   to={{
-			pathname: `/admin/applicantProfile/${id}`,
-			state: {userData:user}
-		 }}
+            to={{
+            pathname: `/admin/${role}ApplicantProfile/${applicantData._id}`,
+            
+          }}
 			
             class=" w-full text-center block mt-2 rounded-lg border-2 bg-blue-600 text-white px-4 py-2 font-semibold"
           >

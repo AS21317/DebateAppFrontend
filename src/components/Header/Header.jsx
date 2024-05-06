@@ -149,7 +149,7 @@ const Header = () => {
             <Link to={!admin ? "/admin/home" : "/home"}>
               <button
                 onClick={(e) => setAdmin((prevAdmin) => !prevAdmin)}
-                className="bg-primaryColor py-[2]  px-6 text-white font-[600] h-[44px] flex items-center
+                className="bg-primaryColor sm:py-[2]  sm:px-6 text-white font-[600] h-[44px] flex items-center
             justify-center rounded-[50px]"
               >
                 {!admin ? "Admin Page" : "Home Page"}
@@ -162,7 +162,7 @@ const Header = () => {
             <Link to={host ? "/host/home" : "/home"}>
               <button
                 onClick={(e) => setHost((prevAdmin) => !prevAdmin)}
-                className="bg-primaryColor py-[2]  px-6 text-white font-[600] h-[44px] flex items-center
+                className="bg-primaryColor px-2  sm:py-2 sm:px-6 text-white font-[600] h-[30px] sm:h-[44px] flex items-center
             justify-center rounded-[50px]"
               >
                 {host ? "Host Page" : "Home Page"}

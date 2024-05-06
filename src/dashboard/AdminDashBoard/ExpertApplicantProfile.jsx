@@ -39,7 +39,7 @@ const sociallinks = [
   },
 ];
 
-const ApplicantProfile = () => {
+const ExpertApplicantProfile = () => {
   const [tab, setTab] = useState("about");
   const [showLoader,setShowLoader]= useState(false)
   const {token} = useContext(authContext)
@@ -47,16 +47,16 @@ const ApplicantProfile = () => {
   const { id } = useParams();  
 
  
-
-  const {loading,error,data:applicationData} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/hostApplication/${id}`)
+// fetch applicant detaiil to show at admin page
+  const {loading,error,data:applicationData} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/expertApplication/get?_id=${id}`)
 //   console.log(applicationData,"application user")
-
   
+// handle admin response for application
  const handleAccept = async()=>{
         setShowLoader((true))
         try {
-            const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/auth/registerHost/${id}`, {
-              method: "POST",
+            const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/expertApplication/approve/${id}`, {
+              method: "PUT",
               headers: {
                 "Content-Type": "application/json",
                   "Authorization": `Bearer ${token}` 
@@ -92,14 +92,14 @@ const ApplicantProfile = () => {
             setShowLoader(false);
             toast.success(result.message);
             Navigate('/admin/home')
-          } catch (err) {
-            toast.error(error.message);
-            setShowLoader(false);
-          }
-        };
+        } catch (err) {
+        toast.error(error.message);
+        setShowLoader(false);
+        }
+    };
     
- 
-  const {expertise,user,applicationForm}= applicationData;
+    if(!applicationData.length) applicationData.push({}) 
+    const {expertise, user, applicationForm } = applicationData[0];
 //   console.log("user",user)
 //   console.log("applicationForm",applicationForm)
 //   console.log("expertise",expertise)
@@ -114,7 +114,7 @@ const ApplicantProfile = () => {
             <div className="md:col-span-2">
               <div className="flex  gap-20">
                 <div class="flex h-60 flex-col justify-between overflow-hidden">
-                  <img src={debateImg} class=" h-full w-full object-cover " />
+                  <img src={user.photo} class=" h-full w-full object-cover " />
                 </div>
 
                 <div>
@@ -279,4 +279,4 @@ const ApplicantProfile = () => {
 }
 
 
-export default ApplicantProfile;
+export default ExpertApplicantProfile;
