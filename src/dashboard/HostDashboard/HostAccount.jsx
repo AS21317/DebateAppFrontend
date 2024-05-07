@@ -214,7 +214,7 @@ font-semibold text-[16px] leading-7 border border-solid
                 </button>
                 
             </div>
-              {tab === "bookings" ? (
+              {tab === "bookings" ? ( !showLoader &&
                 <MyBookingsHost eventsData={eventsData} status={cardType} />
               ) : (
                 <Profile user={userData} />

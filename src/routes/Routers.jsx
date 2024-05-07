@@ -103,8 +103,8 @@ const Routers = () => {
             <Route path="/admin/userDashboard" element={<AdminUserDashboard/>} />
             <Route path="/admin/hostDashboard" element={<AdminHostDashboard/>} />
 
-            <Route path="/host/userDashboard" element={<HostUserDashboard/>} />
-            <Route path="/host/HostDashboard" element={<HostHostDashboard/>} />
+            <Route path="/host/userDashboard" element={<ProtectedRoute allowedRoles={['host']}><HostUserDashboard/></ProtectedRoute>} />
+            <Route path="/host/HostDashboard" element={<ProtectedRoute allowedRoles={['host']}><HostHostDashboard/></ProtectedRoute>} />
             
             <Route path="/coAdmin/userDashboard" element={<CoAdminUserDashboard/>} />
             <Route path="/coAdmin/hostDashboard" element={<CoAdminHostDashboard/>} />
