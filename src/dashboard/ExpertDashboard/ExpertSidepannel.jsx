@@ -9,8 +9,8 @@ import Sidebar, { SidebarItem } from '../AdminDashBoard/Sidebar';
 const ExpertSidePannel = ({role}) => {
   return (
     <Sidebar  >
-          <SidebarItem icon={<LayoutDashboard size={20} />} text="User Dashboard" to="/host/userDashboard"  />
-          <SidebarItem icon={<LayoutDashboard size={20} />} text="Host Dashboard" to="/host/HostDashboard"  />
+          <SidebarItem icon={<LayoutDashboard size={20} />} text="User Dashboard" to="/expert/userDashboard"  />
+          <SidebarItem icon={<LayoutDashboard size={20} />} text="ExpertDasboard Dashboard" to="/expert/HostDashboard"  />
          
           <SidebarItem icon={<Calendar size={20} />} text="Calendar" to="/host/calender" />
           <SidebarItem icon={<StickyNote size={20} />} text="Create Events" to="/host/createEvent" alert />

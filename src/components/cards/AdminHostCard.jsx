@@ -26,8 +26,8 @@ const sociallinks = [
   },
 ];
 
-const ApplicantHostCard = ({ user,id,areaOfInterests = [], name = "", email="", noOfEvents=0, reviewsCt=0, rating=0, photo="" }) => {
-  areaOfInterests = ["Debate", "GD"];
+const ApplicantHostCard = ({ user,id,areaOfInterests = [],expertise=[], name = "", email="", noOfEvents=0, reviewsCt=0, rating=0, photo="",role="expert" }) => {
+  // areaOfInterests = ["Debate", "GD"]; 
 //   name = "Richard Hendricks";
 //   email = "demo@gmail.com";
 //   photo = faq1
@@ -54,15 +54,15 @@ console.log(user,"User here")
           <div class="flex items-center">
             <img
               class="h-14 w-14 rounded-full object-cover"
-              src={photo}
+              src={user.photo}
               alt="Simon Lewis"
             />
 
             <div class="ml-4 w-56">
-              <p class="text-slate-800 text-xl font-extrabold">{name}</p>
-              <p class="text-slate-500">{email}</p>
+              <p class="text-slate-800 text-xl font-extrabold">{user.name}</p>
+              <p class="text-slate-500">{user.email}</p>
               <div className="flex flex-wrap gap-1">
-                {areaOfInterests.map((interest) => {
+                {(role==="expert"?expertise: areaOfInterests).map((interest) => {
                   return (
                     <span class="mt-1 bg-lime-300 w-fit font-bold text-slate-900 py-1 px-2 rounded-[50px]">
                       {interest}
@@ -112,7 +112,7 @@ console.log(user,"User here")
 <Link
 		   to={{
 			pathname: `/admin/applicantProfile/${id}`,
-			state: {userData:user}
+	
 		 }}
 			
             class=" w-full text-center block mt-2 rounded-lg border-2 bg-blue-600 text-white px-2 py-2 font-semibold"
@@ -123,7 +123,7 @@ console.log(user,"User here")
           <Link
 		   to={{
 			pathname: `/admin/applicantProfile/${id}`,
-			state: {userData:user}
+			
 		 }}
 			
             class=" w-full text-center block mt-2 rounded-lg border-2 bg-orange-600 text-white px-4 py-2 font-semibold"
@@ -135,7 +135,7 @@ console.log(user,"User here")
 <Link
 		   to={{
 			pathname: `/admin/applicantProfile/${id}`,
-			state: {userData:user}
+		
 		 }}
 			
             class=" w-full text-center block mt-2 rounded-lg border-2 bg-red-600 text-white px-4 py-2 font-semibold"

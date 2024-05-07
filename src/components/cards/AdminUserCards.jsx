@@ -53,13 +53,12 @@ const AdminUserCards = ({ userData, index }) => {
 
       console.log(result, "Request data is here ");
 
+      toast.success(result.message)
       setLoading(false);
       setApplications(result.data);
-      // toast.success(result.message);
-      toast.success("hii")
     } catch (err) {
-      toast.error(err);
       setLoading(false);
+      toast.error(err);
     }
   };
 

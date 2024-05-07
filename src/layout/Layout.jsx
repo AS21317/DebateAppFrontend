@@ -7,10 +7,10 @@ const Layout = () => {
   return (
     <>
     <Header/>
-<main>
-<Routers/>
-</main>
-<Footer/>
+      <main>
+        <Routers/>
+      </main>
+    <Footer/>
     </>
   )
 }

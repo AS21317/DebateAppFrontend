@@ -287,7 +287,29 @@ const EventCard = ({ event, role = "user" }) => {
                   </div>
                 </div>
 
+                <div className="flex items-center mb-2">
+                  <BsPersonPlus color="#60a5fa" size={15} />
+                  <p className="ml-2 text-sm">
+                    {"Seats Availability: "}
+                    <span className="font-semibold text-red-500">{(seatsAvailable || !isRegistered)? seatsAvailable: "Fully Booked"}</span>
+                  </p>
+                </div>
+
                 <div className="flex mb-2 border-t border-gray-200 "></div>
+
+                {event.type === "ExpertTalk" &&<div className=" flex flex-row items-center gap-2 mb-1">
+                  <img
+                    src={event.expert?.user?.photo}
+                    alt={"Expert"}
+                    width={25}
+                    height={25}
+                    className="rounded-full"
+                  />
+                  <span className="text-sm capitalize font-medium">
+                    {event.expert?.user?.name} ( Expert )
+                  </span>
+                </div>
+                }
 
                 <div className=" flex flex-row items-center gap-2 mb-1">
                   <img
@@ -302,7 +324,7 @@ const EventCard = ({ event, role = "user" }) => {
                   </span>
                 </div>
 
-                <div className="flex flex-row items-center gap-2 mb-1">
+                {event.type !== "ExpertTalk" && <div className="flex flex-row items-center gap-2 mb-1">
                   <img
                     src={event.host.user.photo}
                     alt={"HostPic"}
@@ -313,7 +335,7 @@ const EventCard = ({ event, role = "user" }) => {
                   <span className="text-sm  font-medium">
                     {event.host.user.name} ( Co-Host )
                   </span>
-                </div>
+                </div>}
 
                 <div className="flex pb-4 mt-2 border-t border-gray-200 "></div>
 
@@ -321,22 +343,26 @@ const EventCard = ({ event, role = "user" }) => {
                   {role === "user" && (
                     <button
                       onClick={handleRegister}
-                      disabled={loading || isRegistered}
+                      disabled={loading || isRegistered || (!seatsAvailable)}
                       className={`mb-2 md:mb-0 px-5 py-2 shadow-sm tracking-wider text-white rounded-full ${
                         isRegistered
                           ? "bg-orange-500"
                           : "hover:bg-green-500 bg-green-600"
-                      }`}
+                      } ${!seatsAvailable && "hover:bg-red-500 bg-red-500"}`}
                       type="button"
                       aria-label="like"
                     >
-                      {loading ? (
-                        <HashLoader size={25} color="white" />
-                      ) : isRegistered ? (
-                        "Registered"
-                      ) : (
-                        "Register"
-                      )}
+                      {
+                        loading ? 
+                          <HashLoader size={25} color="white" />
+                         : isRegistered ? 
+                          "Registered"
+                         : seatsAvailable?
+                          "Register"
+                         :
+                          "Fully Booked"
+                      }
+
                     </button>
                   )}
 
@@ -398,7 +424,7 @@ const EventCard = ({ event, role = "user" }) => {
                     </dialog>
                   </div>
 
-                  {role === "requested" && (
+                  {role === "requested" ||role==="requestedByAdmin" && (
                     <>
                       <button
                         onClick={() => {

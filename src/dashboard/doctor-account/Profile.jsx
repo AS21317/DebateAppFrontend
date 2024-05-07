@@ -4,10 +4,12 @@ import UploadImageToCloudinary from "../../utils/uploadCloudinary";
 import { authContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import { toast } from "react-toastify";
+import { HashLoader } from "react-spinners";
 
 const Profile = ({profileData}) => {
 
   const {token}  = useContext(authContext)
+  const [loading,setLoading] = useState(false)
 
   const [formData, setFormData] = useState({
     name: "",
@@ -58,8 +60,10 @@ const Profile = ({profileData}) => {
 
   const handleFileInputChange=async(e)=>{
     const file = e.target.files[0]
+    setLoading(true)
 
     const data = await UploadImageToCloudinary(file)
+    setLoading(false)
     console.log("uploaded file is : ",data) 
     setFormData({...formData,photo:data?.url})
 
@@ -68,6 +72,7 @@ const Profile = ({profileData}) => {
 
   const updateProfileHandler =  async(e)=>{
     e.preventDefault()
+    setLoading(true)
     console.log("called here updation ")
     try {
       const res= await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/doctor/${doctorData._id}`,{
@@ -86,11 +91,15 @@ const Profile = ({profileData}) => {
         }
         console.log("Result is : ",result);
 
+        setLoading(false)
         toast.success(result.message)
 
 
+
     } catch (err) {
+      setLoading(false)
       toast.error(err.message)
+      
       
     }
 
@@ -185,8 +194,8 @@ const Profile = ({profileData}) => {
 
   return (
     <div>
-      <h2 className=" text-headingColor font-bold text-[24px] leading-9 mb-10  ">
-        Profile imformation
+      <h2 className=" text-headingColor mt-10 font-bold text-[24px] leading-9 mb-5  ">
+        Profile information
       </h2>
       <form onSubmit={updateProfileHandler}>
         <div className="mb-5">
@@ -511,13 +520,13 @@ flex items-center justify-center"
 375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor
 font-semibold rounded-lg truncate cursor-pointer"
                   >
-                    Upload Photo
+                   {loading?<HashLoader size={35} color="white" />: "Upload Photo"}
                   </label>
                 </div>
         </div>
 
         <div className="mt-7">
-          <button type="submit"  className="bg-primaryColor text-white text-[18px] leading-[30px] w-full px-4 py-3 rounded-lg">Update Profile</button>
+          <button type="submit"  className="bg-primaryColor text-white text-[18px] leading-[30px] w-full px-4 py-3 rounded-lg"> {loading?<HashLoader size={35} color="white" />: "Update Profile"}</button>
         </div>
       </form>
     </div>

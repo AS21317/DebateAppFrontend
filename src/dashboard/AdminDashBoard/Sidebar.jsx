@@ -50,7 +50,7 @@ export default function Sidebar({ children }) {
             style={{ background: `${isMobileScreen && 'rgba(0, 0, 0, 0.5)'}` }} 
             onClick={() => setExpanded(false)} 
         >
-            <div className={`${isMobileScreen && 'absolute left-0 z-1'} h-custom-height`} onClick={(e) => e.stopPropagation()}>
+            <div className={`${isMobileScreen && 'absolute left-0 z-1'} min-h-custom-height`} onClick={(e) => e.stopPropagation()}>
                 <nav className={`h-full  flex flex-col ${expanded ? "w-52" : "w-14 sm:w-20"} bg-white border-r shadow-sm`}>
                     <div className="p-2 sm:p-4  pb-2 flex justify-between items-center">
                         <img src={logo} className={`overflow-hidden transition-all ${expanded ? "w-[80px] sm:w-[125px]" : "hidden"}`} />

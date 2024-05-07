@@ -9,6 +9,7 @@ import useFetchData from "../../hooks/useFetchData";
 import { HashLoader } from "react-spinners";
 import { CgProfile } from "react-icons/cg";
 import { authContext } from "../../context/AuthContext";
+import ShortExpertCard from "./ShortExpertCard";
 
 const prepareSelectData = (datas=[], getLabel=()=>"") => {
   return datas.map((data) => {
@@ -58,21 +59,30 @@ const getHostLabel = (hostData) => {
   </div>
 }
 
+const getExpertLabel = (expertData) => {
+  return <ShortExpertCard expertData={expertData} />;
+}
+
 
 const CreateEventCard = () => {
 
   const{token}= useContext(authContext) 
 
-
+// fetching all topics and host and experts 
   const {loading: topicLoading, data: topicsData} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/topic/getAll`)
   const {loading: hostLoading, data: hostsData} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/host/getAll`)
-  const [eventLoading, setEventLoading] = useState(false);
+  const {loading: expertLoading, data: expertsData} = useFetchData(`${import.meta.env.VITE_BASE_URL}/api/v1/expert/get`)
+
+  console.log("fetched all expert data :",expertsData)
 
   const selectTopicsData = prepareSelectData(topicsData, getTopicLabel)
   const selectHostsData = prepareSelectData(hostsData, getHostLabel)
+  const selectExpertsData = prepareSelectData(expertsData, getExpertLabel)
+
 
   console.log(topicsData, selectTopicsData)
   console.log(hostsData, selectHostsData)
+  console.log(expertsData, selectExpertsData)
 
 
   // To handle modal openning and closing
@@ -92,27 +102,39 @@ const CreateEventCard = () => {
     };
   }, []);
 
-  const [formData, setFormData] = useState({
+  const defaultFormData = {
     topic: "",
     endDate: "",
     startDate:"",
    
-    hostId: "",
+    host: "",
+    coHost:"",
     startTime:"",
     endTime:"",
     description: "",
     maxAttendees: 0,
     type: "",
-    
+    expert: "",
     photo: null,
-  });
+  }
+  const [formData, setFormData] = useState(defaultFormData);
+
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  
+
+  const handleCoHostSelect = (selectedOption) => {
+    setFormData({ ...formData, coHost: selectedOption.value });
+  }
+
+  const handleExpertSelect = (selectedOption) => {
+    setFormData({ ...formData, expert: selectedOption.value });
+  }
 
   const handleHostSelect = (selectedOption) => {
-    setFormData({ ...formData, hostId: selectedOption.value });
+    setFormData({ ...formData, host: selectedOption.value });
   };
 
   const handleTopicSelect = (selectedOption) => {
@@ -127,13 +149,18 @@ const CreateEventCard = () => {
     setFormData({ ...formData, photo: data?.url });
   };
 
-  console.log("Form data is : ", formData);
+
 
   const createEventHandler = async (e) => {
     e.preventDefault();
+    if(formData.host === formData.coHost)
+      {
+        window.alert("Host and cohost can not me same ")
+      }
+    console.log("Form data is : ", formData);
         try {
           // Replace the API endpoint with your event creation endpoint
-          const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/events/create/${formData.hostId}`, {
+          const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/events/create`, {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -148,7 +175,7 @@ const CreateEventCard = () => {
           }
           console.log("Result is : ", result);
           toast.success(result.message);
-          setFormData("")
+          setFormData(defaultFormData)
         } catch (err) {
           toast.error(err.message);
         }
@@ -160,7 +187,7 @@ const CreateEventCard = () => {
         Create A new Event
       </h2>
 
-      <div className="grid px-6 grid-cols-2 gap-8">
+      <div className="grid px-6 grid-cols-1  mx-auto sm:grid-cols-2 gap-8">
         <div>
           <form onSubmit={createEventHandler}>
             <div className="mb-5">
@@ -177,16 +204,25 @@ const CreateEventCard = () => {
                 className="form__input"
               >
                 <option value="">Select Event Type</option>
-                <option value="debate">Debate</option>
-                <option value="groupDiscussion">Group Discussion</option>
-                <option value="expertTalk">Expert Talk</option>
+                <option value="Debate">Debate</option>
+                <option value="GD">Group Discussion</option>
+                <option value="ExpertTalk">Expert Talk</option>
               </select>
             </div>
 
             <p className="form__label">Assigned Host*</p>
-            <p className="form__label">Name*</p>
               {hostLoading && <HashLoader />}
               {!hostLoading && <SearchingCard type={"host"} onHostSelect={handleHostSelect} data={selectHostsData} />}
+            
+            <p className="form__label mt-5">Assigned CoHost*</p>
+              {hostLoading && <HashLoader />}
+              {!hostLoading && <SearchingCard type={"coHost"} onHostSelect={handleCoHostSelect} data={selectHostsData} />}
+
+            {formData.type === "ExpertTalk" && <>
+              <p className="form__label mt-5">Assigned Expert*</p>
+              {expertLoading && <HashLoader />}
+              {!expertLoading && <SearchingCard type={"expert"} onHostSelect={handleExpertSelect} data={selectExpertsData} />}
+            </>}
 
             {/* Add more fields for event details */}
             {/* Date */}

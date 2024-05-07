@@ -121,7 +121,7 @@ const HostAccount = () => {
               <div className="mt-[30px] md:mt-[50px] ">
 
               <button
-                  onClick={()=>{setTab("bookings"),setCardType("pending"), eventHandler("pending")}}
+                  onClick={()=>{setTab("bookings"),setCardType("requestedByAdmin"), eventHandler("requestedByAdmin")}}
                   className="w-full bg-[#8e8821] p-3 font-semibold  mt-4 text-[16px] leading-7 rounded-md text-white"
                 >
                   Requested Events {
@@ -161,7 +161,8 @@ const HostAccount = () => {
                     cardType === "today" &&
                     "bg-primaryColor text-white font-normal"
                   } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+font-semibold text-[16px] leading-7 border border-solid
+ border-primaryColor`}
                 >
                   {cardType === "today" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
                     "Today" 
@@ -175,7 +176,8 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                     cardType === "upcoming" &&
                     "bg-primaryColor text-white font-normal"
                   } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+font-semibold text-[16px] leading-7 border border-solid
+ border-primaryColor`}
                 >
                    {cardType === "upcoming" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
                     "Upcoming" 
@@ -188,7 +190,8 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                     cardType === "completed" &&
                     "bg-primaryColor text-white font-normal"
                   } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+font-semibold text-[16px] leading-7 border border-solid
+ border-primaryColor`}
                 >
                    {cardType === "completed" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
                     "Completed" 
@@ -202,7 +205,8 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                     cardType === "cancelled" &&
                     "bg-primaryColor text-white font-normal"
                   } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+font-semibold text-[16px] leading-7 border border-solid
+ border-primaryColor`}
                 >
                    {cardType === "cancelled" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
                     "Cancelled" 

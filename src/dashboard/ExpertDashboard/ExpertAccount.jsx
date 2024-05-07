@@ -40,17 +40,17 @@ const ExpertAccount = () => {
   };
 
   const eventHandler = async (status)=>{
+    
     setShowLoader(true)
     try {
       console.log("calling this ")
-        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/events/getByHostAndStatus`, {
-            method: "POST",
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/events/getByExpertAndStatus/${userData._id}/${status}`, {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}` 
             },
-            body: JSON.stringify({status:status,userId:userData._id}),
-        
+          
         });
 
         
@@ -72,7 +72,7 @@ const ExpertAccount = () => {
         // });
     
 
-        console.log(result ,"Request Event   is here ");
+        console.log(result ,"Requested Expert Event    is here ");
 
         
 
@@ -129,22 +129,18 @@ const ExpertAccount = () => {
           </div>
                <div className="flex mb-2 justify-between gap-2 px-8">
             <p className="flex-1  text-black-500 font-bold ">
-              Total Debates:
+              Total Talks:
             </p>
             <p className='font-semibold'>5</p>
           </div>
-          <div className="flex mb-2 justify-between gap-2 px-8">
-            <p className="flex-1  text-black-500 font-bold ">
-              Total GD:
-            </p>
-            <p className='font-semibold'>15</p>
-          </div>
+          
           <div className="flex mb-2 justify-between gap-2 px-8">
             <p className="flex-1  text-black-500 font-bold ">
               Total Reviews:
             </p>
             <p className='font-semibold'>45</p>
           </div>
+
           <div className="flex mb-2 justify-between gap-2 px-8">
             <p className="flex-1  text-black-500 font-bold ">
               Avg Rating:
@@ -156,20 +152,22 @@ const ExpertAccount = () => {
 
               <div className="mt-[30px] md:mt-[50px] ">
 
-              <button
-                  onClick={()=>{setTab("bookings"),setCardType("pending"), eventHandler("pending")}}
+                {/* ===>>> Will implemnt this functionality later  */}
+                
+              {/* <button
+                  onClick={()=>{setTab("bookings"),setCardType("requestedByExpert"), eventHandler("requestedByExpert")}}
                   className="w-full bg-[#2aa45b] p-3 font-semibold  mt-4 text-[16px] leading-7 rounded-md text-white"
                 >
-                  Request to Admin {
+                  Requested to Admin {
                     cardType === "pending" && eventsData && `(${eventsData.length})`
                   }
-                </button>
+                </button> */}
 
                 <button
-                  onClick={()=>{setTab("bookings"),setCardType("pending"), eventHandler("pending")}}
+                  onClick={()=>{setTab("bookings"),setCardType("requestedByAdmin"), eventHandler("requestedByAdmin")}}
                   className="w-full bg-[#434114] p-3 font-semibold  mt-4 text-[16px] leading-7 rounded-md text-white"
                 >
-                  Request from Admin {
+                  Requested from Admin {
                     cardType === "pending" && eventsData && `(${eventsData.length})`
                   }
                 </button>
@@ -196,53 +194,71 @@ const ExpertAccount = () => {
               </div>
             </div>
 
-            <div className="md:col-span-2 md:px-[30px] ml-0">
-              
+            <div className="md:col-span-2 gap-y-5 md:px-[30px]  ml-4">
+            <h1  className="text-2xl font-semibold ml-2  ">Events</h1>
+            <div className=" w-full h-1 border-t-2 mb-2  "></div>
+
+            <div className=" flex flex-wrap justify-center sm:justify-normal gap-y-4 ">
+ 
             <button
-                  onClick={() => {setTab("bookings") , setCardType("today")}}
+                  onClick={() => {setTab("bookings") , setCardType("today"), eventHandler("today")}}
                   className={` ${
                     cardType === "today" &&
                     "bg-primaryColor text-white font-normal"
-                  } p-2 mr-5 px-4 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+                  } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+font-semibold text-[16px] leading-7 border border-solid
+ border-primaryColor`}
                 >
-                  Todays Events
+                {cardType === "today" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
+                    "Today" 
+                  }
                 </button>
 
 
                 <button
-                  onClick={() => {setTab("bookings") , setCardType("upcoming")}}
+                  onClick={() => {setTab("bookings") , setCardType("upcoming"), eventHandler("upcoming")}}
                   className={` ${
                     cardType === "upcoming" &&
+                    cardType === "upcoming" &&
                     "bg-primaryColor text-white font-normal"
-                  } p-2 mr-5 px-5 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+                  } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+font-semibold text-[16px] leading-7 border border-solid
+ border-primaryColor`}
                 >
-                  Upcoming Events
+                  {cardType === "upcoming" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
+                    "Upcoming" 
+                  } 
                 </button>
 
                 <button
-                onClick={() => {setTab("bookings") , setCardType("completed")}}
+                onClick={() => {setTab("bookings") , setCardType("completed"), eventHandler("completed")}}
                   className={` ${
                     cardType === "completed" &&
                     "bg-primaryColor text-white font-normal"
-                  } p-2 mr-5 px-5 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+                  } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+font-semibold text-[16px] leading-7 border border-solid
+ border-primaryColor`}
                 >
-                  Past Events
+                 {cardType === "completed" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
+                    "Completed" 
+                  } 
                 </button>
 
 
                 <button
-                  onClick={() => {setTab("bookings"), setCardType("cancelled")}}
+                  onClick={() => {setTab("bookings"), setCardType("cancelled"), eventHandler("cancelled")}}
                   className={` ${
                     cardType === "cancelled" &&
                     "bg-primaryColor text-white font-normal"
-                  } p-2  px-2 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+                  } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+font-semibold text-[16px] leading-7 border border-solid
+ border-primaryColor`}
                 >
-                  Cancelled Events
+                {cardType === "cancelled" && showLoader? <HashLoader size={25} color="white" className="w-full mx-auto" />:
+                    "Cancelled" 
+                  }
                 </button>
+                </div>
                 
                 
                 

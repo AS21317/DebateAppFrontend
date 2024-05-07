@@ -1,5 +1,5 @@
-import React from 'react'
-import {Routes,Route} from 'react-router-dom'
+import React, { useEffect } from 'react'
+import {Routes,Route, useNavigate} from 'react-router-dom'
 import Home from '../Pages/Home'
 import Service from '../Pages/Service'
 import Login from '../Pages/Login'
@@ -56,9 +56,22 @@ import ExpertApplicants from '../dashboard/AdminDashBoard/ExpertApplicants'
 import ExpertDashboard from '../dashboard/ExpertDashboard/ExpertDashboard'
 import HostapplicantProfile from '../dashboard/AdminDashBoard/HostapplicantProfile'
 import ExpertApplicantProfile from '../dashboard/AdminDashBoard/ExpertApplicantProfile'
+import ExpertHomePage from '../dashboard/ExpertDashboard/ExpertHomePage'
+
+
+const RedirectComponent = () => {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    navigate('/errorPage');
+  }, [navigate]);
+
+  return <></>
+}
 
 
 const Routers = () => {
+
   return ( <Routes>
             <Route path='/' element={<Home/>} />
             <Route path='/home' element={<Home/>} />
@@ -80,7 +93,9 @@ const Routers = () => {
             <Route path='/admin/home' element={<AdminHomePage/>} />
 
             <Route path='/host/home' element={<HostHomePage/>} />
+            <Route path='/host/hosts' element={<HostHomePage/>} />
             <Route path='/coAdmin/home' element={<CoAdminHomePage/>} />
+            <Route path='/expert/home' element={<ExpertHomePage/>} />
 
 
 
@@ -93,6 +108,8 @@ const Routers = () => {
             
             <Route path="/coAdmin/userDashboard" element={<CoAdminUserDashboard/>} />
             <Route path="/coAdmin/hostDashboard" element={<CoAdminHostDashboard/>} />
+            <Route path='/expert/dashBoard' element={<ExpertDashboard/>} />
+            <Route path="/expert/userDashboard" element={<CoAdminUserDashboard/>} />
 
             
             
@@ -134,13 +151,15 @@ const Routers = () => {
             <Route path='/services/debate/details' element={<DebateDetails/>} />
             <Route path='/services/gd/details' element={<GdDetails/>} />
             <Route path='/services/et/details' element={<ExpertTalkDetails/>} />
-            <Route path='/applyForExpert' element={<ProtectedRoute allowedRoles={['user','admin']}><ExpertApplicationPage/></ProtectedRoute>} />
+            <Route path='/applyForExpert' element={<ProtectedRoute allowedRoles={['user','admin','expert','host']}><ExpertApplicationPage/></ProtectedRoute>} />
            
             <Route path='/expertDashboard' element={<ExpertDashboard/>} />
 
+            
+            {/* Error Page */}
+            <Route path="/errorPage" element={<ErrorPage />} />
 
-              {/* Error Page */}
-            <Route path='*' element={<ErrorPage />} />
+            <Route path='*' element={<RedirectComponent/>} />
   </Routes>
   )
 }

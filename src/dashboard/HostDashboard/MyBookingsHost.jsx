@@ -47,12 +47,20 @@ const MyBookingsHost
              
             
            </div>:status==="pending"?<div className='flex flex-wrap justify-evenly gap-x-5 gap-y-4'>
-           {eventsData.map((eventData)=><EventCard role={"requested"} event={eventData} />)}
+           {eventsData.map((eventData)=><EventCard role={"requestedByAdmin"} event={eventData} />)}
 
            
              
             
-           </div>:<div className='flex flex-wrap justify-evenly gap-x-5 gap-y-4'>
+           </div>:status==="requestedByAdmin"?
+           
+           <div className='flex flex-wrap justify-evenly gap-x-5 gap-y-4'>
+           {eventsData.map((eventData)=><EventCard role={"requestedByAdmin"} event={eventData} />)}</div>
+           
+           :status==="requestedToAdmin"?
+           
+           <div className='flex flex-wrap justify-evenly gap-x-5 gap-y-4'>
+           {eventsData.map((eventData)=><EventCard role={"requestedByAdmin"} event={eventData} />)}</div>:<div className='flex flex-wrap justify-evenly gap-x-5 gap-y-4'>
            {eventsData.map((eventData)=><EventCard role={"cancelled"} event={eventData} />)}
 
              

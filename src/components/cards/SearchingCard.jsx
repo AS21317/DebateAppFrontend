@@ -10,6 +10,8 @@ const Checkbox = ({ children, ...props }) => (
 
 const defaultTopic = [{value:null,label:"Select Topic Name",color:"#qwe32e"}]
 const defaultHost = [{value:null,label:"Select Host Name",color:"#qwe32e"}]
+const defaultExpert = [{value:null,label:"Select Expert Name",color:"#qwe32e"}]
+const defaultCoHost = [{value:null,label:"Select Co-Host Name",color:"#qwe32e"}]
 
 const colourOptions = [
   { value: null, label: 'Select Topic Name', color: '#00B8D9' },
@@ -32,6 +34,12 @@ const SearchingCard
   const [isLoading, setIsLoading] = useState(false);
   const [isRtl, setIsRtl] = useState(false);
 
+  let defaultVal = defaultTopic[0]
+  if(type === "host") defaultVal = defaultHost[0]
+  if(type === "coHost") defaultVal = defaultCoHost[0]
+  if(type === "expert") defaultVal = defaultExpert[0]
+
+
   const handleHostSelect = (selectedOption) => {
     // Pass the selected option to the parent component
     console.log("selected option is: ",selectedOption)
@@ -43,12 +51,12 @@ const SearchingCard
       <Select
         className="basic-single"
         classNamePrefix="select"
-        defaultValue={type==="topic"? defaultTopic[0]: defaultHost[0]}
-        isDisabled={isDisabled}
-        isLoading={isLoading}
-        isClearable={isClearable}
-        isRtl={isRtl}
-        isSearchable={isSearchable}
+        defaultValue={defaultVal}
+        // isDisabled={isDisabled}
+        // isLoading={isLoading}
+        // isClearable={isClearable}
+        // isRtl={isRtl}
+        // isSearchable={isSearchable}
         name="color"
         options={data}
         onChange={handleHostSelect}

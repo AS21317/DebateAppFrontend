@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useContext, useState } from "react";
 
 import logo from "../../assets/images/logo3.png";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation, useLoaderData } from "react-router-dom";
 import userImage from "../../assets/images/avatar-icon.png";
 import Login from "../../Pages/Login";
 import { authContext } from "../../context/AuthContext";
@@ -80,35 +80,77 @@ const coAdminNavLinks = [
   },
 ];
 
-const hostNavLinks = [
-  {
-    path: "/host/home",
-    display: "Home",
-  },
-  {
-    path: "/host/hosts",
-    display: "View all Hosts",
-  },
-  {
-    path: "/host/experts",
-    display: "View All Experts ",
-  },
-  {
-    path: "/host/events",
-    display: "View All Events",
-  },
-];
+
 
 const Header = () => {
-  const [admin, setAdmin] = useState(false);
-  const [host, setHost] = useState(false);
-  const [coAdmin, setCoadmin] = useState(false);
+
   const headerRef = useRef(null);
   const menuRef = useRef(null);
   const { user, role: newRole, token } = useContext(authContext);
-  const [role, setRole] = useState(newRole);
+  // const [role, setRole] = useState(newRole);
   // console.log("user info save : ",user,role,token);
   console.log("Role is  : ", user, newRole);
+
+
+  let isOnDashboard = localStorage.getItem("isOnDashboard")
+  isOnDashboard = (isOnDashboard === "true"? true: false)
+
+  const location = useLocation()
+
+  const dashboard = location.pathname.includes('admin') || location.pathname.includes('host') || location.pathname.includes('coAdmin') || location.pathname.includes('expert')
+  if(dashboard){
+    localStorage.setItem("isOnDashboard", true)
+    isOnDashboard = true;
+  }
+
+
+
+  const [admin, setAdmin] = useState(isOnDashboard);
+  const [host, setHost] = useState(isOnDashboard);
+  const [coAdmin, setCoadmin] = useState(isOnDashboard);
+  const [expert, setExpert] = useState(isOnDashboard);
+
+
+  useEffect(() => {
+    const confirmBeforeUnload = (e) => {
+      // Cancel the event
+      // e.preventDefault();
+
+      // Chrome requires the returnValue property to be set
+      // e.returnValue = '';
+
+      localStorage.setItem("isOnDashboard", false)
+    };
+
+    // Add the event listener when the component mounts
+    window.addEventListener('beforeunload', confirmBeforeUnload);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('beforeunload', confirmBeforeUnload);
+    };
+  }, []); 
+
+
+  const hostNavLinks = [
+    {
+      path: `/${newRole === "expert"? "expert": "host"}/home`,
+      display: "Home",
+    },
+    {
+      path: "/hosts",
+      display: "View all Hosts",
+    }, 
+    {
+      path: "/experts",
+      display: "View All Experts ",
+    },
+    {
+      path: "/events",
+      display: "View All Events",
+    },
+  ];
+
 
   const handleStickyHeader = () => {
     window.addEventListener("scroll", () => {
@@ -133,6 +175,8 @@ const Header = () => {
     menuRef.current.classList.toggle("show__menu");
   };
 
+
+  if(location.pathname.includes('errorPage')) return <></>
   return (
     <header className="header flex  shadow-md justify-center items-center" ref={headerRef}>
       <div className="container px-1  ">
@@ -145,57 +189,70 @@ const Header = () => {
           </div>
 
           {/* To show the respective dashboard logic is written here  */}
-          {newRole == "admin" ? (
+          {newRole === "admin" ? (
             <Link to={!admin ? "/admin/home" : "/home"}>
               <button
-                onClick={(e) => setAdmin((prevAdmin) => !prevAdmin)}
+                onClick={(e) => setAdmin((prevAdmin) => {
+                  localStorage.setItem("isOnDashboard", !prevAdmin)
+                  return !prevAdmin;
+                })}
                 className="bg-primaryColor sm:py-[2]  sm:px-6 text-white font-[600] h-[44px] flex items-center
             justify-center rounded-[50px]"
               >
-                {!admin ? "Admin Page" : "Home Page"}
+                {!admin ? "Admin Page" : "User Page"}
               </button>
             </Link>
           ) : null}
 
           {/* To show the respective dashboard logic is written here  */}
-          {newRole == "host" ? (
-            <Link to={host ? "/host/home" : "/home"}>
+          {newRole === "host" ? (
+            <Link to={!host ? "/host/home" : "/home"}>
               <button
-                onClick={(e) => setHost((prevAdmin) => !prevAdmin)}
+                onClick={(e) => setHost((prevAdmin) => {
+                  localStorage.setItem("isOnDashboard", !prevAdmin)
+                  return !prevAdmin;
+                })}
                 className="bg-primaryColor px-2  sm:py-2 sm:px-6 text-white font-[600] h-[30px] sm:h-[44px] flex items-center
             justify-center rounded-[50px]"
               >
-                {host ? "Host Page" : "Home Page"}
+                {!host ? "Host Page" : "Home Page"}
               </button>
             </Link>
           ) : null}
 
-          {newRole == "coAdmin" ? (
-            <Link to={host ? "/coAdmin/home" : "/home"}>
+          {newRole === "coAdmin" ? (
+            <Link to={!coAdmin ? "/coAdmin/home" : "/home"}>
               <button
-                onClick={(e) => setHost((prevAdmin) => !prevAdmin)}
+                onClick={(e) => setHost((prevAdmin) => {
+                  localStorage.setItem("isOnDashboard", !prevAdmin)
+                  return !prevAdmin;
+                })}
                 className="bg-primaryColor py-[2]  px-6 text-white font-[600] h-[44px] flex items-center
             justify-center rounded-[50px]"
               >
-                {host ? "CoAdmin Page" : "Home Page"}
+                {!coAdmin ? "CoAdmin Page" : "User Page"}
               </button>
             </Link>
-          ) : null}
+          ) : 
+           newRole==="expert"? <Link to={!expert ? "/expert/home" : "/home"}>
+              <button
+                onClick={(e) => setExpert((prevAdmin) => {
+                  localStorage.setItem("isOnDashboard", !prevAdmin)
+                  return !prevAdmin;
+                })}
+                className="bg-primaryColor py-[2]  px-3 sm:px-6 text-white font-[600] h-[30px] sm:h-[44px] flex items-center
+            justify-center rounded-[50px]"
+              >
+                {!expert ? "Expert Page" : "User Page"}
+              </button>
+            </Link>:null}
 
-          {/* To show the respective dashboard logic is written here  */}
-          {/* {
-           newRole=='user'? <Link to={!admin?'/admin/home':'/home'}> 
-            <button       onClick={(e) => setAdmin((prevAdmin) => !prevAdmin)}  className="bg-primaryColor py-[2]  px-6 text-white font-[600] h-[44px] flex items-center
-            justify-center rounded-[50px]">
-               {!admin? "Admin Page":"Host View"} 
-            </button>
-            </Link> :null
-          } */}
+     
 
           {/* =====>  menu =====>                  */}
           <div className="navigation " ref={menuRef} onClick={toggleMenu}>
             <ul className="menu flex items-center flex-wrap gap-[2rem] sm:gap-[2.4rem] md:gap-[3.4rem]  lg:gap-[1.4rem]">
-              {newRole == "admin"
+              {(newRole === "admin" && admin)
                 ? adminNavLinks.map((link, index) => (
                     <li key={index}>
                       <NavLink
@@ -211,7 +268,7 @@ const Header = () => {
                       </NavLink>
                     </li>
                   ))
-                : newRole === "coAdmin"
+                : (newRole === "coAdmin" && coAdmin)
                 ? coAdminNavLinks.map((link, index) => (
                     <li key={index}>
                       <NavLink
@@ -227,7 +284,7 @@ const Header = () => {
                       </NavLink>
                     </li>
                   ))
-                : newRole === "host"
+                : (newRole === "host" || newRole ==="expert") && (expert || host)
                 ? hostNavLinks.map((link, index) => (
                     <li key={index}>
                       <NavLink
@@ -274,7 +331,7 @@ const Header = () => {
                       ? "/user/profile"
                       : newRole === "admin"
                       ? "/admin/userDashboard"
-                      : "/coAdmin/userDashboard"
+                      : newRole==="expert"?"/expert/dashBoard":"coAdmin/dashBoard"
                   }`}
                 >
                   <figure className="w-[35px] h-[35px] rounded-full ">

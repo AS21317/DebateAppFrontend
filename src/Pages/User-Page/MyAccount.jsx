@@ -175,7 +175,7 @@ const MyAccount = () => {
   return (
     <section>
       <div className="max-w-[1170px] px-5 mx-auto">
-        {loading && !error && <Loader />}
+        {loading && !error && <HashLoader  size={45} color="red"/>}
 
         {error && !loading && <Error errMessage={error} />}
         {!loading && !error && (
@@ -199,17 +199,17 @@ const MyAccount = () => {
                   {userData.email}
                 </p>
               </div>
-              <div className="flex mt-4 justify-between gap-2 px-8">
+              <div className="flex mt-2 justify-between gap-2 px-8">
                 <p className="flex-1  text-black-500 font-bold ">Role:</p>
                 <p className="font-semibold capitalize">{userData.role}</p>
               </div>
-              <div className="flex mt-4 justify-between gap-2 px-8">
+              <div className="flex mt-2 justify-between gap-2 px-8">
                 <p className="flex-1  text-black-500 font-bold ">
                   Total Debates:
                 </p>
                 <p className="font-semibold">5</p>
               </div>
-              <div className="flex mt-4 justify-between gap-2 px-8">
+              <div className="flex mt-2 justify-between gap-2 px-8">
                 <p className="flex-1  text-black-500 font-bold ">Total GD:</p>
                 <p className="font-semibold">15</p>
               </div>
