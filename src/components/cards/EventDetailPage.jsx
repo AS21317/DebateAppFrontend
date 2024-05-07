@@ -68,6 +68,7 @@ const EventDetailPage = () => {
 
   console.log("event details is : ", event);
 
+  // this is taken becouse host can remove some attendies from his side 
   const allowedAttendees = event.attendees?.filter(
     (attendee) => attendee.status === "allowed"
   ).length;

@@ -172,6 +172,7 @@ const Signup = () => {
                <label className="text-headingColor font-bold text-[16px] leading-7">
                   Gender:
                   <select
+                  required
                     name="gender"
                     value={formData.gender}
                     onChange={handleInputChange}

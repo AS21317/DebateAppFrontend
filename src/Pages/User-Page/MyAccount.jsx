@@ -364,9 +364,11 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
             </div>
 
             <div className="md:col-span-2 gap-y-5 md:px-[30px] ml-4">
+            <h1  className="text-2xl font-semibold ml-2  ">Events</h1>
+            <div className=" w-full h-1 border-t-2 mb-2  "></div>
               
 
-           <div className=" flex flex-wrap justify-center gap-y-4 ">
+           <div className=" flex flex-wrap justify-center md:justify-normal gap-y-4 ">
            <button
                 onClick={() => {
                   setTab("bookings"), setCardType("upcoming"),eventHandler("Upcoming")
@@ -374,10 +376,11 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 className={` ${
                   cardType === "upcoming" &&
                   "bg-primaryColor text-white font-normal"
-                } sm:p-2 sm:mr-3 min-w-[150px] sm:w-fit sm:px-3 mr-3  px-3 py-3 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+                }sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+                font-semibold text-[16px] leading-7 border border-solid
+                 border-primaryColor`}
               >
-                Upcoming Events
+               {eventLoading && cardType==="upcoming"?<HashLoader size={25} color="white" className="w-full mx-auto" />: "Upcoming"}
               </button>
 
               <button
@@ -387,10 +390,11 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 className={` ${
                   cardType === "completed" &&
                   "bg-primaryColor text-white font-normal"
-                }sm:p-2 sm:mr-3 min-w-[150px] sm:w-fit sm:px-3 mr-3 px-3 py-3 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+                }sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+                font-semibold text-[16px] leading-7 border border-solid
+                 border-primaryColor`}
               >
-                Past Events
+               {eventLoading && cardType==="completed"?<HashLoader size={25} color="white" className="w-full mx-auto" />: "Past"}
               </button>
 
               <button
@@ -400,10 +404,11 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 className={` ${
                   cardType === "missed" &&
                   "bg-primaryColor text-white font-normal"
-                } sm:p-2 sm:mr-3 min-w-[150px] sm:w-fit sm:px-3 mr-3 px-3 py-3 rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+                }sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+                font-semibold text-[16px] leading-7 border border-solid
+                 border-primaryColor`}
               >
-                Missed Events
+                {eventLoading && cardType==="missed"?<HashLoader size={25} color="white" className="w-full mx-auto" />: "Missed"}
               </button>
 
               <button
@@ -413,16 +418,17 @@ font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
                 className={`${
                   cardType === "cancelled" &&
                   "bg-primaryColor text-white font-normal"
-                } sm:p-2 sm:mr-3 min-w-[150px] sm:w-fit sm:px-3 mr-3 px-3 py-3  rounded-md text-headingColor
-font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+                } sm:p-2 sm:px-3 sm:mr-3 min-w-[100px] sm:w-fit mr-3  px-3 py-1 rounded-md text-headingColor
+                font-semibold text-[16px] leading-7 border border-solid
+                 border-primaryColor`}
               >
-                Canceled Events
+                {eventLoading && cardType==="cancelled"?<HashLoader size={25} color="white" className="w-full mx-auto" />: "Calcelled"}
               </button>
            </div>
                 {
                   !eventLoading && eventsData.length ===0 && (<div className=" flex justify-center items-center h-full font-bold capitalize font-serif text-2xl"><p>{`You have no ${cardType} Events `} </p></div>)
                 }
-              {tab === "bookings" ? ( eventLoading ?<div className=" flex mt-10 justify-center items-center"><HashLoader size={35} color="black" /></div>:
+              {tab === "bookings" ? ( eventLoading ?<div className=" flex mt-10 justify-center items-center"></div>:
                 <MyBookings eventsData={eventsData} status={cardType} />
               ) : (
                 <Profile user={userData} />

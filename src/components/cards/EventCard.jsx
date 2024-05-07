@@ -32,6 +32,10 @@ const formatDate = (date) => {
   return `${day}-${month}-${year}`;
 };
 
+
+
+
+
 const EventCard = ({ event, role = "user" }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -365,6 +369,23 @@ const EventCard = ({ event, role = "user" }) => {
 
                     </button>
                   )}
+
+{role === "dashBoarduser" && (
+                    <button
+                      // onClick={handleMarkDone}
+                      // disabled={loading || isMarkedDone}
+                      className={`mb-2 md:mb-0 px-5 py-2 shadow-sm tracking-wider text-white rounded-full ${
+                        isMarkedDone
+                          ? "bg-orange-500"
+                          : "hover:bg-green-500 bg-green-600"
+                      }`}
+                      type="button"
+                      aria-label="like"
+                    >
+                      <a  target='_blank' href={ `${event.meetLink}`}>Join Meet</a>
+                    </button>
+                  )}
+
 
                   {role === "host" && (
                     <button

@@ -3,6 +3,7 @@ import { CgProfile } from 'react-icons/cg';
 import demoImg from '../../assets/images/faq1.jpg'
 
 const AttendeesCard = ({attendee}) => {
+  console.log("founded attendee info is : ", attendee)
     return <div className="flex bg-green-200  w-[300px] m-4  p-2 rounded-lg flex-row  gap-4">
       <div className="flex   items-center"> 
       <img src={attendee.user.photo ||demoImg } alt={"hostPic"} className="rounded-full" width={35}  />
@@ -11,7 +12,7 @@ const AttendeesCard = ({attendee}) => {
       <div className="flex flex-col  text-[16px] font-medium flex-wrap
        justify-between ">
         <p >Name: { " "}{attendee.user.name}</p>
-        <p>Age: {attendee.user?.age} </p>
+        <p>Age: {(attendee.user?.age|| "21")} </p>
   
      
       </div>

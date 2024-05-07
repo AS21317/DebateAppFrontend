@@ -9,6 +9,7 @@ const AllHostPage = () => {
   const [loadingHost, setLoadingHost] = useState(false);
 
   const [hostData, setHostData] = useState([]);
+  const [hostLoading , setHostLoading] = useState([]);
   const { user, token, role } = useContext(authContext);
 
   
@@ -21,7 +22,7 @@ const AllHostPage = () => {
    //Fetching All Hosts Events
 
    const getAllHosts = async () => {
-    setHostData(true);
+    setHostLoading(true);
     try {
       const res = await fetch(
         `${import.meta.env.VITE_BASE_URL}/api/v1/host/getAll`,
@@ -52,13 +53,13 @@ const AllHostPage = () => {
 
       // if res found , 1. show a toast notification , 2. setShowLoader false
 
-      setHostData(false);
+      setHostLoading(false);
       setHostData(result.data);
       // toast.success(result.message);
       // Navigate('/admin/home')
     } catch (err) {
       // toast.error(err.message);
-      setLoadingHost(false);
+      setHostLoading(false);
     }
   };
 
@@ -94,14 +95,14 @@ placeholder:text-textColor"
       <div className="container w-full max-w-[100%]">
        
 
-          {loadingHost  && (
+          {hostLoading  && (
                     <div className=" text-center flex justify-center mt-10 font-bold text-2xl text-red-600">
 
             <HashLoader className="text-center" size={35} color="red" />
             </div>
           )}
 
-          {!loadingHost && hostData?.length === 0 && (
+          {!hostLoading && hostData?.length === 0 && (
             <div className=" text-center flex justify-center mt-10 font-bold text-2xl text-red-600">
              
               <h1>No Host Available </h1>

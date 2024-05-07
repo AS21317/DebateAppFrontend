@@ -3,11 +3,28 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import { authContext } from "../context/AuthContext";
+import signupImg  from "../assets/images/speaker1.png"
+import { HashLoader } from "react-spinners";
+
+ 
 
 const ExpertApplicationPage = () => {
   const { token, user } = useContext(authContext);
   const [loading, setLoading] = useState(false);
   console.log(user);
+  const defaultFormData = {
+    name: "",
+    age: "",
+    email: "",
+    phone: "",
+    gender: "",
+    message: "",
+    photo: null,
+    expertise: [],
+    user: user._id,
+    resumeLink: "",
+  }
+
 
   const [formData, setFormData] = useState({
     name: "",
@@ -39,6 +56,9 @@ const ExpertApplicationPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+
+
+
   // apply expert function
   const applyForExpert = async (e) => {
     console.log("applying expert");
@@ -69,7 +89,8 @@ const ExpertApplicationPage = () => {
       console.log("Expert Application  response is : ", result);
 
       toast.success(result.message);
-      setLoading(true);
+      setLoading(false);
+      setFormData(defaultFormData)
     } catch (err) {
       toast.error(err.message);
       setLoading(false);
@@ -122,17 +143,26 @@ const ExpertApplicationPage = () => {
     e.preventDefault();
     deleteItems("expertise", index);
   };
-
+ 
   return (
-    <section>
-      <div className="container">
-        <h2 className=" text-headingColor  text-center font-bold text-[24px] leading-9 mb-10  ">
-          Become an Expert
-        </h2>
-        <div className="  ">
-          <div className=" flex justify-center  ">
-            <form className="min-w-[300px] ">
-              <div className=" flex-col sm:flex gap-10 justify-between">
+    <section className="px-5 xl:px-0">
+    <div className="max-w-[1170px] mx-auto">
+      <div className="grid grid-cols-1 items-center lg:grid-cols-2">
+        <div className="hidden lg:block  max-h-[90vh] rounded-l-lg">
+          <figure className="rounded-l-lg">
+            <img src={signupImg} alt="" className="w-full min-h-[80vh] rounded-lg" style={{ transform: 'rotateY(180deg)' }}/>
+          </figure>
+        </div>
+
+        <div className="rounded-l-lg lg:pl-16 ">
+        <h3 className="text-headingColor text-center text-[26px] leading-9 font-bold mb-10">
+           Welcoming You to join us as an Expert
+          </h3>
+          <h3 className="text-headingColor text-[22px] leading-9 font-bold mb-5">
+            Become an <span className="text-primaryColor">Expert</span>
+          </h3>
+          { <form className="min-w-[300px] ">
+              <div className=" flex-col sm:flex  justify-between">
                 <div className="mb-5">
                   <p className="form__label">Name*</p>
                   <input
@@ -249,16 +279,17 @@ const ExpertApplicationPage = () => {
                 <button
                   onClick={applyForExpert}
                   type="submit"
-                  className="bg-primaryColor text-white text-[18px] leading-[30px] w-full px-4 py-3 rounded-lg"
+                  className="bg-primaryColor text-white font-bold text-[20px] leading-[30px] w-full px-4 py-3 rounded-lg"
                 >
-                  Submit
+                 {loading?<HashLoader size={35} color="white" className="w-full mx-auto" />: "Submit"}
                 </button>
               </div>
-            </form>
-          </div>
+            </form> }
         </div>
       </div>
-    </section>
+    </div>
+
+  </section>
   );
 };
 

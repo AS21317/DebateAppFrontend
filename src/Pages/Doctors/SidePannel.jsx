@@ -3,6 +3,7 @@ import convertTime from '../../utils/convertTime'
 import { authContext } from '../../context/AuthContext'
 import { useContext } from 'react'
 import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 const SidePannel = () => {
   const {token} = useContext(authContext)
 
@@ -85,7 +86,8 @@ const bookingHandler = async()=>{
   
     </ul>
     </div>
-    <button onClick={bookingHandler} className="btn px-2 w-full rounded-md">Join me in upcoming events</button>
+    <Link to={"/events"}  ><button className="btn px-2 w-full rounded-md">
+    Join me in upcoming events</button></Link>
     </div>
   )
 }
