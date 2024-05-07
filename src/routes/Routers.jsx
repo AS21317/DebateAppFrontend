@@ -86,7 +86,7 @@ const Routers = () => {
 
             <Route path="/coAdmin/profile" element={<CoAdminProfileCard/>} />
 
-            <Route path='/user/profile' element=  { <ProtectedRoute allowedRoles={['user','admin']}><MyAccount/></ProtectedRoute> } /> 
+            <Route path="/user/profile" element=  { <MyAccount/> } /> 
 
 
             {/* All Home Pages */}
