@@ -142,7 +142,7 @@ const Routers = () => {
             <Route path='/hosts' element={<AllHostPage/>} />
             <Route path='/checkout-success' element={<CheckoutSuccessPage/>} />
             
-            <Route path='/user/profile' element=  { <ProtectedRoute allowedRoles={['user','admin']}><MyAccount/></ProtectedRoute> } /> 
+            {/* <Route path='/user/profile' element=  { <ProtectedRoute allowedRoles={['user','admin']}><MyAccount/></ProtectedRoute> } />  */}
             <Route path='/doctor/profile/me' element={<ProtectedRoute allowedRoles={['admin']}><Dashboard/></ProtectedRoute>} /> 
             <Route path='/host/hostDetails' element={<HostDetails/>} />
             <Route path='/event/eventDetails/:id' element={<EventDetailPage/>} />
