@@ -41,6 +41,23 @@ const sociallinks = [
   },
 ];
 
+const convertTo12HourFormat = (time24) => {
+  const [hours24, minutes] = time24.split(":").map(Number);
+  const period = hours24 >= 12 ? "PM" : "AM";
+  let hours12 = hours24 % 12;
+  hours12 = hours12 === 0 ? 12 : hours12;
+  const time12 = `${hours12}:${String(minutes).padStart(2, "0")} ${period}`;
+  return time12;
+};
+
+const formatDate = (date) => {
+  date = new Date(date);
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};
+
 const EventDetailPage = () => {
   const [tab, setTab] = useState("about");
   const { token, user, dispatch } = useContext(authContext);
@@ -67,6 +84,8 @@ const EventDetailPage = () => {
 
 
   console.log("event details is : ", event);
+  const startDate = formatDate(event.startDate);
+  const startTime = convertTo12HourFormat(event.startTime);
 
   // this is taken becouse host can remove some attendies from his side 
   const allowedAttendees = event.attendees?.filter(
@@ -173,7 +192,7 @@ const EventDetailPage = () => {
                     <div className="flex py-3  text-sm text-gray-500">
                       <div className="flex-1 inline-flex items-center">
                         <IoCalendarOutline color="#60a5fa" size={15} />
-                        <p className=" ml-2  font-semibold">05-25-2021</p>
+                        <p className=" ml-2  font-semibold">{startDate}</p>
                       </div>
 
                       <div className="flex-1 inline-flex items-center">
@@ -191,7 +210,7 @@ const EventDetailPage = () => {
                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                           ></path>
                         </svg>
-                        <p className=" font-semibold">10:00 PM</p>
+                        <p className=" font-semibold">{startTime}</p>
                       </div>
                     </div>
                     <div className=" flex flex-row items-center gap-2 mb-3  ">
