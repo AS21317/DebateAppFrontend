@@ -286,22 +286,9 @@ const EventCard = ({ event, role = "user" }) => {
                     <p className=" ml-2  font-semibold">{startDate}</p>
                   </div>
                   <div className="flex-1 inline-flex items-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-5 w-5 mr-2 text-blue-400"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                          ></path>
-                        </svg>
-                        <p className=" font-semibold">{startTime}</p>
-                      </div>
+                    <BsFillCalendarMonthFill color="#60a5fa" size={15} />
+                    <p className="ml-2 font-semibold">{startTime}</p>
+                  </div>
                 </div>
 
                 <div className="flex items-center mb-2">
