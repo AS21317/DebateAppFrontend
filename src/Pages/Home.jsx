@@ -300,7 +300,7 @@ const Home = () => {
 
       {/* Hero Section End  */}
       {/* bg-[#CDF0F3] */}
-      <section className="hero__section1 pt-4 md:pt-[60px]  ">
+      <section className="hero__section py-6 sm:pb-[75px] sm:pt-[60px]">
         <div className="container ">
           <div className="mx-auto">
             <h2 className="heading text-center">Event of the Day</h2>
@@ -326,7 +326,7 @@ const Home = () => {
           {todaysEventsData?.length > 0 && (
             <div
               className="sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[40px]
-          lg:mt-[115px]"
+          lg:mt-[40px]"
             >
               {todaysEventsData.map((event) => (
                 <EventCard event={event} />

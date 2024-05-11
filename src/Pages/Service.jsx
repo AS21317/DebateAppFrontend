@@ -8,7 +8,7 @@ import exoertTalk from "../assets/images/expertTalk.jpg";
 
 
 const text = [
-  "Embark on intellectual journeys and sharpen your argumentative prowess with our Debate Services.oin a vibrant community of debaters committed to exploring diverse viewpoints and honing their rhetorical skills.",
+  "Embark on intellectual journeys and sharpen your argumentative prowess with our Debate Services.Join a vibrant community of debaters committed to exploring diverse viewpoints and honing their rhetorical skills.", 
   "Facilitate collaboration, deepen understanding, and cultivate consensus with our Group Discussion Services. Explore complex issues, share insights, and forge connections with like-minded individuals.",
   "Gain  insights from industry leaders, subject matter experts, and thought leaders with our Expert Talk Services.  Expand your horizons with curated talks and discussions by experts in their fields.",
 ];

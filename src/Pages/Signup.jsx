@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import signupImg from "../assets/images/signup.gif";
-import avatar from "../assets/images/doctor-img01.png";
+import avatar from "../assets/images/faq1.png";
 import { Link, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../config.js";  //TODO ----> Find out why using it is causing error 
 import { toast } from "react-toastify";
@@ -25,7 +25,29 @@ const Signup = () => {
   });
 
   const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    // pssword matching check
+    if (name === "confirmPassword") {
+      if (value !== formData.password) {
+        e.target.setCustomValidity("Passwords and confirm password do not match");
+      } else {
+        e.target.setCustomValidity("");
+      }
+    }
+
+
+     // Email validation
+  if (name === "email") {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(value)) {
+      e.target.setCustomValidity("Please enter a valid email address");
+    } else {
+      e.target.setCustomValidity("");
+    }
+  }
   };
 
 
@@ -94,7 +116,7 @@ const Signup = () => {
   };
 
   return (
-    <section className="px-5 xl:px-0">
+    <section className="hero__section1 px-5 xl:px-0">
       <div className="max-w-[1170px] mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2">
           <div className="hidden lg:block bg-primaryColor rounded-l-lg">
