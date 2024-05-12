@@ -27,7 +27,7 @@ const Contact = () => {
     setLoading(true);
     console.log("Calling submit handler ")
     try {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/contact/createMessage`, {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/v1/contactMessage/createMessage`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
